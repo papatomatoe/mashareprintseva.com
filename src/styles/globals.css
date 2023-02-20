@@ -1,0 +1,288 @@
+:root {
+	--main-font: 'Roboto', 'Arial', sans-serif;
+	--accent-font: 'Volkhov', 'Times', serif;
+
+	--color-bg: #fff;
+	--color-text: #454545;
+	--color-accent: #8a6f48;
+	--color-border: #d8d8d8;
+
+	--color-link: #656565;
+	--color-link-border: #656565;
+	--color-link-mob: #efefef;
+	--color-link-border-mob: #fff;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	position: relative;
+
+	min-width: 320px;
+	min-height: 100%;
+	height: 100%;
+
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 1.5;
+	font-family: var(--main-font);
+	color: var(--color-text);
+	font-style: normal;
+	letter-spacing: -0.2px;
+
+	background-color: var(--color-bg);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	text-decoration: none;
+}
+
+ul,
+li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
+}
+
+body::-webkit-scrollbar {
+	width: 7px;
+}
+
+body::-webkit-scrollbar-track {
+	background-color: var(--color-bg);
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: var(--color-accent);
+	border-radius: 10px;
+}
+
+#app {
+	min-height: 100%;
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+}
+
+.v-h {
+	position: absolute;
+
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+
+	border: 0;
+
+	clip: rect(0 0 0 0);
+}
+
+.blocked {
+	overflow: hidden;
+}
+
+.bio__content p {
+	margin-bottom: 30px;
+}
+
+.bio__content p:last-of-type {
+	margin-bottom: 10px;
+}
+.bio__content a {
+	text-decoration: underline;
+	display: inline-block;
+	color: #8a6f48;
+	margin: 5px 0;
+}
+.bio__content a:hover,
+.bio__content a:focus {
+	opacity: 0.8;
+}
+.bio__content a:active {
+	opacity: 0.6;
+}
+.bio__content ul {
+	margin-bottom: 50px;
+}
+
+.bio__content h3 {
+	margin-top: 50px;
+	margin-bottom: 30px;
+	font-size: 24px;
+	line-height: 1.5;
+	font-weight: 700;
+}
+
+.section__content p {
+	margin-bottom: 30px;
+}
+.project__subtitle a {
+	display: block;
+	margin: 0 auto;
+	grid-area: link;
+	font-weight: 400;
+	text-decoration: underline;
+	color: #8a6f48;
+	margin-bottom: 100px;
+}
+.project__subtitle blockquote {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0 auto;
+	margin-bottom: 100px;
+}
+.project__subtitle blockquote p {
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 1.5;
+	font-family: Roboto, Arial, sans-serif;
+	color: #878787;
+	font-style: normal;
+}
+
+.project__subtitle blockquote cite {
+	font-weight: 300;
+	font-size: 12px;
+	line-height: 1.5;
+	font-family: Roboto, Arial, sans-serif;
+	color: #878787;
+	font-style: normal;
+}
+
+.project__content p {
+	margin: 100px 0;
+}
+.project__content a {
+	display: block;
+	text-align: center;
+	text-decoration: underline;
+	color: #8a6f48;
+}
+
+.project__content a:hover,
+.project__content a:focus {
+	opacity: 0.8;
+}
+
+.project__content a:active {
+	opacity: 0.6;
+}
+
+.project__content h3 {
+	font-size: 24px;
+	line-height: 1.5;
+	font-weight: 700;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 180px;
+}
+
+.project__content img {
+	position: relative;
+	width: 100%;
+}
+
+.project__content blockquote {
+	display: block;
+	box-sizing: border-box;
+	width: 80%;
+	margin: 30px auto 100px;
+}
+.project__content blockquote p {
+	margin: 0;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 1.5;
+	font-family: Roboto, Arial, sans-serif;
+	color: #878787;
+	font-style: normal;
+}
+.project__content blockquote cite {
+	display: block;
+	margin-top: 30px;
+	font-weight: 300;
+	font-size: 12px;
+	line-height: 1.5;
+	font-family: Roboto, Arial, sans-serif;
+	color: #878787;
+	font-style: normal;
+}
+@media (min-width: 768px) {
+	.bio__content p {
+		margin: 5px auto 30px;
+	}
+	.bio__content p:last-of-type {
+		margin-bottom: 10px;
+	}
+	.section__content p {
+		margin: 0 auto 20px;
+	}
+
+	.project__subtitle {
+		width: 80%;
+		margin-bottom: 120px;
+	}
+
+	.project__subtitle a,
+	.project__subtitle blockquote {
+		margin-bottom: 20px;
+	}
+
+	.project__subtitle a:hover,
+	.project__subtitle a:focus {
+		opacity: 0.8;
+	}
+
+	.project__subtitle a:active {
+		opacity: 0.6;
+	}
+
+	.project__content p {
+		width: 80%;
+		margin: 150px auto;
+	}
+
+	.project__content a {
+		width: 80%;
+		margin: 20px auto;
+	}
+}
+
+@media (min-width: 1200px) {
+	.bio__content p {
+		margin: 15px auto 20px;
+		width: 100%;
+	}
+	.projects__subtitle {
+		width: auto;
+		margin-bottom: 0;
+	}
+}
