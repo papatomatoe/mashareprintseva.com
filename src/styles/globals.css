@@ -11,6 +11,8 @@
 	--color-link-border: #656565;
 	--color-link-mob: #efefef;
 	--color-link-border-mob: #fff;
+
+	--color-icon: #000;
 }
 
 * {
@@ -18,7 +20,9 @@
 }
 
 html,
-body {
+body,
+#app {
+	position: relative;
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -84,7 +88,7 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 }
 
-#app {
+.app-container {
 	min-height: 100%;
 	display: grid;
 	grid-template-rows: min-content 1fr min-content;
@@ -110,6 +114,36 @@ body::-webkit-scrollbar-thumb {
 
 .bio__content p {
 	margin-bottom: 30px;
+}
+
+.button {
+	padding: 7px;
+	display: block;
+	cursor: pointer;
+	background-color: #252525;
+	border: none;
+	border-radius: 4px;
+
+	font-family: var(--text-font);
+	font-style: normal;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 21px;
+
+	color: #efefef;
+	outline: none;
+
+	transition: background-color 0.2s linear;
+	--color-icon: #efefef;
+}
+
+.button:hover,
+.button:focus {
+	background-color: #8a6f48;
+}
+
+.button:active {
+	background-color: #454545;
 }
 
 .bio__content p:last-of-type {
@@ -235,6 +269,7 @@ body::-webkit-scrollbar-thumb {
 	color: #878787;
 	font-style: normal;
 }
+
 @media (min-width: 768px) {
 	.bio__content p {
 		margin: 5px auto 30px;

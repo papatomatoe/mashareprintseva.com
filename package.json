@@ -14,6 +14,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"@types/bcrypt": "^5.0.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"eslint": "^8.28.0",
@@ -29,6 +30,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.10.1"
+		"@prisma/client": "^4.10.1",
+		"@tinymce/tinymce-svelte": "^1.0.0",
+		"bcrypt": "^5.1.0",
+		"pocketbase": "^0.10.1",
+		"slugify": "^1.6.5"
 	}
 }

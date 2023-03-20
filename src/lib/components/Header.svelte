@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Logo, Nav } from '$lib/components';
+	import Logo from './Logo.svelte';
+	import Nav from './Nav.svelte';
 
 	export let menu: any;
 	export let social: any;
