@@ -1,5 +1,61 @@
 <script lang="ts">
+	import Table from '$lib/components/Table.svelte';
+	import Status from '$lib/components/Status.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
 	let title = 'Sections';
+
+	let tableData = [
+		{
+			id: '1',
+			published: true,
+			order: 1,
+			title: 'Tailoring & Couture',
+			slug: 'tailoring-and-couture',
+			created: '22.10.2023 10:30'
+		},
+		{
+			id: '2',
+			published: false,
+			order: 2,
+			title: 'Contemporary',
+			slug: 'contemporary',
+			created: '22.10.2023 10:30'
+		}
+	];
+
+	let config = [
+		{
+			key: 'select'
+		},
+		{
+			key: 'id',
+			title: 'id'
+		},
+		{
+			key: 'published',
+			title: 'state',
+			render: Status
+		},
+		{
+			key: 'order',
+			title: 'order'
+		},
+		{
+			key: 'title',
+			title: 'title'
+		},
+		{
+			key: 'slug',
+			title: 'slug'
+		},
+		{
+			key: 'created',
+			title: 'created'
+		},
+		{
+			key: 'edit'
+		}
+	];
 </script>
 
 <div class="container">
@@ -50,7 +106,10 @@
 			New Item
 		</button>
 	</div>
-	<div class="container__bottom" />
+	<div class="container__bottom">
+		<Table data={tableData} {config} />
+		<Pagination />
+	</div>
 </div>
 
 <style>
