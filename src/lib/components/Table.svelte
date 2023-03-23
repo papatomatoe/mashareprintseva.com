@@ -1,22 +1,74 @@
-<script lang="ts">
-	import Checkbox from '$lib/components/Checkbox.svelte';
-
-	export let data: {
+<script lang="ts" context="module">
+	export interface IDataItem {
 		id: string;
 		published: boolean;
 		order: number;
 		title: string;
 		slug: string;
 		created: string;
-	}[] = [];
+	}
 
-	export let config: {
+	export interface ITableConfig {
 		key: string;
 		title?: string;
 		render?: any;
-	}[] = [];
+		sortable?: boolean;
+	}
+
+	export type SortDirection = 'direct' | 'reverse';
+</script>
+
+<script lang="ts">
+	import Checkbox from '$lib/components/Checkbox.svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	export let data: IDataItem[] = [];
+	export let config: ITableConfig[] = [];
+	export let selectedRows: IDataItem[] = [];
+
+	let sortKey = '';
+	let sortDirection: SortDirection | null = null;
+
+	$: isAllCheckboxSelected = Boolean(selectedRows.length);
+	$: sortedData =
+		sortKey && sortDirection
+			? [...data].sort((a, b) => {
+					const itemA = a[sortKey];
+					const itemB = b[sortKey];
+					if (typeof itemA === 'string' && typeof itemB === 'string') {
+						return sortDirection === 'direct'
+							? itemA.toLowerCase().localeCompare(itemB.toLowerCase())
+							: itemB.toLowerCase().localeCompare(itemA.toLowerCase());
+					}
+
+					return sortDirection === 'direct' ? itemA - itemB : itemB - itemA;
+			  })
+			: data;
 
 	const renderTd = (item: Record<string, any>, key: string) => item[key];
+
+	const handleCheckAll = () => dispatch('select-all');
+
+	const handleSelect = (item: IDataItem) => dispatch('select', item);
+
+	const handleEdit = (item: IDataItem) => dispatch('edit', item);
+
+	const handleSort = (key: string) => {
+		if (sortKey === key) {
+			if (!sortDirection) {
+				sortDirection = 'direct';
+			} else if (sortDirection === 'direct') {
+				sortDirection = 'reverse';
+			} else {
+				sortDirection = null;
+			}
+		} else {
+			sortDirection = 'direct';
+		}
+		sortKey = key;
+	};
 </script>
 
 <table class="table">
@@ -25,27 +77,34 @@
 			{#each config as cell (cell.key)}
 				<th>
 					{#if cell.key === 'select'}
-						<Checkbox on:change={() => console.log('check all')} isCheckedAll />
+						<Checkbox on:change={handleCheckAll} checked={isAllCheckboxSelected} isCheckedAll />
 					{:else if cell.title}
-						<button class="table__button" type="button">
-							<span>{cell.title}</span>
-							<svg
-								width="8"
-								height="5"
-								viewBox="0 0 8 5"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path d="M4 0L7.4641 4.5H0.535898L4 0Z" fill="var(--color-icon)" />
-							</svg>
-						</button>
+						{#if cell.sortable}
+							<button class="table__button" type="button" on:click={() => handleSort(cell.key)}>
+								<span>{cell.title}</span>
+								{#if cell.key === sortKey}
+									<svg
+										class="table__sort {sortDirection ? `table__sort--${sortDirection}` : ''}"
+										width="8"
+										height="5"
+										viewBox="0 0 8 5"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path d="M4 0L7.4641 4.5H0.535898L4 0Z" fill="var(--color-icon)" />
+									</svg>
+								{/if}
+							</button>
+						{:else}
+							{cell.title}
+						{/if}
 					{/if}
 				</th>
 			{/each}
 		</tr>
 	</thead>
 	<tbody>
-		{#each data as item (item.id)}
+		{#each sortedData as item (item.id)}
 			<tr>
 				{#each config as cell (cell.key)}
 					<td>
@@ -60,13 +119,12 @@
 								<svelte:component this={cell.render} />
 							{/if}
 						{:else if cell.key === 'select'}
-							<Checkbox on:change={() => console.log(`check ${item.id}`)} />
+							<Checkbox
+								on:change={() => handleSelect(item)}
+								checked={Boolean(selectedRows.find((row) => row.id === item.id))}
+							/>
 						{:else if cell.key === 'edit'}
-							<button
-								class="button button--edit"
-								type="button"
-								on:click={() => console.log(`edit ${item.id}`)}
-							>
+							<button class="button table__edit" type="button" on:click={() => handleEdit(item)}>
 								<svg
 									width="21"
 									height="21"
@@ -90,6 +148,10 @@
 					</td>
 				{/each}
 			</tr>
+		{:else}
+			<tr class="table__tr--no-data"
+				><td colspan={config.length}><p class="table__no-data">No data</p></td></tr
+			>
 		{/each}
 	</tbody>
 </table>
@@ -122,20 +184,65 @@
 	}
 
 	.table__button {
-		display: flex;
-		align-items: center;
-		gap: 5px;
+		position: relative;
+		padding-right: 12px;
 		border: none;
 		background-color: transparent;
+		cursor: pointer;
 	}
 
-	.button--edit {
+	.table__button:hover,
+	.table__button:focus {
+		color: #858585;
+		--color-icon: #858585;
+	}
+
+	.table__edit {
 		display: grid;
 		padding: 0;
 		width: 40px;
 		height: 40px;
 		place-items: center;
-		background-color: #efefef;
+		background-color: transparent;
 		--color-icon: #000;
+	}
+
+	.table__edit:hover,
+	.table__edit:focus {
+		background-color: transparent;
+		--color-icon: #8a6f48;
+	}
+
+	.table__edit:active {
+		background-color: transparent;
+		--color-icon: #858585;
+	}
+
+	.table__sort {
+		position: absolute;
+		display: none;
+		right: 0;
+		top: 50%;
+		transform: translate(0, -50%);
+	}
+	.table__sort--direct {
+		display: block;
+	}
+	.table__sort--reverse {
+		display: block;
+		transform: rotateZ(180deg);
+		top: calc(50% - 1px);
+	}
+
+	table tbody tr.table__tr--no-data:hover {
+		background-color: #fff;
+	}
+	.table__no-data {
+		width: 100%;
+		padding: 40px;
+		font-weight: 700;
+		text-transform: uppercase;
+		text-align: center;
+		color: #858585;
 	}
 </style>

@@ -1,8 +1,13 @@
 <script lang="ts">
-	import Table from '$lib/components/Table.svelte';
+	import Table, { type IDataItem } from '$lib/components/Table.svelte';
 	import Status from '$lib/components/Status.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import Input from '$lib/components/Input.svelte';
+
+	import { debounce } from '$lib/utils/debounce';
 	let title = 'Sections';
+
+	let selectedRows: IDataItem[] = [];
 
 	let tableData = [
 		{
@@ -29,39 +34,110 @@
 		},
 		{
 			key: 'id',
-			title: 'id'
+			title: 'id',
+			sortable: true
 		},
 		{
 			key: 'published',
 			title: 'state',
+			sortable: true,
 			render: Status
 		},
 		{
 			key: 'order',
-			title: 'order'
+			title: 'order',
+			sortable: true
 		},
 		{
 			key: 'title',
-			title: 'title'
+			title: 'title',
+			sortable: true
 		},
 		{
 			key: 'slug',
-			title: 'slug'
+			title: 'slug',
+			sortable: true
 		},
 		{
 			key: 'created',
-			title: 'created'
+			title: 'created',
+			sortable: true
 		},
 		{
 			key: 'edit'
 		}
 	];
+
+	let searchResultData = tableData;
+
+	const handleSelectAll = () => {
+		selectedRows = selectedRows.length ? [] : [...tableData];
+	};
+
+	const handleSelect = (e: CustomEvent) => {
+		const item = e.detail;
+
+		const selectedItem = selectedRows.find((row) => row.id === item.id);
+
+		selectedRows = selectedItem
+			? [...selectedRows.filter((e) => e.id !== item.id)]
+			: [...selectedRows, item];
+	};
+
+	const handleEdit = (e: CustomEvent) => console.log('edit ' + e.detail.title);
+
+	const handleDelete = () => {
+		console.log('delete selected items');
+	};
+
+	const search = (v: string) => {
+		const value = v.toLocaleLowerCase();
+
+		searchResultData = value
+			? tableData.filter(
+					(el) =>
+						String(el.id).toLowerCase().includes(value) ||
+						String(el.title).toLowerCase().includes(value) ||
+						String(el.slug).toLowerCase().includes(value) ||
+						String(el.created).toLowerCase().includes(value)
+			  )
+			: tableData;
+
+		selectedRows = [];
+	};
+
+	const handleSearch = debounce((e: CustomEvent) => {
+		search(e.detail);
+	}, 500);
+
+	$: console.log(searchResultData);
 </script>
 
 <div class="container">
 	<div class="container__top">
 		<h1 class="container__title">{title}</h1>
-		<button class="button container__button">
+		<div class="container__search">
+			<Input placeholder="search" on:input={handleSearch}>
+				<svg
+					slot="icon"
+					xmlns="http://www.w3.org/2000/svg"
+					width="17px"
+					height="17px"
+					viewBox="0 0 32 32"
+				>
+					<path
+						fill="var(--color-icon)"
+						d="m29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29ZM4 13a9 9 0 1 1 9 9a9.01 9.01 0 0 1-9-9Z"
+					/>
+				</svg>
+			</Input>
+		</div>
+
+		<button
+			class="button container__button"
+			disabled={Boolean(!selectedRows.length || !searchResultData.length)}
+			on:click={handleDelete}
+		>
 			<svg
 				width="10"
 				height="13"
@@ -107,7 +183,14 @@
 		</button>
 	</div>
 	<div class="container__bottom">
-		<Table data={tableData} {config} />
+		<Table
+			data={searchResultData}
+			{config}
+			{selectedRows}
+			on:select-all={handleSelectAll}
+			on:select={handleSelect}
+			on:edit={handleEdit}
+		/>
 		<Pagination />
 	</div>
 </div>
@@ -125,17 +208,28 @@
 		border-bottom: 1px solid #d9d9d9;
 	}
 	.container__title {
-		margin-right: auto;
-
 		font-weight: 700;
 		font-size: 24px;
 		line-height: 36px;
 	}
+
+	.container__search {
+		width: 250px;
+		margin-left: 20px;
+		margin-right: auto;
+	}
 	.container__button {
 		display: flex;
-		padding: 3px 10px 3px 15px;
+		padding: 7px 10px 7px 15px;
 		align-items: center;
 		justify-content: space-between;
 		gap: 11px;
+	}
+	.container__button:disabled,
+	.container__button:hover:disabled {
+		background-color: #efefef;
+		color: #d8d8d8;
+		cursor: auto;
+		--color-icon: #d8d8d8;
 	}
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+
 	export let label = '';
 	export let value = '';
 	export let error = '';
@@ -15,18 +16,24 @@
 
 	const dispatch = createEventDispatcher();
 
-	const handleClearError = () => {
-		dispatch('clearError');
-	};
-
 	const handleClear = () => {
 		value = '';
 		error = '';
+		dispatch('clearError');
+		dispatch('input', '');
 	};
 
 	const handleRegenerate = () => {
 		dispatch('regenerate');
 	};
+
+	const handleInput = (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		dispatch('clearError');
+		dispatch('input', target.value);
+	};
+
+	$: withIcon = $$slots.icon;
 </script>
 
 <label class="field">
@@ -41,12 +48,15 @@
 		</p>
 	{/if}
 	<div class="field__wrapper">
+		<div class="field__icon"><slot name="icon" /></div>
 		<input
 			class="field__input"
 			class:field__input--error={error}
+			class:field__input--with-icon={withIcon}
 			use:typeAction
 			bind:value
-			on:input={handleClearError}
+			on:change
+			on:input={handleInput}
 			{name}
 			{placeholder}
 		/>
@@ -66,7 +76,11 @@
 				</svg>
 			</button>
 		{:else}
-			<button class="field__button" type="button" on:click={handleClear}
+			<button
+				class:field__button--visible={value}
+				class="field__button field__button--clear"
+				type="button"
+				on:click={handleClear}
 				><svg
 					width="30"
 					height="30"
@@ -175,5 +189,28 @@
 
 	.field__button:active {
 		--color-icon: #252525;
+	}
+
+	.field__button--clear {
+		display: none;
+	}
+
+	.field__button--visible {
+		display: block;
+	}
+	.field__input--with-icon {
+		padding-left: 25px;
+	}
+
+	.field__icon {
+		height: fit-content;
+		position: absolute;
+		width: 17px;
+		height: 17px;
+		top: 50%;
+		left: 5px;
+		transform: translate(0, -50%);
+
+		--color-icon: #d8d8d8;
 	}
 </style>
