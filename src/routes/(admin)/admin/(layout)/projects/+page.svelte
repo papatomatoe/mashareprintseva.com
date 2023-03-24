@@ -1,16 +1,6 @@
 <script lang="ts">
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import Status from '$lib/components/Status.svelte';
-	const tableData = Array(200)
-		.fill('')
-		.map((_, idx) => ({
-			id: idx + 1,
-			published: true,
-			order: 8,
-			title: 'Contemporary',
-			slug: 'contemporary',
-			created: '22.10.2023 10:30'
-		}));
 
 	let config = [
 		{
@@ -28,8 +18,8 @@
 			render: Status
 		},
 		{
-			key: 'order',
-			title: 'order',
+			key: 'section',
+			title: 'section',
 			sortable: true
 		},
 		{
@@ -51,6 +41,18 @@
 			key: 'edit'
 		}
 	];
+
+	const tableData = Array(76)
+		.fill('')
+		.map((_, idx) => ({
+			id: idx + 1,
+			published: true,
+			section: 'Contemporary',
+			title: 'Decay in Bloom',
+			slug: 'decay-in-bloom',
+			created: '22.10.2023 10:30'
+		}));
+
 	const handleAddNewItem = () => console.log('add new item');
 	const handleDeleteItems = (e: CustomEvent) => console.log('delete selected items');
 	const handleEditItem = (e: CustomEvent) => console.log('edit item ' + e.detail.id);
@@ -64,3 +66,6 @@
 	on:delete={handleDeleteItems}
 	on:edit={handleEditItem}
 />
+
+<style>
+</style>

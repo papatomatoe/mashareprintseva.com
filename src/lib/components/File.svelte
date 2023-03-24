@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import { Clear } from '$lib/components/icons';
 	export let label = '';
 	export let files: FileList | null = null;
 	export let error = '';
@@ -58,19 +59,8 @@
 			{placeholder}
 		/>
 		<div class="field__container" on:drop|preventDefault={handleDrop} on:dragover|preventDefault />
-		<button class="field__button" type="button" on:click={handleClear}
-			><svg
-				width="30"
-				height="30"
-				viewBox="0 0 30 30"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					d="M13.4525 14.6066L8.42291 19.6362L9.97046 21.1837L15 16.1542L20.0295 21.1837L21.5771 19.6362L16.5476 14.6066L21.5771 9.57709L20.0295 8.02954L15 13.0591L9.97046 8.02954L8.42291 9.57709L13.4525 14.6066Z"
-					fill="var(--color-icon)"
-				/>
-			</svg>
+		<button class="field__button" type="button" on:click={handleClear}>
+			<Clear />
 		</button>
 	</div>
 	{#if error}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Select from '$lib/components/Select.svelte';
+	import { Prev, Next } from '$lib/components/icons';
 
 	const dispatch = createEventDispatcher();
 
@@ -23,7 +24,7 @@
 
 	$: currentGroupIndex = pageGroups.findIndex((el) => el.includes(currentPage));
 
-	$: currentGroup = pageGroups[currentGroupIndex];
+	$: currentGroup = pageGroups && pageGroups.length ? pageGroups[currentGroupIndex] : [1];
 
 	const handleSelectPerPage = (e: CustomEvent) => {
 		dispatch('select-per-page', e.detail.value);
@@ -54,21 +55,7 @@
 				disabled={currentPage === 1}
 				on:click={handleSelectPrevPage}
 			>
-				<svg
-					width="9"
-					height="17"
-					viewBox="0 0 9 17"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M8 1L1 8.5L8 16"
-						stroke="var(--color-icon)"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
+				<Prev />
 			</button>
 		</li>
 		{#each currentGroup as page, index (index)}
@@ -91,21 +78,7 @@
 				type="button"
 				on:click={handleSelectNextPage}
 			>
-				<svg
-					width="9"
-					height="17"
-					viewBox="0 0 9 17"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M1 15.9999L8 8.49994L1 0.999938"
-						stroke="var(--color-icon)"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
+				<Next />
 			</button>
 		</li>
 	</ul>
