@@ -3,30 +3,215 @@
 	import Status from '$lib/components/Status.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
-
 	import { debounce } from '$lib/utils/debounce';
+
 	let title = 'Sections';
-
 	let selectedRows: IDataItem[] = [];
+	// let tableData = [
+	// 	{
+	// 		id: '1',
+	// 		published: true,
+	// 		order: 1,
+	// 		title: 'Tailoring & Couture',
+	// 		slug: 'tailoring-and-couture',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '2',
+	// 		published: false,
+	// 		order: 2,
+	// 		title: 'Contemporary',
+	// 		slug: 'contemporary',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '3',
+	// 		published: true,
+	// 		order: 3,
+	// 		title: 'Heritage',
+	// 		slug: 'heritage',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '4',
+	// 		published: true,
+	// 		order: 4,
+	// 		title: 'Interior',
+	// 		slug: 'interior',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '5',
+	// 		published: true,
+	// 		order: 5,
+	// 		title: 'Myrtusworkshop',
+	// 		slug: 'myrtusworkshop',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '6',
+	// 		published: true,
+	// 		order: 6,
+	// 		title: 'Learn',
+	// 		slug: 'learn',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '7',
+	// 		published: true,
+	// 		order: 7,
+	// 		title: 'Tailoring & Couture',
+	// 		slug: 'tailoring-and-couture',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '8',
+	// 		published: false,
+	// 		order: 8,
+	// 		title: 'Contemporary',
+	// 		slug: 'contemporary',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '9',
+	// 		published: true,
+	// 		order: 9,
+	// 		title: 'Heritage',
+	// 		slug: 'heritage',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '10',
+	// 		published: true,
+	// 		order: 10,
+	// 		title: 'Interior',
+	// 		slug: 'interior',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '11',
+	// 		published: true,
+	// 		order: 11,
+	// 		title: 'Myrtusworkshop',
+	// 		slug: 'myrtusworkshop',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '12',
+	// 		published: true,
+	// 		order: 12,
+	// 		title: 'Learn',
+	// 		slug: 'learn',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '13',
+	// 		published: true,
+	// 		order: 1,
+	// 		title: 'Tailoring & Couture',
+	// 		slug: 'tailoring-and-couture',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '14',
+	// 		published: false,
+	// 		order: 2,
+	// 		title: 'Contemporary',
+	// 		slug: 'contemporary',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '15',
+	// 		published: true,
+	// 		order: 3,
+	// 		title: 'Heritage',
+	// 		slug: 'heritage',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '16',
+	// 		published: true,
+	// 		order: 4,
+	// 		title: 'Interior',
+	// 		slug: 'interior',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '17',
+	// 		published: true,
+	// 		order: 5,
+	// 		title: 'Myrtusworkshop',
+	// 		slug: 'myrtusworkshop',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '18',
+	// 		published: true,
+	// 		order: 6,
+	// 		title: 'Learn',
+	// 		slug: 'learn',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '19',
+	// 		published: true,
+	// 		order: 7,
+	// 		title: 'Tailoring & Couture',
+	// 		slug: 'tailoring-and-couture',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '20',
+	// 		published: false,
+	// 		order: 8,
+	// 		title: 'Contemporary',
+	// 		slug: 'contemporary',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '21',
+	// 		published: true,
+	// 		order: 9,
+	// 		title: 'Heritage',
+	// 		slug: 'heritage',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '22',
+	// 		published: true,
+	// 		order: 10,
+	// 		title: 'Interior',
+	// 		slug: 'interior',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '23',
+	// 		published: true,
+	// 		order: 11,
+	// 		title: 'Myrtusworkshop',
+	// 		slug: 'myrtusworkshop',
+	// 		created: '22.10.2023 10:30'
+	// 	},
+	// 	{
+	// 		id: '34',
+	// 		published: true,
+	// 		order: 12,
+	// 		title: 'Learn',
+	// 		slug: 'learn',
+	// 		created: '22.10.2023 10:30'
+	// 	}
+	// ];
 
-	let tableData = [
-		{
-			id: '1',
+	const tableData = Array(200)
+		.fill('')
+		.map((_, idx) => ({
+			id: idx + 1,
 			published: true,
-			order: 1,
-			title: 'Tailoring & Couture',
-			slug: 'tailoring-and-couture',
-			created: '22.10.2023 10:30'
-		},
-		{
-			id: '2',
-			published: false,
-			order: 2,
+			order: 8,
 			title: 'Contemporary',
 			slug: 'contemporary',
 			created: '22.10.2023 10:30'
-		}
-	];
+		}));
 
 	let config = [
 		{
@@ -67,8 +252,16 @@
 			key: 'edit'
 		}
 	];
-
 	let searchResultData = tableData;
+	let perPage = 10;
+	let currentPage = 1;
+
+	$: pages = Math.ceil(searchResultData.length / perPage);
+
+	$: tableDataPerPage = searchResultData.slice(
+		currentPage * perPage - perPage,
+		currentPage * perPage
+	);
 
 	const handleSelectAll = () => {
 		selectedRows = selectedRows.length ? [] : [...tableData];
@@ -96,10 +289,10 @@
 		searchResultData = value
 			? tableData.filter(
 					(el) =>
-						String(el.id).toLowerCase().includes(value) ||
-						String(el.title).toLowerCase().includes(value) ||
-						String(el.slug).toLowerCase().includes(value) ||
-						String(el.created).toLowerCase().includes(value)
+						String(el.id).toLowerCase().startsWith(value) ||
+						String(el.title).toLowerCase().startsWith(value) ||
+						String(el.slug).toLowerCase().startsWith(value) ||
+						String(el.created).toLowerCase().startsWith(value)
 			  )
 			: tableData;
 
@@ -110,7 +303,13 @@
 		search(e.detail);
 	}, 500);
 
-	$: console.log(searchResultData);
+	const handleSelectPerPage = (e: CustomEvent) => {
+		perPage = e.detail;
+	};
+
+	const handleSelectCurrentPage = (e: CustomEvent) => {
+		currentPage = e.detail;
+	};
 </script>
 
 <div class="container">
@@ -184,14 +383,20 @@
 	</div>
 	<div class="container__bottom">
 		<Table
-			data={searchResultData}
+			data={tableDataPerPage}
 			{config}
 			{selectedRows}
 			on:select-all={handleSelectAll}
 			on:select={handleSelect}
 			on:edit={handleEdit}
 		/>
-		<Pagination />
+		<Pagination
+			{pages}
+			{perPage}
+			{currentPage}
+			on:select-per-page={handleSelectPerPage}
+			on:select-page={handleSelectCurrentPage}
+		/>
 	</div>
 </div>
 

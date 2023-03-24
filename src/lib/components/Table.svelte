@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	export interface IDataItem {
-		id: string;
+		id: number;
 		published: boolean;
 		order: number;
 		title: string;

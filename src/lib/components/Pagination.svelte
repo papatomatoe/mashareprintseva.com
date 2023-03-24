@@ -1,11 +1,59 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import Select from '$lib/components/Select.svelte';
+
+	const dispatch = createEventDispatcher();
+
+	const perGroup = 5;
+
+	export let pages = 0;
+	export let perPage = 10;
+	export let currentPage = 1;
+
+	$: groups = Math.ceil(pages / 5);
+
+	$: pageGroups = Array(groups)
+		.fill('')
+		.map((_, index) =>
+			Array(pages)
+				.fill('')
+				.map((_, idx) => idx + 1)
+				.slice(index * perGroup, index * perGroup + perGroup)
+		);
+
+	$: currentGroupIndex = pageGroups.findIndex((el) => el.includes(currentPage));
+
+	$: currentGroup = pageGroups[currentGroupIndex];
+
+	const handleSelectPerPage = (e: CustomEvent) => {
+		dispatch('select-per-page', e.detail.value);
+		dispatch('select-page', 1);
+	};
+
+	const handleSelectCurrentPage = (page: number) => {
+		dispatch('select-page', page);
+	};
+
+	const handleSelectPrevPage = () => {
+		const page = currentPage > 1 ? currentPage - 1 : currentPage;
+		dispatch('select-page', page);
+	};
+
+	const handleSelectNextPage = () => {
+		const page = currentPage <= pages ? currentPage + 1 : currentPage;
+		dispatch('select-page', page);
+	};
 </script>
 
 <div class="pagination">
 	<ul class="pagination__list">
 		<li class="pagination__item">
-			<button class="button pagination__button" type="button">
+			<button
+				class="button pagination__button"
+				type="button"
+				disabled={currentPage === 1}
+				on:click={handleSelectPrevPage}
+			>
 				<svg
 					width="9"
 					height="17"
@@ -23,17 +71,26 @@
 				</svg>
 			</button>
 		</li>
+		{#each currentGroup as page, index (index)}
+			<li class="pagination__item">
+				<button
+					class="button pagination__button"
+					class:pagination__button--current={page === currentPage}
+					type="button"
+					on:click={() => handleSelectCurrentPage(page)}
+				>
+					{page}
+				</button>
+			</li>
+		{/each}
+
 		<li class="pagination__item">
-			<button class="button pagination__button pagination__button--current" type="button">1</button>
-		</li>
-		<li class="pagination__item">
-			<button class="button pagination__button" type="button">2</button>
-		</li>
-		<li class="pagination__item">
-			<button class="button pagination__button" type="button">3</button>
-		</li>
-		<li class="pagination__item">
-			<button class="button pagination__button" type="button">
+			<button
+				class="button pagination__button"
+				disabled={currentPage >= pages}
+				type="button"
+				on:click={handleSelectNextPage}
+			>
 				<svg
 					width="9"
 					height="17"
@@ -57,10 +114,11 @@
 		<div class="pagination__select">
 			<Select
 				options={[
-					{ title: '10', value: '10' },
-					{ title: '50', value: '50' },
-					{ title: '100', value: '100' }
+					{ title: '10', value: 10 },
+					{ title: '50', value: 50 },
+					{ title: '100', value: 100 }
 				]}
+				on:select={handleSelectPerPage}
 			/>
 		</div>
 	</div>
@@ -77,6 +135,7 @@
 
 	.pagination__list {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 10px;
 	}
 
@@ -106,6 +165,13 @@
 		border-color: #8a6f48;
 		--color-icon: #fff;
 		color: #fff;
+	}
+
+	.pagination__button:disabled {
+		background-color: #efefef;
+		border-color: #efefef;
+		cursor: auto;
+		--color-icon: #d8d8d8;
 	}
 
 	.pagination__select {

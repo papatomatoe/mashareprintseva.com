@@ -1,11 +1,28 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	export let options: { title: string; value: string }[] = [];
-	export let selected: { title: string; value: string } | null = null;
+	import { browser } from '$app/environment';
+
+	export let options: { title: string; value: any }[] = [];
+	export let selected: { title: string; value: any } | null = null;
 
 	const dispatch = createEventDispatcher();
 
 	let visible = false;
+	let ref: HTMLDivElement;
+	let optionsRef: HTMLUListElement;
+	let dropdownPosition: string = 'calc(100% + 2px)';
+
+	$: {
+		if (browser && ref && optionsRef) {
+			const positionBottom = ref.getBoundingClientRect().bottom;
+			const bodyHeight = document.body.offsetHeight;
+			const optionsHeight = optionsRef.offsetHeight;
+			dropdownPosition =
+				positionBottom + optionsHeight >= bodyHeight
+					? `-${optionsHeight + 2}px`
+					: 'calc(100% + 2px)';
+		}
+	}
 
 	const handleSelect = (option: { title: string; value: string }) => {
 		selectedOption = option;
@@ -37,7 +54,7 @@
 	$: selectedOption = selected ?? options[0] ?? { title: '-', value: '-' };
 </script>
 
-<div class="select" use:clickOutside>
+<div class="select" use:clickOutside bind:this={ref}>
 	<button class="select__button select__button--selected" type="button" on:click={handleVisible}>
 		{selectedOption.title}
 		<svg
@@ -59,9 +76,9 @@
 		</svg>
 	</button>
 	{#if options.length && visible}
-		<ul class="options">
+		<ul style:top={dropdownPosition} class="select__options" bind:this={optionsRef}>
 			{#each options as option (option.value)}
-				<li class="option">
+				<li class="select__option">
 					<button class="select__button" type="button" on:click={() => handleSelect(option)}>
 						{option.title}
 					</button>
@@ -111,7 +128,7 @@
 		transform: rotateZ(180deg);
 	}
 
-	.options {
+	.select__options {
 		padding: 2px;
 		display: grid;
 		position: absolute;
@@ -121,5 +138,9 @@
 		border-radius: 4px;
 		background-color: #fff;
 		gap: 4px;
+	}
+
+	.select__options--top {
+		top: -2px;
 	}
 </style>
