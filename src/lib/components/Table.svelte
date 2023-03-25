@@ -218,7 +218,7 @@
 	}
 
 	.table__button:hover,
-	.table__button:focus {
+	.table__button:focus-visible {
 		color: #858585;
 		--color-icon: #858585;
 	}
@@ -234,7 +234,7 @@
 	}
 
 	.table__edit:hover,
-	.table__edit:focus {
+	.table__edit:focus-visible {
 		background-color: transparent;
 		--color-icon: #8a6f48;
 	}

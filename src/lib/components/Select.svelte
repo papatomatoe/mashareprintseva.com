@@ -107,7 +107,7 @@
 		border-radius: 4px;
 	}
 	.select__button:hover,
-	.select__button:focus {
+	.select__button:focus-visible {
 		background-color: #d8d8d8;
 	}
 
@@ -120,7 +120,7 @@
 	}
 
 	.select__button--selected:hover,
-	.select__button--selected:focus {
+	.select__button--selected:focus-visible {
 		background-color: #fff;
 		border: 1px solid #d8d8d8;
 	}

@@ -122,7 +122,7 @@
 		border-color: #454545;
 	}
 
-	.field__input:focus {
+	.field__input:focus-visible {
 		border-color: #8a6f48;
 	}
 
@@ -163,7 +163,7 @@
 	}
 
 	.field__button:hover,
-	.field__button:focus {
+	.field__button:focus-visible {
 		--color-icon: #8a6f48;
 	}
 

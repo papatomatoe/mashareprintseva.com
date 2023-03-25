@@ -123,7 +123,7 @@
 		--color-icon: #858585;
 	}
 	.pagination__button:hover,
-	.pagination__button:focus {
+	.pagination__button:focus-visible {
 		background-color: #858585;
 		border-color: #858585;
 		--color-icon: #fff;
@@ -133,7 +133,7 @@
 	.pagination__button:active,
 	.pagination__button--current,
 	.pagination__button--current:hover,
-	.pagination__button--current:focus {
+	.pagination__button--current:focus-visible {
 		background-color: #8a6f48;
 		border-color: #8a6f48;
 		--color-icon: #fff;

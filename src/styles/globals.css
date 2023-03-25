@@ -139,7 +139,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .button:hover,
-.button:focus {
+.button:focus-visible {
 	background-color: #8a6f48;
 }
 
@@ -157,7 +157,7 @@ body::-webkit-scrollbar-thumb {
 	margin: 5px 0;
 }
 .bio__content a:hover,
-.bio__content a:focus {
+.bio__content a:focus-visible {
 	opacity: 0.8;
 }
 .bio__content a:active {
@@ -223,7 +223,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .project__content a:hover,
-.project__content a:focus {
+.project__content a:focus-visible {
 	opacity: 0.8;
 }
 

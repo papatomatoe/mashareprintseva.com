@@ -58,13 +58,13 @@
 	}
 
 	.dashboard__link:hover,
-	.dashboard__link:focus {
+	.dashboard__link:focus-visible {
 		border-color: #8a6f48;
 		color: #8a6f48;
 		--color-icon: #8a6f48;
 	}
 
-	.dashboard__link:focus {
+	.dashboard__link:active {
 		border-color: #d8d8d8;
 		color: #d8d8d8;
 		--color-icon: #d8d8d8;

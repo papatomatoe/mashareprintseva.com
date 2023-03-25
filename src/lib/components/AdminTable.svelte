@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import { page } from '$app/stores';
 	import Table, {
 		type TableData,
 		type ITableData,
-		type ITableConfig,
-		type ISocial,
-		type IProject,
-		type ISection,
-		type IUser
+		type ITableConfig
 	} from '$lib/components/Table.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
@@ -26,6 +23,7 @@
 	let perPage = 10;
 	let currentPage = 1;
 
+	$: currentPath = $page.url.pathname;
 	$: pages = Math.ceil(searchResultData.length / perPage);
 
 	$: tableDataPerPage = searchResultData.slice(
@@ -90,10 +88,10 @@
 			<Delete />
 			Delete selected
 		</button>
-		<button class="button container__button" on:click={handleAddNewItem}>
+		<a class="button container__button" href={`${currentPath}/new`}>
 			<Add />
 			New Item
-		</button>
+		</a>
 	</div>
 	<div class="container__bottom">
 		<Table

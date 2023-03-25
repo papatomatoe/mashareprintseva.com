@@ -116,7 +116,7 @@
 			transition: opacity 0.3s linear;
 		}
 		.header__logo[href]:hover,
-		.header__logo[href]:focus {
+		.header__logo[href]:focus-visible {
 			opacity: 0.7;
 			transition: opacity 0.3s linear;
 		}

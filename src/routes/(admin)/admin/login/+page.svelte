@@ -159,7 +159,7 @@
 		border-color: #454545;
 	}
 
-	.form__input:focus {
+	.form__input:focus-visible {
 		border-color: #8a6f48;
 	}
 

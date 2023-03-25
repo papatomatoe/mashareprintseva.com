@@ -3,6 +3,7 @@
 	import Logo from '$lib/components/Logo.svelte';
 	import icons from '$lib/components/icons';
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	export let data;
 	let collapseMenu = false;
 
@@ -86,7 +87,12 @@
 			</div>
 		{/if}
 
-		<slot />
+		<div>
+			{#if !isDashboardPage}
+				<Breadcrumbs />
+			{/if}
+			<slot />
+		</div>
 	</main>
 </div>
 
@@ -164,7 +170,7 @@
 		transition: background-color 0.2s linear;
 	}
 	.menu__collapse:hover,
-	.menu__collapse:focus {
+	.menu__collapse:focus-visible {
 		background-color: #8a6f48;
 	}
 	.menu__collapse:active {
@@ -223,7 +229,7 @@
 	}
 
 	.menu__link:hover,
-	.menu__link:focus {
+	.menu__link:focus-visible {
 		background-color: #d8d8d8;
 	}
 
@@ -238,7 +244,7 @@
 
 	.menu__link--current,
 	.menu__link--current:hover,
-	.menu__link--current:focus,
+	.menu__link--current:focus-visible,
 	.menu__link--current:active {
 		background-color: #8a6f48;
 		--color-icon: #fff;
@@ -246,7 +252,7 @@
 
 	.menu__link--current span,
 	.menu__link--current:hover span,
-	.menu__link--current:focus span,
+	.menu__link--current:focus-visible span,
 	.menu__link--current:active span {
 		color: #fff;
 	}

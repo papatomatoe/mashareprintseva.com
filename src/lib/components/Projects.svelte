@@ -73,7 +73,7 @@
 		}
 
 		.projects__link:hover img,
-		.projects__link:focus img {
+		.projects__link:focus-visible img {
 			transform: scale(1.04);
 		}
 		.projects__link:hover .projects__title {
