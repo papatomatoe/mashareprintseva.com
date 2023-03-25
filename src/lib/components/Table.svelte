@@ -1,4 +1,20 @@
 <script lang="ts" context="module">
+	export interface IUser {
+		id: number;
+		role: 'USER' | 'ADMIN' | 'EDITOR';
+		active: boolean;
+		username: string;
+		email: string;
+		created: string;
+	}
+	export interface ISocial {
+		id: number;
+		published: boolean;
+		icon: string;
+		title: string;
+		link: string;
+		created: string;
+	}
 	export interface ISection {
 		id: number;
 		published: boolean;
@@ -17,7 +33,14 @@
 		created: string;
 	}
 
-	export type ITableData = ISection | IProject;
+	export type DataType = 'sections' | 'projects' | 'socials' | 'users';
+
+	export type TableData = ISection | IProject | ISocial | IUser;
+
+	export interface ITableData {
+		data: TableData[];
+		type: DataType;
+	}
 
 	export interface ITableConfig {
 		key: string;
@@ -36,9 +59,9 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let data: ITableData[] = [];
+	export let data: TableData[] = [];
 	export let config: ITableConfig[] = [];
-	export let selectedRows: ITableData[] = [];
+	export let selectedRows: TableData[] = [];
 
 	let sortKey = '';
 	let sortDirection: SortDirection | null = null;
@@ -63,9 +86,9 @@
 
 	const handleCheckAll = () => dispatch('select-all');
 
-	const handleSelect = (item: ITableData) => dispatch('select', item);
+	const handleSelect = (item: TableData) => dispatch('select', item);
 
-	const handleEdit = (item: ITableData) => dispatch('edit', item);
+	const handleEdit = (item: TableData) => dispatch('edit', item);
 
 	const handleSort = (key: string) => {
 		if (sortKey === key) {
@@ -126,6 +149,12 @@
 									this={cell.render}
 									published={item[cell.key]}
 									title={item[cell.key] ? 'published' : 'draft'}
+								/>
+							{:else if cell.key === 'active'}
+								<svelte:component
+									this={cell.render}
+									published={item[cell.key]}
+									title={item[cell.key] ? 'active' : 'inactive'}
 								/>
 							{:else}
 								<svelte:component this={cell.render} />

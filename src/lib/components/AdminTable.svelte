@@ -1,19 +1,28 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import Table, { type ITableData, type ITableConfig } from '$lib/components/Table.svelte';
+	import Table, {
+		type TableData,
+		type ITableData,
+		type ITableConfig,
+		type ISocial,
+		type IProject,
+		type ISection,
+		type IUser
+	} from '$lib/components/Table.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import { Add, Search, Delete } from '$lib/components/icons';
 	import { debounce } from '$lib/utils/debounce';
+	import { searchByData } from '$lib/utils/table';
 
 	const dispatch = createEventDispatcher();
 
 	export let title: string;
-	export let data: ITableData[] = [];
+	export let tableData: ITableData = { data: [], type: 'sections' };
 	export let config: ITableConfig[];
 
-	let selectedRows: ITableData[] = [];
-	let searchResultData = data;
+	let selectedRows: TableData[] = [];
+	let searchResultData = tableData.data;
 	let perPage = 10;
 	let currentPage = 1;
 
@@ -25,7 +34,7 @@
 	);
 
 	const handleSelectAll = () => {
-		selectedRows = selectedRows.length ? [] : [...data];
+		selectedRows = selectedRows.length ? [] : [...tableData.data];
 	};
 
 	const handleSelect = (e: CustomEvent) => {
@@ -42,17 +51,9 @@
 
 	const search = (val: string) => {
 		const value = val.toLocaleLowerCase();
-		if (!data) return;
+		if (!tableData.data) return;
 
-		searchResultData = value
-			? data.filter(
-					(el) =>
-						String(el.id).toLowerCase().startsWith(value) ||
-						String(el.title).toLowerCase().startsWith(value) ||
-						String(el.slug).toLowerCase().startsWith(value) ||
-						String(el.created).toLowerCase().startsWith(value)
-			  )
-			: data;
+		searchResultData = searchByData(value, tableData);
 
 		selectedRows = [];
 	};

@@ -3,17 +3,17 @@
 	import Status from '$lib/components/Status.svelte';
 	import type { ITableData } from '$lib/components/Table.svelte';
 	const tableData: ITableData = {
-		data: Array(200)
+		data: Array(56)
 			.fill('')
 			.map((_, idx) => ({
 				id: idx + 1,
 				published: true,
-				order: 8,
-				title: 'Contemporary',
-				slug: 'contemporary',
+				icon: '',
+				title: 'etsy',
+				link: 'https://www.etsy.com/shop/myrtusworkshop',
 				created: '22.10.2023 10:30'
 			})),
-		type: 'sections'
+		type: 'socials'
 	};
 
 	let config = [
@@ -37,13 +37,17 @@
 			sortable: true
 		},
 		{
+			key: 'icon',
+			title: 'icon'
+		},
+		{
 			key: 'title',
 			title: 'title',
 			sortable: true
 		},
 		{
-			key: 'slug',
-			title: 'slug',
+			key: 'link',
+			title: 'link',
 			sortable: true
 		},
 		{
@@ -61,7 +65,7 @@
 </script>
 
 <AdminTable
-	title="Sections"
+	title="Socials"
 	{tableData}
 	{config}
 	on:crate={handleAddNewItem}

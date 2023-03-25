@@ -3,17 +3,17 @@
 	import Status from '$lib/components/Status.svelte';
 	import type { ITableData } from '$lib/components/Table.svelte';
 	const tableData: ITableData = {
-		data: Array(200)
+		data: Array(7)
 			.fill('')
 			.map((_, idx) => ({
 				id: idx + 1,
-				published: true,
-				order: 8,
-				title: 'Contemporary',
-				slug: 'contemporary',
+				active: true,
+				role: 'USER',
+				username: 'test',
+				email: 'test@test.test',
 				created: '22.10.2023 10:30'
 			})),
-		type: 'sections'
+		type: 'users'
 	};
 
 	let config = [
@@ -26,24 +26,28 @@
 			sortable: true
 		},
 		{
-			key: 'published',
+			key: 'active',
 			title: 'state',
 			sortable: true,
 			render: Status
 		},
 		{
-			key: 'order',
-			title: 'order',
+			key: 'role',
+			title: 'role',
 			sortable: true
 		},
 		{
-			key: 'title',
-			title: 'title',
+			key: 'icon',
+			title: 'icon'
+		},
+		{
+			key: 'username',
+			title: 'username',
 			sortable: true
 		},
 		{
-			key: 'slug',
-			title: 'slug',
+			key: 'email',
+			title: 'email',
 			sortable: true
 		},
 		{
@@ -61,7 +65,7 @@
 </script>
 
 <AdminTable
-	title="Sections"
+	title="Users"
 	{tableData}
 	{config}
 	on:crate={handleAddNewItem}

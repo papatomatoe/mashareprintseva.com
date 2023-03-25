@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import Status from '$lib/components/Status.svelte';
+	import type { ITableData } from '$lib/components/Table.svelte';
 
 	let config = [
 		{
@@ -42,16 +43,19 @@
 		}
 	];
 
-	const tableData = Array(76)
-		.fill('')
-		.map((_, idx) => ({
-			id: idx + 1,
-			published: true,
-			section: 'Contemporary',
-			title: 'Decay in Bloom',
-			slug: 'decay-in-bloom',
-			created: '22.10.2023 10:30'
-		}));
+	const tableData: ITableData = {
+		data: Array(76)
+			.fill('')
+			.map((_, idx) => ({
+				id: idx + 1,
+				published: true,
+				section: 'Contemporary',
+				title: 'Decay in Bloom',
+				slug: 'decay-in-bloom',
+				created: '22.10.2023 10:30'
+			})),
+		type: 'projects'
+	};
 
 	const handleAddNewItem = () => console.log('add new item');
 	const handleDeleteItems = (e: CustomEvent) => console.log('delete selected items');
@@ -60,7 +64,7 @@
 
 <AdminTable
 	title="Projects"
-	data={tableData}
+	{tableData}
 	{config}
 	on:crate={handleAddNewItem}
 	on:delete={handleDeleteItems}
