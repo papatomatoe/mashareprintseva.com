@@ -17,8 +17,6 @@
 
 			return [...acc, { title: el, path }];
 		}, []);
-
-	$: console.log(breadcrumbsData);
 </script>
 
 <ul class="breadcrumbs">

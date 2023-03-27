@@ -9,8 +9,11 @@
 		<Switch name="published" label="published" />
 		<button class="button form__submit" type="submit">save</button>
 	</div>
-	<div class="form__bottom">
-		<slot />
+	<div class="form__bottom" class:form__bottom--has-side={$$slots.side}>
+		<div class="form__left"><slot /></div>
+		{#if $$slots.side}
+			<slot name="side" />
+		{/if}
 	</div>
 </form>
 
@@ -37,6 +40,16 @@
 		width: 84px;
 	}
 	.form__bottom {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 37px;
+	}
+
+	.form__bottom--has-side {
+		grid-template-columns: 1fr 287px;
+	}
+
+	.form__left {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 37px;

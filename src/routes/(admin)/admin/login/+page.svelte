@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { applyAction, enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import type { ActionData } from './$types';
@@ -39,7 +40,12 @@
 
 	$: invalid = form?.invalid;
 	$: credentials = form?.credentials;
+	$: pageTitle = $page.data.pageTitle;
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+</svelte:head>
 
 <div class="container">
 	<form

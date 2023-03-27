@@ -10,6 +10,7 @@
 	export let type = 'text';
 	export let required = false;
 	export let isSlug = false;
+	export let disabled = false;
 
 	const typeAction = (node: HTMLInputElement) => {
 		node.type = type;
@@ -37,7 +38,7 @@
 	$: withIcon = $$slots.icon;
 </script>
 
-<label class="field">
+<label class="field" class:field__disabled={disabled}>
 	{#if label}
 		<p class="field__label">
 			<span class="field__text">
@@ -60,6 +61,7 @@
 			on:input={handleInput}
 			{name}
 			{placeholder}
+			{disabled}
 		/>
 		{#if isSlug}
 			<button class="field__button" type="button" on:click={handleRegenerate}>
@@ -192,5 +194,14 @@
 		transform: translate(0, -50%);
 
 		--color-icon: #d8d8d8;
+	}
+
+	.field__disabled .field__label .field__text {
+		color: #d8d8d8;
+	}
+	.field__disabled .field__input,
+	.field__disabled .field__input:hover {
+		border-color: #d8d8d8;
+		color: #d8d8d8;
 	}
 </style>

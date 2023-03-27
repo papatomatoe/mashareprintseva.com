@@ -3,21 +3,18 @@
 	import Editor from '$lib/components/Editor.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import Textarea from '$lib/components/Textarea.svelte';
 	import File from '$lib/components/File.svelte';
 	import Select, { type IOption } from '$lib/components/Select.svelte';
 	import { Remove } from '$lib/components/icons';
 
-	let order = '1';
-	let orderError = '';
 	let title = '';
 	let titleError = '';
 	let slug = '';
 	let slugError = '';
-	let altTitle = '';
 	let description = '';
 	let subtitle = '';
 	let images: FileList | null = null;
+	let preview: FileList | null = null;
 	let options = [
 		{ title: 'The Unseen Hues', value: '1' },
 		{ title: 'Serendipity of Man', value: '2' },
@@ -25,14 +22,11 @@
 		{ title: 'In a Former Home', value: '4' },
 		{ title: 'Vortex Constellation', value: '5' }
 	];
-	let selectedProjects: IOption[] = [];
+	let selectedSection: IOption | null = null;
 
-	$: optionsWithSelected = options.filter((el) => !selectedProjects.includes(el));
+	$: optionsWithSelected = options.filter((el) => el.value !== selectedSection?.value);
 	$: slug = slugify(title, { lower: true });
 
-	const handleClearOrderError = () => {
-		orderError = '';
-	};
 	const handleClearTitleError = () => {
 		titleError = '';
 	};
@@ -44,25 +38,17 @@
 		slug = slugify(title, { lower: true });
 	};
 
-	const handleSelectProject = (e: CustomEvent) => {
-		selectedProjects = [...selectedProjects, e.detail];
+	const handleSelectSection = (e: CustomEvent) => {
+		selectedSection = e.detail;
 	};
-	const handleRemoveProject = (id) => {
-		selectedProjects = selectedProjects.filter((el) => el.value !== id);
+	const handleRemoveSection = (id) => {
+		selectedSection = null;
 	};
 </script>
 
 <Form title="New Item">
 	<div class="form__fields form__fields--top">
 		<Input label="id" name="id" disabled />
-		<Input
-			label="order"
-			name="order"
-			error={orderError}
-			bind:value={order}
-			on:clearError={handleClearOrderError}
-			required
-		/>
 		<Input
 			label="title"
 			name="title"
@@ -84,16 +70,17 @@
 			required
 		/>
 	</div>
+	<div class="editor">
+		<Editor id="project-subtitle" label="subtitle" bind:value={subtitle} />
+	</div>
 	<div class="form__fields form__fields--mid">
-		<Input
-			label="alternative title"
-			name="slug"
-			placeholder="enter alternative title"
-			bind:value={altTitle}
+		<File
+			name="image"
+			label="preview"
+			placeholder="Drag 'n' drop image here, or click to select image"
+			required
+			bind:files={preview}
 		/>
-		<div class="form__subtitle">
-			<Textarea name="subtitle" label="subtitle" value={subtitle} />
-		</div>
 		<File
 			name="image"
 			label="image"
@@ -103,31 +90,29 @@
 		/>
 	</div>
 	<div class="editor">
-		<Editor id="sections-description" label="description" bind:value={description} />
+		<Editor id="project-description" label="description" bind:value={description} />
 	</div>
 	<div slot="side" class="form__select select">
 		<div class="select__wrapper">
-			<p class="select__label">projects</p>
+			<p class="select__label">section</p>
 			<Select
 				options={optionsWithSelected}
-				on:select={handleSelectProject}
+				on:select={handleSelectSection}
 				placeholder="select project"
 				clearable
 			/>
-			{#if selectedProjects}
+			{#if selectedSection}
 				<ul class="select__projects">
-					{#each selectedProjects as project (project.value)}
-						<li class="select__project">
-							<span>{project.title}</span>
-							<button
-								class="button select__button"
-								type="button"
-								on:click={() => handleRemoveProject(project.value)}
-							>
-								<Remove />
-							</button>
-						</li>
-					{/each}
+					<li class="select__project">
+						<span>{selectedSection.title}</span>
+						<button
+							class="button select__button"
+							type="button"
+							on:click={() => handleRemoveSection(selectedSection?.value)}
+						>
+							<Remove />
+						</button>
+					</li>
 				</ul>
 			{/if}
 		</div>
@@ -141,21 +126,15 @@
 	}
 
 	.form__fields--top {
-		grid-template-columns: 60px 60px 1fr 1fr;
+		grid-template-columns: 60px 1fr 1fr;
 		gap: 31px;
 	}
 
 	.form__fields--mid {
-		grid-template-columns: minmax(100px, 300px) minmax(200px, 1fr);
-		grid-template-rows: repeat(2, min-content);
+		grid-template-columns: 1fr 1fr;
 		gap: 31px;
 	}
 
-	.form__subtitle {
-		grid-row: 1 /-1;
-		grid-column: 2 / -1;
-		display: flex;
-	}
 	.editor {
 		grid-column: 1 /-1;
 	}

@@ -1,11 +1,20 @@
+<script context="module" lang="ts">
+	export interface IOption {
+		title: string;
+		value: any;
+	}
+</script>
+
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { browser } from '$app/environment';
 
-	export let options: { title: string; value: any }[] = [];
-	export let selected: { title: string; value: any } | null = null;
-
 	const dispatch = createEventDispatcher();
+
+	export let options: IOption[] = [];
+	export let selected: IOption | null = null;
+	export let placeholder = 'select...';
+	export let clearable = false;
 
 	let visible = false;
 	let ref: HTMLDivElement;
@@ -24,8 +33,12 @@
 		}
 	}
 
+	$: selectedOption = selected;
+
 	const handleSelect = (option: { title: string; value: string }) => {
-		selectedOption = option;
+		if (!clearable) {
+			selectedOption = option;
+		}
 		dispatch('select', option);
 		visible = false;
 	};
@@ -50,13 +63,15 @@
 			}
 		};
 	};
-
-	$: selectedOption = selected ?? options[0] ?? { title: '-', value: '-' };
 </script>
 
 <div class="select" use:clickOutside bind:this={ref}>
 	<button class="select__button select__button--selected" type="button" on:click={handleVisible}>
-		{selectedOption.title}
+		{#if selectedOption}
+			{selectedOption.title}
+		{:else}
+			<span class="select__placeholder">{placeholder}</span>
+		{/if}
 		<svg
 			class="icon"
 			class:icons--open={visible}
@@ -142,5 +157,9 @@
 
 	.select__options--top {
 		top: -2px;
+	}
+
+	.select__placeholder {
+		color: #d8d8d8;
 	}
 </style>

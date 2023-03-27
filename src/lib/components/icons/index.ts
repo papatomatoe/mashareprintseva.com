@@ -14,6 +14,7 @@ import Repeat from './Repeat.svelte';
 import Prev from './Prev.svelte';
 import Next from './Next.svelte';
 import Edit from './Edit.svelte';
+import Remove from './Remove.svelte';
 export default { MainPage, BioPage, Sections, Projects, Socials, Users };
 
-export { Edit, Search, Delete, Add, CheckAll, Check, Clear, Repeat, Prev, Next };
+export { Edit, Search, Delete, Add, CheckAll, Check, Clear, Repeat, Prev, Next, Remove };
