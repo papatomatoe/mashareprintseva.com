@@ -25,3 +25,21 @@ model Roles {
   name String @unique
   User User[]
 }
+
+model MainPage {
+  id        Int     @id @default(autoincrement())
+  published Boolean
+  title     String  @unique
+  slug      String  @unique
+  content   String
+}
+
+model Bio {
+  id        Int     @id @default(autoincrement())
+  published Boolean
+  title     String  @unique
+  slug      String  @unique
+  image     String
+  epigraph  String
+  content   String
+}

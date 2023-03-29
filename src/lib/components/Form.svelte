@@ -1,12 +1,25 @@
 <script lang="ts">
+	import { enhance, applyAction } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import Switch from '$lib/components/Switch.svelte';
 	export let title = '';
+	export let published = false;
 </script>
 
-<form class="form" method="POST" on:submit>
+<form
+	class="form"
+	method="POST"
+	on:submit
+	use:enhance={() => {
+		return async ({ result }) => {
+			invalidateAll();
+			await applyAction(result);
+		};
+	}}
+>
 	<div class="form__top">
 		<h1 class="form__title">{title}</h1>
-		<Switch name="published" label="published" />
+		<Switch name="published" label="published" bind:checked={published} />
 		<button class="button form__submit" type="submit">save</button>
 	</div>
 	<div class="form__bottom" class:form__bottom--has-side={$$slots.side}>
