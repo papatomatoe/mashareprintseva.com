@@ -4,7 +4,9 @@
 	import icons from '$lib/components/icons';
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+
 	export let data;
+
 	let collapseMenu = false;
 
 	const handleCollapseMenu = () => {

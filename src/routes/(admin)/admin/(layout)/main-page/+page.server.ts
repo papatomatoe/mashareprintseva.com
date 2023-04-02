@@ -28,7 +28,7 @@ export const actions = {
 			await db.mainPage.upsert({
 				where: { title: 'mainPage' },
 				update: { published, content },
-				create: { title: 'mainPage', slug: '/', published, content }
+				create: { title: 'mainPage', slug: '', published, content }
 			});
 			return { success: true };
 		} catch (e) {

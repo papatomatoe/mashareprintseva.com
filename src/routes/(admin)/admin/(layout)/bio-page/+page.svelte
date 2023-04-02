@@ -1,60 +1,62 @@
 <script lang="ts">
-	import slugify from 'slugify';
 	import Editor from '$lib/components/Editor.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Textarea from '$lib/components/Textarea.svelte';
 	import File from '$lib/components/File.svelte';
 
-	let title = '';
-	let titleError = '';
-	let slug = '';
-	let epigraph = '';
-	let content = '';
-	let images: FileList | null = null;
+	export let data;
 
-	const handleClearTitleError = () => {
-		titleError = '';
+	let title = 'Bio';
+	let slug = 'bio';
+	let epigraph = data.bio?.epigraph || '';
+	let content = data.bio?.content || '';
+	let fileUrl = data.bio?.image || '';
+	let preview = data.bio?.preview || '';
+	let fileUrlError = '';
+	let published = data.bio?.published;
+
+	const handleSubmit = (e: SubmitEvent) => {
+		if (!fileUrl) fileUrlError = 'require';
 	};
 
-	const handleRegenerateSlug = () => {
-		slug = slugify(title, { lower: true });
+	const handleClearFileUrlError = () => {
+		fileUrlError = '';
 	};
 
-	$: slug = slugify(title, { lower: true });
+	$: hasErrors = Boolean(fileUrlError);
 </script>
 
-<Form title="Bio Page">
+<Form title="Bio Page" {published} {hasErrors} on:submit={handleSubmit}>
 	<Input
 		label="title"
 		name="title"
 		placeholder="enter page title"
-		error={titleError}
 		bind:value={title}
-		on:clearError={handleClearTitleError}
 		required
+		disabled
 	/>
 	<Input
 		label="slug"
 		name="slug"
 		placeholder="enter slug"
-		error={titleError}
 		bind:value={slug}
-		on:clearError={handleClearTitleError}
-		on:regenerate={handleRegenerateSlug}
 		isSlug
 		required
+		disabled
 	/>
 	<File
 		name="image"
 		label="image"
-		placeholder="Drag 'n' drop image here, or click to select image"
 		required
-		bind:files={images}
+		on:clearError={handleClearFileUrlError}
+		bind:fileUrl
+		bind:preview
+		error={fileUrlError}
 	/>
-	<Textarea name="epigraph" label="epigraph" value={epigraph} />
+	<Textarea name="epigraph" label="epigraph" placeholder="enter epigraph" value={epigraph} />
 	<div class="editor">
-		<Editor id="bio-page-content" label="content" bind:value={content} />
+		<Editor id="bio-page-content" name="content" label="content" bind:value={content} />
 	</div>
 </Form>
 

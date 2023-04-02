@@ -63,19 +63,21 @@
 			{placeholder}
 			{disabled}
 		/>
-		{#if isSlug}
-			<button class="field__button" type="button" on:click={handleRegenerate}>
-				<Repeat />
-			</button>
-		{:else}
-			<button
-				class:field__button--visible={value}
-				class="field__button field__button--clear"
-				type="button"
-				on:click={handleClear}
-			>
-				<Clear />
-			</button>
+		{#if !disabled}
+			{#if isSlug}
+				<button class="field__button" type="button" on:click={handleRegenerate}>
+					<Repeat />
+				</button>
+			{:else}
+				<button
+					class:field__button--visible={value}
+					class="field__button field__button--clear"
+					type="button"
+					on:click={handleClear}
+				>
+					<Clear />
+				</button>
+			{/if}
 		{/if}
 	</div>
 	{#if error}

@@ -2,7 +2,8 @@
 	import Input from '$lib/components/Input.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Editor from '$lib/components/Editor.svelte';
-	import Notification from '$lib/components/Notification.svelte';
+	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
+
 	export let data;
 	export let form;
 
@@ -11,12 +12,12 @@
 	let content = data.mainPage?.content || '';
 	let published = data.mainPage?.published;
 
-	$: console.log(form);
-
 	$: showNotification = Boolean(form);
 
-	$: notificationMessage = form?.success ? 'Successfully saved' : 'Error';
-	$: notificationType = form?.success ? 'success' : 'error';
+	$: notificationMessage = form ? (form?.success ? 'Successfully saved' : 'Error') : '';
+	$: notificationType = (
+		form ? (form.success ? 'success' : 'error') : 'default'
+	) as NotificationType;
 </script>
 
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />

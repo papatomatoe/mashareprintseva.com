@@ -1,9 +1,14 @@
+<script lang="ts" context="module">
+	export type NotificationType = 'success' | 'error' | 'default';
+</script>
+
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { Clear } from '$lib/components/icons';
+	import { Success, Error, Inform } from '$lib/components/icons';
 
 	export let message = '';
-	export let type: 'success' | 'error' | 'default' = 'default';
+	export let type: NotificationType = 'default';
 	export let show = false;
 	export let duration = 5000;
 
@@ -23,7 +28,14 @@
 
 {#if show}
 	<div class="container">
-		<div transition:fly={{ x: 200, duration: 300 }} class="notification nitification__{type}">
+		<div transition:fly={{ x: 200, duration: 300 }} class="notification notification__{type}">
+			{#if type === 'success'}
+				<Success />
+			{:else if type === 'error'}
+				<Error />
+			{:else}
+				<Inform />
+			{/if}
 			<p>{message}</p>
 			<button class="button notification__button" type="button" on:click={handleCloseNotification}>
 				<Clear />
@@ -44,6 +56,11 @@
 	}
 	.notification {
 		position: absolute;
+		padding: 5px 30px 5px 7px;
+		display: grid;
+		grid-template-columns: 20px 1fr;
+		align-items: center;
+		gap: 10px;
 		top: 100px;
 		right: 20px;
 		width: 250px;
@@ -52,7 +69,17 @@
 		border-radius: 4px;
 		box-shadow: 0px 4px 15px -2px rgba(0, 0, 0, 0.2);
 		pointer-events: all;
+		--color-icon: #2391ff;
 	}
+
+	.notification__success {
+		--color-icon: #21824e;
+	}
+
+	.notification__error {
+		--color-icon: #ff0000;
+	}
+
 	.notification__button {
 		position: absolute;
 		width: 30px;

@@ -4,6 +4,7 @@ import Sections from './Sections.svelte';
 import Projects from './Projects.svelte';
 import Socials from './Socials.svelte';
 import Users from './Users.svelte';
+import Files from './Files.svelte';
 import Search from './Search.svelte';
 import Delete from './Delete.svelte';
 import Add from './Add.svelte';
@@ -17,7 +18,10 @@ import Edit from './Edit.svelte';
 import Remove from './Remove.svelte';
 import Success from './Success.svelte';
 import Error from './Error.svelte';
-export default { MainPage, BioPage, Sections, Projects, Socials, Users };
+import Inform from './Inform.svelte';
+import Spinner from './Spinner.svelte';
+
+export default { MainPage, BioPage, Sections, Projects, Socials, Users, Files };
 
 export {
 	Edit,
@@ -32,5 +36,7 @@ export {
 	Next,
 	Remove,
 	Success,
-	Error
+	Error,
+	Inform,
+	Spinner
 };

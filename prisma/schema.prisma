@@ -40,6 +40,7 @@ model Bio {
   title     String  @unique
   slug      String  @unique
   image     String
+  preview   String
   epigraph  String
   content   String
 }

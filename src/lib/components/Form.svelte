@@ -4,13 +4,15 @@
 	import Switch from '$lib/components/Switch.svelte';
 	export let title = '';
 	export let published = false;
+	export let hasErrors = false;
 </script>
 
 <form
 	class="form"
 	method="POST"
 	on:submit
-	use:enhance={() => {
+	use:enhance={({ form, data, action, cancel, submitter }) => {
+		if (hasErrors) cancel();
 		return async ({ result }) => {
 			invalidateAll();
 			await applyAction(result);
