@@ -55,18 +55,16 @@
 
 			const formData = new FormData();
 			formData.append('file', dataURI as string);
+			formData.append('name', file.name);
 
-			const response = await fetch('/api/files', {
+			const response = await fetch('/api/file', {
 				method: 'POST',
 				body: formData
 			});
 
-			const data = await response.json();
-
-			console.log(data);
-
-			preview = data.eager[0].url;
-			fileUrl = data.url;
+			const { result, prw } = await response.json();
+			preview = prw.url;
+			fileUrl = result.url;
 		} catch (e) {
 			console.error(e);
 		} finally {

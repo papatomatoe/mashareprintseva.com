@@ -1,24 +1,24 @@
-import { error, json } from '@sveltejs/kit';
-import { v2 as cloudinary, type UploadApiOptions } from 'cloudinary';
-import {
-	CLOUDINARY_API_KEY,
-	CLOUDINARY_API_SECRET,
-	CLOUDINARY_CLOUD_NAME
-} from '$env/static/private';
+import { json, error } from '@sveltejs/kit';
+import { v2 as cloudinary } from 'cloudinary';
 
-const cloudinaryConfig = cloudinary.config({
-	cloud_name: CLOUDINARY_CLOUD_NAME,
-	api_key: CLOUDINARY_API_KEY,
-	api_secret: CLOUDINARY_API_SECRET,
-	secure: true
-});
-export const POST = async ({ request, fetch }) => {
+export const POST = async ({ request }) => {
 	const formData = await request.formData();
-	const file = formData.get('file');
+	const max_results = formData.get('maxResults');
+	const next_cursor = formData.get('next_cursor') as string | undefined;
 
-	const result = await cloudinary.uploader.upload(file as string);
+	try {
+		const response = await cloudinary.search
+			.expression('thumbnail OR format:pdf')
+			.max_results(Number(max_results))
+			.next_cursor(next_cursor)
+			.sort_by('created_at', 'desc')
+			.execute();
 
-	console.log(result);
+		if (!response) throw error(400, 'not found');
 
-	return json('ok');
+		return json({ data: response });
+	} catch (e) {
+		console.log(e);
+		throw error(500, 'Something went wrong...');
+	}
 };

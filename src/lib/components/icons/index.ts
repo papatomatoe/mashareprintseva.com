@@ -20,7 +20,7 @@ import Success from './Success.svelte';
 import Error from './Error.svelte';
 import Inform from './Inform.svelte';
 import Spinner from './Spinner.svelte';
-
+import PDF from './PDF.svelte';
 export default { MainPage, BioPage, Sections, Projects, Socials, Users, Files };
 
 export {
@@ -31,6 +31,7 @@ export {
 	CheckAll,
 	Check,
 	Clear,
+	PDF,
 	Repeat,
 	Prev,
 	Next,

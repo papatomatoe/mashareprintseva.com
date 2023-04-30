@@ -89,7 +89,7 @@
 			</div>
 		{/if}
 
-		<div>
+		<div class="main__wrapper">
 			{#if !isDashboardPage}
 				<Breadcrumbs />
 			{/if}
@@ -257,5 +257,9 @@
 	.menu__link--current:focus-visible span,
 	.menu__link--current:active span {
 		color: #fff;
+	}
+
+	.main__wrapper {
+		position: relative;
 	}
 </style>
