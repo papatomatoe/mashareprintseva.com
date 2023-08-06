@@ -3,8 +3,10 @@ import { v2 as cloudinary } from 'cloudinary';
 
 export const POST = async ({ request }) => {
 	const formData = await request.formData();
-	const max_results = formData.get('maxResults');
+	const max_results = formData.get('max_results');
 	const next_cursor = formData.get('next_cursor') as string | undefined;
+
+	console.log(next_cursor);
 
 	try {
 		const response = await cloudinary.search

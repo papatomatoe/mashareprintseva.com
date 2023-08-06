@@ -8,8 +8,13 @@
 	const perGroup = 5;
 
 	export let pages = 0;
-	export let perPage = 10;
+	export let perPage = 0;
 	export let currentPage = 1;
+	export let perPageOptions = [
+		{ title: '10', value: 10 },
+		{ title: '50', value: 50 },
+		{ title: '100', value: 100 }
+	];
 
 	$: groups = Math.ceil(pages / 5);
 
@@ -86,11 +91,8 @@
 		<p class="pagination__label">entries per page</p>
 		<div class="pagination__select">
 			<Select
-				options={[
-					{ title: '10', value: 10 },
-					{ title: '50', value: 50 },
-					{ title: '100', value: 100 }
-				]}
+				options={perPageOptions}
+				selected={perPageOptions.find((el) => el.value === perPage)}
 				on:select={handleSelectPerPage}
 			/>
 		</div>
