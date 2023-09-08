@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, type ComponentEvents } from 'svelte';
 	import { page } from '$app/stores';
 	import Table, {
 		type TableData,
@@ -8,7 +8,9 @@
 	} from '$lib/components/Table.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import { Add, Search, Delete } from '$lib/components/icons';
+	import Add from '$lib/components/icons/Add.svelte';
+	import Search from '$lib/components/icons/Search.svelte';
+	import Delete from '$lib/components/icons/Add.svelte';
 	import { debounce } from '$lib/utils/debounce';
 	import { searchByData } from '$lib/utils/table';
 
@@ -56,7 +58,7 @@
 		selectedRows = [];
 	};
 
-	const handleSearch = debounce((e: CustomEvent) => {
+	const handleSearch = debounce((e: ComponentEvents<Input>['input']) => {
 		search(e.detail);
 	}, 500);
 

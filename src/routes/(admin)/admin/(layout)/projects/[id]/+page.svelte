@@ -5,7 +5,7 @@
 	import Input from '$lib/components/Input.svelte';
 	import File from '$lib/components/File.svelte';
 	import Select, { type IOption } from '$lib/components/Select.svelte';
-	import { Remove } from '$lib/components/icons';
+	import Remove from '$lib/components/icons/Remove.svelte';
 
 	let title = '';
 	let titleError = '';
@@ -41,7 +41,7 @@
 	const handleSelectSection = (e: CustomEvent) => {
 		selectedSection = e.detail;
 	};
-	const handleRemoveSection = (id) => {
+	const handleRemoveSection = <T>(id: T) => {
 		selectedSection = null;
 	};
 </script>

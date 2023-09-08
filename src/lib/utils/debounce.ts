@@ -1,5 +1,5 @@
-export function debounce(cb, timeout) {
-	return function (this: any, ...args) {
+export function debounce(cb: any, timeout: number) {
+	return function (this: { lastCall: number; lastCallTimer: NodeJS.Timeout }, ...args: unknown[]) {
 		const previousCall = this.lastCall;
 
 		this.lastCall = Date.now();

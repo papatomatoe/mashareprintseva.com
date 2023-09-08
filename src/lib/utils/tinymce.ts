@@ -39,19 +39,20 @@ export const conf = {
 			const reader = new FileReader();
 
 			reader.addEventListener('load', () => {
-				if (!tinymce) {
-					return;
-				}
-				const id = 'blobid' + new Date().getTime();
-				const blobCache = tinymce.activeEditor.editorUpload.blobCache;
-				const base64 = reader.result.split(',')[1];
-				const blobInfo = blobCache.create(id, file, base64);
-				blobCache.add(blobInfo);
+				if (reader.result && reader.result !== null) {
+					if (!tinymce) return;
 
-				cb(blobInfo.blobUri(), { title: file.name });
+					const id = 'blobid' + new Date().getTime();
+					const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+					const base64 = (reader.result as string).split(',')[1];
+					const blobInfo = blobCache.create(id, file, base64);
+					blobCache.add(blobInfo);
+
+					file && cb(blobInfo.blobUri(), { title: file.name });
+				}
 			});
 
-			reader.readAsDataURL(file);
+			file && reader.readAsDataURL(file);
 		});
 
 		input.click();

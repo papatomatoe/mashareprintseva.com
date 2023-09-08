@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Logo from '$lib/components/Logo.svelte';
-	import icons from '$lib/components/icons';
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 
@@ -12,8 +11,6 @@
 	const handleCollapseMenu = () => {
 		collapseMenu = !collapseMenu;
 	};
-
-	const getIcon = (key: string) => icons[key as keyof typeof icons];
 
 	$: user = data.user;
 	$: pathname = $page.url.pathname;
@@ -76,7 +73,7 @@
 										class:menu__link--current={pathname === item.href}
 										href={item.href}
 									>
-										<svelte:component this={getIcon(item.id)} />
+										<svelte:component this={item.icon} />
 										{#if !collapseMenu}
 											<span>{item.title}</span>
 										{/if}

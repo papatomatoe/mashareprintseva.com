@@ -1,78 +1,73 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { Spinner } from '$lib/components/icons';
+	import { createEventDispatcher, type ComponentEvents } from 'svelte';
+	import Spinner from '$lib/components/icons/Spinner.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import { Search, Delete, Add, PDF } from '$lib/components/icons';
+	import Search from '$lib/components/icons/Search.svelte';
+	import Delete from '$lib/components/icons/Delete.svelte';
+	import Add from '$lib/components/icons/Add.svelte';
+	import PDF from '$lib/components/icons/PDF.svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 
-	let files: any[] = [];
-	let nextCursor = null;
-	let prevCursor = null;
-	let loading = false;
+	const dispatch = createEventDispatcher();
+
+	export let files: any[] = [];
+	export let loading = false;
 	let hasError = false;
-	let selectedFiles: string[] = [];
+	let selectedFileIds: string[] = [];
 	let searchResultData = [];
 	let total = 0;
 	let perPage = 50;
 	let currentPage = 1;
 
 	$: pages = Math.ceil(total / perPage);
-	$: getThumbnails(perPage);
 
-	const getThumbnails = async (maxResults, next?) => {
-		loading = true;
-		hasError = false;
-		try {
-			const formData = new FormData();
-			formData.append('max_results', String(maxResults));
-			if (next) {
-				formData.append('next_cursor', next);
-			}
-			const response = await fetch('/api/files', { method: 'POST', body: formData });
-			const { data } = await response.json();
-			console.log(data);
-			files = data.resources;
-			nextCursor = data.next_cursor;
-			prevCursor = next;
-			total = data.total_count;
-		} catch (e) {
-			hasError = true;
-		} finally {
-			loading = false;
+	const handleSearch = (e: ComponentEvents<Input>['input']) => {
+		const search = e.detail;
+		dispatch('search', {
+			search
+		});
+	};
+
+	const handleDelete = () => {
+		dispatch('delete', { ids: selectedFileIds });
+		selectedFileIds = [];
+	};
+
+	const handleAddFiles = (
+		e: Event & {
+			currentTarget: EventTarget & HTMLInputElement;
 		}
+	) => {
+		const uploadedFiles = e?.currentTarget?.files && e.currentTarget.files;
+
+		files && dispatch('add', { uploadedFiles });
 	};
 
-	// onMount(async () => {
-	// 	getThumbnails(perPage);
-	// });
-
-	const handleSearch = () => {};
-	const handleDelete = () => {};
 	const handleCheck = (id: string) => {
-		selectedFiles = selectedFiles.some((el) => el === id)
-			? selectedFiles.filter((el) => el !== id)
-			: [...selectedFiles, id];
+		selectedFileIds = selectedFileIds.some((el) => el === id)
+			? selectedFileIds.filter((el) => el !== id)
+			: [...selectedFileIds, id];
 	};
-	const handleSelectPerPage = (e) => {
+
+	const handleSelectPerPage = (e: ComponentEvents<Pagination>['select-per-page']) => {
 		perPage = e.detail;
-		getThumbnails(perPage);
+		dispatch('change-limit', { limit: perPage });
 	};
-	const handleSelectPage = async (e) => {
+
+	const handleSelectPage = async (e: ComponentEvents<Pagination>['select-page']) => {
 		const newCurrentPage = e.detail;
 		if (newCurrentPage > currentPage) {
 			console.log('next');
-			await getThumbnails(perPage, nextCursor);
+			// await getThumbnails(perPage, nextCursor);
 		} else if (newCurrentPage < currentPage) {
 			console.log('prev');
-			await getThumbnails(perPage, prevCursor);
+			// await getThumbnails(perPage, prevCursor);
 		} else {
 			return;
 		}
 		currentPage = e.detail;
 	};
-
-	$: console.log(prevCursor, nextCursor);
 </script>
 
 <div class="files__top">
@@ -87,35 +82,48 @@
 
 	<button
 		class="button files__button"
-		disabled={Boolean(!selectedFiles.length)}
+		disabled={!Boolean(selectedFileIds.length) || loading}
 		on:click={handleDelete}
 	>
 		<Delete />
 		Delete selected
 	</button>
-	<button class="button files__button">
-		<Add />
-		Add Files
-	</button>
+	<label>
+		<div class="button files__button" class:files__button--disabled={loading}>
+			<Add />
+			Add files
+		</div>
+		<input
+			class="files__input"
+			type="file"
+			on:change={handleAddFiles}
+			multiple
+			disabled={loading}
+		/>
+	</label>
 </div>
-{#if loading}
-	<div class="spinner"><Spinner /></div>
-{:else if files && files.length}
+{#if files && files.length}
 	<ul class="files__list">
-		{#each files as file (file.asset_id)}
+		{#each files as file (file.fileId)}
 			<li class="files__item">
 				<div class="files__checkbox">
-					<Checkbox width={30} height={30} on:change={() => handleCheck(file.public_id)} />
+					<Checkbox width={30} height={30} on:change={() => handleCheck(file.fileId)} />
 				</div>
 				<div class="files__image">
-					{#if file.format === 'pdf'}
+					{#if file.type === 'pdf'}
 						<div class="files__pdf"><PDF /></div>
+					{:else if file.loading}
+						<Spinner />
 					{:else}
-						<img src={file.url} alt={file.filename} />
+						<img src={file.thumbnail || file.thumbnailUrl} alt={file.name} />
 					{/if}
 				</div>
 				<div class="files__info">
-					<h2 class="files__item-title">{file.filename.split('thumbnail_').join('')}</h2>
+					{#if file.name}
+						<h2 class="files__item-title">{file.name}</h2>
+					{:else}
+						<h2 class="files__item-title">loading...</h2>
+					{/if}
 				</div>
 			</li>
 		{/each}
@@ -165,6 +173,7 @@
 		justify-content: space-between;
 		gap: 11px;
 	}
+	.files__button--disabled,
 	.files__button:disabled,
 	.files__button:hover:disabled {
 		background-color: #efefef;
@@ -172,12 +181,12 @@
 		cursor: auto;
 		--color-icon: #d8d8d8;
 	}
-	.spinner {
+	/* .spinner {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-	}
+	} */
 
 	.files__list {
 		display: grid;
@@ -224,5 +233,9 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+	}
+
+	.files__input {
+		display: none;
 	}
 </style>

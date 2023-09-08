@@ -18,7 +18,6 @@
 		{#each menu as item (item.id)}
 			<li class="menu__item">
 				{#if currentPath === `/${item.slug}`}
-					<!-- svelte-ignore a11y-missing-attribute -->
 					<a class="link link--current">{item.title}</a>
 				{:else}
 					<a class="link" href="/{item.slug}" on:click={handleCloseMenu}>

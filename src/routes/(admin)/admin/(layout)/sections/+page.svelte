@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import Status from '$lib/components/Status.svelte';
-	import type { ITableData } from '$lib/components/Table.svelte';
+	import type { ITableData, ITableConfig } from '$lib/components/Table.svelte';
 	const tableData: ITableData = {
 		data: Array(200)
 			.fill('')
@@ -16,7 +16,7 @@
 		type: 'sections'
 	};
 
-	let config = [
+	let config: ITableConfig[] = [
 		{
 			key: 'select'
 		},

@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
-	import icons from '$lib/components/icons';
-
-	const getIcon = (key: string) => icons[key as keyof typeof icons];
 </script>
 
 <h1 class="v-h">Dashboard</h1>
@@ -13,7 +10,7 @@
 		{#each ADMIN_MENU as item (item.id)}
 			<li class="dahsboard__item">
 				<a class="dashboard__link" href={item.href}>
-					<svelte:component this={getIcon(item.id)} width={30} height={30} />
+					<svelte:component this={item.icon} width={30} height={30} />
 					<span>{item.title}</span>
 				</a>
 			</li>

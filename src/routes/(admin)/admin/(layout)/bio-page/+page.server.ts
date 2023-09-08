@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-import { db } from '$lib/database';
+import type { PageServerLoad, Actions } from './$types';
+import { db } from '$lib/database/db';
+
 export const load = (async ({ locals }) => {
 	if (!locals.user) throw redirect(302, '/admin/login');
 
@@ -41,4 +42,4 @@ export const actions = {
 			return fail(400, { success: false });
 		}
 	}
-};
+} satisfies Actions;

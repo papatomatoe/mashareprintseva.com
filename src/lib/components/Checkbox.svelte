@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Check, CheckAll } from '$lib/components/icons';
+	import Check from '$lib/components/icons/Check.svelte';
+	import CheckAll from '$lib/components/icons/CheckAll.svelte';
 	export let checked = false;
 	export let name = '';
 	export let isCheckedAll = false;

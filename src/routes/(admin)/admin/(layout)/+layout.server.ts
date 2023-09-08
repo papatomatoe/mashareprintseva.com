@@ -5,6 +5,7 @@ import {
 	CLOUDINARY_API_SECRET,
 	CLOUDINARY_CLOUD_NAME
 } from '$env/static/private';
+import ImageKit from 'imagekit';
 
 const cloudinaryConfig = cloudinary.config({
 	cloud_name: CLOUDINARY_CLOUD_NAME,

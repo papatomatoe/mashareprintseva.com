@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	export interface IOption {
 		title: string;
-		value: any;
+		value: unknown;
 	}
 </script>
 
@@ -35,7 +35,7 @@
 
 	$: selectedOption = selected;
 
-	const handleSelect = (option: { title: string; value: string }) => {
+	const handleSelect = (option: { title: string; value: unknown }) => {
 		if (!clearable) {
 			selectedOption = option;
 		}

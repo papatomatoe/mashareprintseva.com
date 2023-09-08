@@ -43,19 +43,21 @@
 	}
 
 	export interface ITableConfig {
-		key: string;
+		key: SortKey | 'select' | 'edit';
 		title?: string;
-		render?: any;
+		render?: new (args: { target: any; props?: any }) => ATypedSvelteComponent;
 		sortable?: boolean;
 	}
 
 	export type SortDirection = 'direct' | 'reverse';
+
+	export type SortKey = keyof ISection | keyof IProject | keyof ISocial | keyof IUser;
 </script>
 
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
-	import { Edit } from '$lib/components/icons';
+	import Edit from '$lib/components/icons/Edit.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -63,22 +65,29 @@
 	export let config: ITableConfig[] = [];
 	export let selectedRows: TableData[] = [];
 
-	let sortKey = '';
+	let sortKey: SortKey | null = null;
 	let sortDirection: SortDirection | null = null;
 
 	$: isAllCheckboxSelected = Boolean(selectedRows.length);
 	$: sortedData =
 		sortKey && sortDirection
 			? [...data].sort((a, b) => {
-					const itemA = a[sortKey];
-					const itemB = b[sortKey];
-					if (typeof itemA === 'string' && typeof itemB === 'string') {
-						return sortDirection === 'direct'
-							? itemA.toLowerCase().localeCompare(itemB.toLowerCase())
-							: itemB.toLowerCase().localeCompare(itemA.toLowerCase());
+					if (sortKey !== null) {
+						//@ts-ignore
+						const itemA = a[sortKey];
+						//@ts-ignore
+						const itemB = b[sortKey];
+
+						if (typeof itemA === 'string' && typeof itemB === 'string')
+							return sortDirection === 'direct'
+								? itemA.toLowerCase().localeCompare(itemB.toLowerCase())
+								: itemB.toLowerCase().localeCompare(itemA.toLowerCase());
+
+						if (typeof itemA === 'number' && typeof itemB === 'number')
+							return sortDirection === 'direct' ? itemA - itemB : itemB - itemA;
 					}
 
-					return sortDirection === 'direct' ? itemA - itemB : itemB - itemA;
+					return 0;
 			  })
 			: data;
 
@@ -90,7 +99,7 @@
 
 	const handleEdit = (item: TableData) => dispatch('edit', item);
 
-	const handleSort = (key: string) => {
+	const handleSort = (key: SortKey) => {
 		if (sortKey === key) {
 			if (!sortDirection) {
 				sortDirection = 'direct';
@@ -115,7 +124,13 @@
 						<Checkbox on:change={handleCheckAll} checked={isAllCheckboxSelected} isCheckedAll />
 					{:else if cell.title}
 						{#if cell.sortable}
-							<button class="table__button" type="button" on:click={() => handleSort(cell.key)}>
+							<button
+								class="table__button"
+								type="button"
+								on:click={() => {
+									if (cell.key !== 'select' && cell.key !== 'edit') handleSort(cell.key);
+								}}
+							>
 								<span>{cell.title}</span>
 								{#if cell.key === sortKey}
 									<svg
@@ -144,17 +159,17 @@
 				{#each config as cell (cell.key)}
 					<td>
 						{#if cell.render}
-							{#if cell.key === 'published'}
+							{#if 'published' in item && cell.key === 'published'}
 								<svelte:component
 									this={cell.render}
-									published={item[cell.key]}
-									title={item[cell.key] ? 'published' : 'draft'}
+									published={item.published}
+									title={item.published ? 'published' : 'draft'}
 								/>
-							{:else if cell.key === 'active'}
+							{:else if 'active' in item && cell.key === 'active'}
 								<svelte:component
 									this={cell.render}
-									published={item[cell.key]}
-									title={item[cell.key] ? 'active' : 'inactive'}
+									published={item.active}
+									title={item.active ? 'active' : 'inactive'}
 								/>
 							{:else}
 								<svelte:component this={cell.render} />

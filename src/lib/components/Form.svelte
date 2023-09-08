@@ -11,7 +11,7 @@
 	class="form"
 	method="POST"
 	on:submit
-	use:enhance={({ form, data, action, cancel, submitter }) => {
+	use:enhance={({ cancel }) => {
 		if (hasErrors) cancel();
 		return async ({ result }) => {
 			invalidateAll();
