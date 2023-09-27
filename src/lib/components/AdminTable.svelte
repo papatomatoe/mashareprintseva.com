@@ -67,6 +67,7 @@
 	};
 
 	const handleSelectCurrentPage = (e: CustomEvent) => {
+		console.log(e.detail);
 		currentPage = e.detail;
 	};
 </script>

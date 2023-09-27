@@ -155,10 +155,6 @@
 		gap: 4px;
 	}
 
-	.select__options--top {
-		top: -2px;
-	}
-
 	.select__placeholder {
 		color: #d8d8d8;
 	}

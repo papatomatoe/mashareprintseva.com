@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ComponentEvents } from 'svelte';
-	import Filemanager from '$lib/components/Filemanager.svelte';
+	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
 	import type { PageData } from './$types';
 	import { nanoid } from 'nanoid';
 	import toBase64 from '$lib/utils/toBase64';
@@ -8,24 +8,26 @@
 	import { debounce } from '$lib/utils/debounce';
 	export let data: PageData;
 
-	let files: any[] = [];
+	let files: IFile[] = [];
 	let notification: { message: string; type: NotificationType } | null = null;
 	let loading: boolean = false;
 
-	$: files = data.files;
+	$: files = data.filesData.files;
 
 	const handleDeleteFiles = async (e: ComponentEvents<Filemanager>['delete']) => {
 		const ids = e.detail.ids;
+
+		const deletedFiles = files.filter((file) => ids.includes(file.id));
 		loading = true;
 		try {
-			const response = await fetch('/api/files/delete', {
+			const response = await fetch('/api/v2/files/delete', {
 				method: 'DELETE',
-				body: JSON.stringify(ids)
+				body: JSON.stringify(deletedFiles)
 			});
 
-			const { successfullyDeletedFileIds } = await response.json();
+			const successfullyDeletedFileIds = await response.json();
 
-			files = files.filter((file) => !successfullyDeletedFileIds.includes(file.fileId));
+			files = files.filter((file) => !successfullyDeletedFileIds.includes(file.id));
 
 			notification = { message: 'Successfully deleted', type: 'success' };
 		} catch (e) {
@@ -39,36 +41,30 @@
 	const handleAddFiles = async (e: ComponentEvents<Filemanager>['add']) => {
 		const { uploadedFiles } = e.detail;
 
-		[...uploadedFiles].forEach(async (file) => {
-			const dataURI = await toBase64(file);
+		const formData = new FormData();
 
-			const fileId = nanoid();
-
-			files = [...files, { fileId, loading: true }];
-
-			const formData = new FormData();
-			formData.append('file', dataURI as string);
-			formData.append('fileName', file.name);
-
-			loading = true;
-
-			try {
-				const response = await fetch('/api/file/upload', { method: 'POST', body: formData });
-
-				const fileData = await response.json();
-
-				const idx = files.findIndex((file) => file.fileId === fileId);
-
-				files = [...files.slice(0, idx), fileData, ...files.slice(idx + 1)];
-
-				notification = { message: 'Successfully uploaded', type: 'success' };
-			} catch (e) {
-				console.error(e);
-				notification = { message: 'Something went wrong...', type: 'error' };
-			} finally {
-				loading = false;
-			}
+		[...uploadedFiles].forEach((file: File) => {
+			formData.append('files', file, file.name);
 		});
+
+		loading = true;
+
+		try {
+			const response = await fetch('/api/v2/files/upload', { method: 'POST', body: formData });
+
+			const newFiles = await response.json();
+
+			// const idx = files.findIndex((file) => file.fileId === fileId);
+
+			files = [...files, ...newFiles];
+
+			notification = { message: 'Successfully uploaded', type: 'success' };
+		} catch (e) {
+			console.error(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+		}
 	};
 
 	const handleSearchFiles = debounce(async (e: ComponentEvents<Filemanager>['search']) => {
@@ -111,6 +107,13 @@
 			loading = false;
 		}
 	};
+
+	const handleNext = async (e: ComponentEvents<Filemanager>['next']) => {
+		console.log(e.detail);
+	};
+	const handlePrevious = async (e: ComponentEvents<Filemanager>['previous']) => {
+		console.log(e.detail);
+	};
 </script>
 
 <Notification
@@ -126,6 +129,8 @@
 		on:add={handleAddFiles}
 		on:search={handleSearchFiles}
 		on:change-limit={handleChangeLimit}
+		on:next={handleNext}
+		on:previous={handlePrevious}
 	/>
 </div>
 
