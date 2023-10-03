@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
 	export interface IFile {
 		id: number;
-		name: string;
-		uniqueName: string;
-		url: string;
-		thumbnail: string;
-		fileType: string;
+		name: string | null;
+		uniqueName: string | null;
+		url: string | null;
+		thumbnail: string | null;
+		fileType: string | null;
 		createdAt: Date;
 	}
 </script>

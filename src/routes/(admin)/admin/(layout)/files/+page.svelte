@@ -72,7 +72,7 @@
 
 		loading = true;
 		try {
-			const response = await fetch('/api/files/search', {
+			const response = await fetch('/api/v2/files/search', {
 				method: 'POST',
 				body: JSON.stringify(search)
 			});
@@ -92,7 +92,7 @@
 		const { limit } = e.detail;
 		loading = true;
 		try {
-			const response = await fetch('/api/files/list', {
+			const response = await fetch('/api/v2/files/list', {
 				method: 'POST',
 				body: JSON.stringify(limit)
 			});

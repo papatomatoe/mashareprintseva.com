@@ -41,37 +41,33 @@
 		}
 	};
 
-	const toBase64 = (file: File) =>
-		new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = () => resolve(reader.result);
-			reader.onerror = (error) => reject(error);
-		});
-
 	const uploadFile = async (file: File) => {
 		loading = true;
 		try {
-			const dataURI = await toBase64(file);
-
 			const formData = new FormData();
-			formData.append('file', dataURI as string);
-			formData.append('fileName', file.name);
+			formData.append('files', file, file.name);
 
-			const response = await fetch('/api/file/upload', {
+			const response = await fetch('/api/v2/files/upload', {
 				method: 'POST',
 				body: formData
 			});
 
-			const { url, thumbnailUrl } = await response.json();
-			preview = url;
-			fileUrl = thumbnailUrl;
+			console.log(response);
+
+			const [savedFile] = await response.json();
+			preview = savedFile.thumbnail;
+			fileUrl = savedFile.url;
 		} catch (e) {
 			console.error(e);
 		} finally {
 			loading = false;
 		}
 	};
+
+	$: {
+		console.log(fileUrl);
+		console.log(preview);
+	}
 
 	const handleAddImage = async (
 		e: Event & {
