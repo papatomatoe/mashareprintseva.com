@@ -1,7 +1,7 @@
 import type { Action, Actions, PageServerLoad } from './$types';
 import bcrypt from 'bcrypt';
 import { fail, redirect } from '@sveltejs/kit';
-import { db } from '$lib/database';
+import { db } from '$lib/database/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) throw redirect(302, '/admin/dashboard');

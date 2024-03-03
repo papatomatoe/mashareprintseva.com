@@ -4,8 +4,10 @@
 
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import { Clear } from '$lib/components/icons';
-	import { Success, Error, Inform } from '$lib/components/icons';
+	import Clear from '$lib/components/icons/Clear.svelte';
+	import Success from '$lib/components/icons/Success.svelte';
+	import Error from '$lib/components/icons/Error.svelte';
+	import Inform from '$lib/components/icons/Inform.svelte';
 
 	export let message = '';
 	export let type: NotificationType = 'default';
@@ -69,6 +71,7 @@
 		border-radius: 4px;
 		box-shadow: 0px 4px 15px -2px rgba(0, 0, 0, 0.2);
 		pointer-events: all;
+		z-index: 1;
 		--color-icon: #2391ff;
 	}
 

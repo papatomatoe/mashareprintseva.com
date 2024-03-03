@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { Clear, Spinner } from '$lib/components/icons';
+	import Spinner from '$lib/components/icons/Spinner.svelte';
+	import Clear from '$lib/components/icons/Clear.svelte';
 
 	export let label = '';
 	export let error = '';
@@ -10,7 +11,7 @@
 	export let fileUrl = '';
 	export let preview = '';
 
-	let files: FileList | null = null;
+	export let files: FileList | null = null;
 	let loading = false;
 
 	const dispatch = createEventDispatcher();
@@ -30,7 +31,7 @@
 			[...e.dataTransfer.items].forEach((item, i) => {
 				if (item.kind === 'file') {
 					const file = item.getAsFile();
-					uploadFile(file);
+					file && uploadFile(file);
 				}
 			});
 		} else {
@@ -40,33 +41,22 @@
 		}
 	};
 
-	const toBase64 = (file: File) =>
-		new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = () => resolve(reader.result);
-			reader.onerror = (error) => reject(error);
-		});
-
-	const uploadFile = async (file) => {
+	const uploadFile = async (file: File) => {
 		loading = true;
 		try {
-			const dataURI = await toBase64(file);
-
 			const formData = new FormData();
-			formData.append('file', dataURI as string);
+			formData.append('files', file, file.name);
 
-			const response = await fetch('/api/files', {
+			const response = await fetch('/api/v2/files/upload', {
 				method: 'POST',
 				body: formData
 			});
 
-			const data = await response.json();
+			console.log(response);
 
-			console.log(data);
-
-			preview = data.eager[0].url;
-			fileUrl = data.url;
+			const [savedFile] = await response.json();
+			preview = savedFile.thumbnail;
+			fileUrl = savedFile.url;
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -74,9 +64,18 @@
 		}
 	};
 
-	const handleAddImage = async (e) => {
-		const file = e.target.files[0];
-		await uploadFile(file);
+	$: {
+		console.log(fileUrl);
+		console.log(preview);
+	}
+
+	const handleAddImage = async (
+		e: Event & {
+			currentTarget: EventTarget & HTMLInputElement;
+		}
+	) => {
+		const file = e?.currentTarget?.files && e.currentTarget.files[0];
+		file && (await uploadFile(file));
 	};
 </script>
 
@@ -105,6 +104,8 @@
 			<input class="field__url" type="text" {name} bind:value={fileUrl} />
 			<input class="field__url" type="text" name="preview" bind:value={preview} />
 			<div
+				tabindex="0"
+				role="button"
 				class="field__container"
 				class:field__container--error={error}
 				on:drop|preventDefault={handleDrop}

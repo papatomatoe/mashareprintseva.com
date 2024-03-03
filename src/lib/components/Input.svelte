@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { Repeat, Clear } from '$lib/components/icons';
+	import Repeat from '$lib/components/icons/Repeat.svelte';
+	import Clear from '$lib/components/icons/Clear.svelte';
 
 	export let label = '';
 	export let value = '';

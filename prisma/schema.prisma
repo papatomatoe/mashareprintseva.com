@@ -8,16 +8,14 @@ datasource db {
 }
 
 model User {
-  id            String @id @default(uuid())
-  username      String @unique
+  id            String   @id @default(uuid())
+  username      String   @unique
   passwordHash  String
-  userAuthToken String @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  role   Roles @relation(fields: [roleId], references: [id])
-  roleId Int
+  userAuthToken String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  roleId        Int
+  role          Roles    @relation(fields: [roleId], references: [id])
 }
 
 model Roles {
@@ -43,4 +41,14 @@ model Bio {
   preview   String
   epigraph  String
   content   String
+}
+
+model File {
+  id         Int      @id @default(autoincrement())
+  name       String?
+  uniqueName String?
+  url        String?
+  thumbnail  String?
+  fileType   String?
+  createdAt  DateTime @default(now())
 }

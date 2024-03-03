@@ -21,7 +21,6 @@
 
 <header class="header" class:inactive={isMenuOpened}>
 	{#if currentPath === HOME_PATH}
-		<!-- svelte-ignore a11y-missing-attribute -->
 		<a class="header__logo" aria-label="Logo Masha Reprintseva">
 			<Logo />
 		</a>

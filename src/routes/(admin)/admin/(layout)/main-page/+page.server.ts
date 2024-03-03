@@ -1,6 +1,6 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
-import { db } from '$lib/database';
+import { db } from '$lib/database/db';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) throw redirect(302, '/admin/login');

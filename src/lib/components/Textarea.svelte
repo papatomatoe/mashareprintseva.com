@@ -86,6 +86,7 @@
 	.field__input {
 		width: 100%;
 		height: 100%;
+		min-height: 100%;
 		padding: 5px 40px 5px 10px;
 		background: #ffffff;
 		border: 1px solid #d8d8d8;

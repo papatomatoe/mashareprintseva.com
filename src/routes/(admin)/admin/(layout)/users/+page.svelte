@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import Status from '$lib/components/Status.svelte';
-	import type { ITableData } from '$lib/components/Table.svelte';
+	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
 	const tableData: ITableData = {
 		data: Array(7)
 			.fill('')
@@ -16,7 +16,7 @@
 		type: 'users'
 	};
 
-	let config = [
+	let config: ITableConfig[] = [
 		{
 			key: 'select'
 		},
