@@ -1,11 +1,13 @@
-import { error, json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
-import sharp from 'sharp';
-import { nanoid } from 'nanoid';
-import fs from 'fs/promises';
+import { STATIC_PATH, UPLOAD_PATH } from '$env/static/private';
 import { db } from '$lib/database/db';
-import { STATIC_DIR } from '$env/static/private';
+import { error, json } from '@sveltejs/kit';
+import fs from 'fs/promises';
+import { nanoid } from 'nanoid';
+import sharp from 'sharp';
+import type { RequestHandler } from './$types';
 const IMAGE_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
+
+const STATIC_FOLDER_PATH = `${STATIC_PATH}/${UPLOAD_PATH}`;
 
 export const POST: RequestHandler = async ({ request }) => {
 	const formData = await request.formData();
@@ -43,9 +45,9 @@ export const POST: RequestHandler = async ({ request }) => {
 					await sharp(fileBuffer)
 						.resize({ width: 800, fit: 'inside' })
 						.webp({ quality: 80 })
-						.toFile(`./${STATIC_DIR}/${fullSize}`)
+						.toFile(`./${STATIC_FOLDER_PATH}/${fullSize}`)
 						.then(() => {
-							fileInfo.url = `/${STATIC_DIR}/${fullSize}`;
+							fileInfo.url = `/${UPLOAD_PATH}/${fullSize}`;
 							fileInfo.fileType = 'image/webp';
 							fileInfo.name = name;
 						});
@@ -53,17 +55,17 @@ export const POST: RequestHandler = async ({ request }) => {
 					await sharp(fileBuffer)
 						.resize({ width: 100, fit: 'inside' })
 						.webp({ quality: 80 })
-						.toFile(`./${STATIC_DIR}/${thumbnail}`)
+						.toFile(`./${STATIC_FOLDER_PATH}/${thumbnail}`)
 						.then(() => {
-							fileInfo.thumbnail = `/${STATIC_DIR}/${thumbnail}`;
+							fileInfo.thumbnail = `/${UPLOAD_PATH}/${thumbnail}`;
 						});
 				} else {
 					const buffer = Buffer.from(fileBuffer);
 
 					await fs
-						.writeFile(`./${STATIC_DIR}/${uniqueFileName}`, buffer)
+						.writeFile(`./${STATIC_FOLDER_PATH}/${uniqueFileName}`, buffer)
 						.then(() => {
-							fileInfo.url = `/${STATIC_DIR}/${uniqueFileName}`;
+							fileInfo.url = `/${UPLOAD_PATH}/${uniqueFileName}`;
 							fileInfo.fileType = file.type;
 							fileInfo.name = name;
 							fileInfo.uniqueName = uniqueFileName;

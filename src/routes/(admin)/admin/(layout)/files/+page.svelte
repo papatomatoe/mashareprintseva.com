@@ -1,11 +1,9 @@
 <script lang="ts">
-	import type { ComponentEvents } from 'svelte';
 	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
-	import type { PageData } from './$types';
-	import { nanoid } from 'nanoid';
-	import toBase64 from '$lib/utils/toBase64';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 	import { debounce } from '$lib/utils/debounce';
+	import type { ComponentEvents } from 'svelte';
+	import type { PageData } from './$types';
 	export let data: PageData;
 
 	let files: IFile[] = [];
@@ -38,7 +36,7 @@
 		}
 	};
 
-	const handleAddFiles = async (e: ComponentEvents<Filemanager>['add']) => {
+	const handleUploadFiles = async (e: ComponentEvents<Filemanager>['add']) => {
 		const { uploadedFiles } = e.detail;
 
 		const formData = new FormData();
@@ -126,7 +124,7 @@
 		{files}
 		{loading}
 		on:delete={handleDeleteFiles}
-		on:add={handleAddFiles}
+		on:upload={handleUploadFiles}
 		on:search={handleSearchFiles}
 		on:change-limit={handleChangeLimit}
 		on:next={handleNext}

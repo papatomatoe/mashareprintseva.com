@@ -1,11 +1,12 @@
-import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/database/db';
+import { fail, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) throw redirect(302, '/admin/login');
 
 	const bio = await db.bio.findFirst();
+
 	return {
 		bio,
 		pageTitle: 'Admin | Bio Page'

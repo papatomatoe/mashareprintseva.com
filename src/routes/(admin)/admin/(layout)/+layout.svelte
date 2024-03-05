@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
-	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
@@ -173,6 +173,8 @@
 		border: 2px solid #d8d8d8;
 		cursor: pointer;
 		outline: none;
+
+		z-index: 1;
 
 		transition: background-color 0.2s linear;
 	}

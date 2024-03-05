@@ -11,15 +11,14 @@
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher, type ComponentEvents } from 'svelte';
-	import Spinner from '$lib/components/icons/Spinner.svelte';
-	import Input from '$lib/components/Input.svelte';
-	import Search from '$lib/components/icons/Search.svelte';
-	import Delete from '$lib/components/icons/Delete.svelte';
-	import Add from '$lib/components/icons/Add.svelte';
-	import PDF from '$lib/components/icons/PDF.svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
+	import Input from '$lib/components/Input.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import Add from '$lib/components/icons/Add.svelte';
+	import Delete from '$lib/components/icons/Delete.svelte';
+	import PDF from '$lib/components/icons/PDF.svelte';
+	import Search from '$lib/components/icons/Search.svelte';
+	import { createEventDispatcher, type ComponentEvents } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -49,7 +48,7 @@
 	) => {
 		const uploadedFiles = e?.currentTarget?.files && e.currentTarget.files;
 
-		files && dispatch('add', { uploadedFiles });
+		files && dispatch('upload', { uploadedFiles });
 	};
 
 	const handleCheck = (id: number) => {
