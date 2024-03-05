@@ -5,7 +5,7 @@ import fs from 'fs/promises';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import type { RequestHandler } from './$types';
-const IMAGE_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
+import { IMAGE_TYPES, FILE_TYPES } from '$lib/constants/files';
 
 const STATIC_FOLDER_PATH = `${STATIC_PATH}/${UPLOAD_PATH}`;
 
@@ -60,6 +60,8 @@ export const POST: RequestHandler = async ({ request }) => {
 							fileInfo.thumbnail = `/${UPLOAD_PATH}/${thumbnail}`;
 						});
 				} else {
+					if (FILE_TYPES.includes(file.type)) return;
+
 					const buffer = Buffer.from(fileBuffer);
 
 					await fs
