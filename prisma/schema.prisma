@@ -14,18 +14,18 @@ model User {
   userAuthToken String   @unique
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  roleId        Int
+  roleId        String
   role          Roles    @relation(fields: [roleId], references: [id])
 }
 
 model Roles {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(uuid())
   name String @unique
   User User[]
 }
 
 model MainPage {
-  id        Int     @id @default(autoincrement())
+  id        String  @id @default(uuid())
   published Boolean
   title     String  @unique
   slug      String  @unique
@@ -33,7 +33,7 @@ model MainPage {
 }
 
 model Bio {
-  id        Int     @id @default(autoincrement())
+  id        String  @id @default(uuid())
   published Boolean
   title     String  @unique
   slug      String  @unique
@@ -44,7 +44,7 @@ model Bio {
 }
 
 model File {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   name       String?
   uniqueName String?
   url        String?
