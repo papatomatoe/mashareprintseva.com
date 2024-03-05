@@ -1,19 +1,4 @@
-:root {
-	--main-font: 'Roboto', 'Arial', sans-serif;
-	--accent-font: 'Volkhov', 'Times', serif;
-
-	--color-bg: #fff;
-	--color-text: #454545;
-	--color-accent: #8a6f48;
-	--color-border: #d8d8d8;
-
-	--color-link: #656565;
-	--color-link-border: #656565;
-	--color-link-mob: #efefef;
-	--color-link-border-mob: #fff;
-
-	--color-icon: #000;
-}
+@import './vars.css';
 
 * {
 	box-sizing: border-box;
@@ -145,6 +130,15 @@ body::-webkit-scrollbar-thumb {
 
 .button:active {
 	background-color: #454545;
+}
+
+.button--disabled,
+.button:disabled,
+.button:hover:disabled {
+	background-color: #efefef;
+	color: #d8d8d8;
+	cursor: auto;
+	--color-icon: #d8d8d8;
 }
 
 .bio__content p:last-of-type {

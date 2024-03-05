@@ -1,0 +1,16 @@
+:root {
+	--main-font: 'Roboto', 'Arial', sans-serif;
+	--accent-font: 'Volkhov', 'Times', serif;
+
+	--color-bg: #fff;
+	--color-text: #454545;
+	--color-accent: #8a6f48;
+	--color-border: #d8d8d8;
+
+	--color-link: #656565;
+	--color-link-border: #656565;
+	--color-link-mob: #efefef;
+	--color-link-border-mob: #fff;
+
+	--color-icon: #000;
+}
