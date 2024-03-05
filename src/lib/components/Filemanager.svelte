@@ -1,74 +1,196 @@
 <script context="module" lang="ts">
 	export interface IFile {
-		id: number;
+		id: string;
 		name: string | null;
 		uniqueName: string | null;
 		url: string | null;
 		thumbnail: string | null;
 		fileType: string | null;
 		createdAt: Date;
+		loading?: boolean;
 	}
 </script>
 
 <script lang="ts">
 	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Input from '$lib/components/Input.svelte';
+	import type { NotificationType } from '$lib/components/Notification.svelte';
+	import Notification from '$lib/components/Notification.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Add from '$lib/components/icons/Add.svelte';
 	import Delete from '$lib/components/icons/Delete.svelte';
 	import PDF from '$lib/components/icons/PDF.svelte';
 	import Search from '$lib/components/icons/Search.svelte';
-	import { createEventDispatcher, type ComponentEvents } from 'svelte';
-
-	const dispatch = createEventDispatcher();
+	import Spinner from '$lib/components/icons/Spinner.svelte';
+	import { FILE_TYPES, IMAGE_TYPES } from '$lib/constants/files';
+	import { debounce } from '$lib/utils/debounce';
+	import { nanoid } from 'nanoid';
+	import type { ComponentEvents } from 'svelte';
 
 	export let files: IFile[] = [];
 	export let loading = false;
+
 	let hasError = false;
-	let selectedFileIds: number[] = [];
+	let selectedFileIds: string[] = [];
+	let uploadedFilePlaceholders: IFile[] = [];
+
+	let notification: { message: string; type: NotificationType } | null = null;
 	let limit = 50;
 	let currentPage = 1;
 
-	const handleSearch = (e: ComponentEvents<Input>['input']) => {
-		const search = e.detail;
-		dispatch('search', {
-			search
-		});
+	$: console.log('🚀 ~ files:', files);
+	$: console.log('🚀 ~ uploadedFilePlaceholders:', uploadedFilePlaceholders);
+
+	$: renderedFiles = [...files, ...uploadedFilePlaceholders];
+
+	const handleCheck = (id: string) => {
+		selectedFileIds = selectedFileIds.some((el) => el === id)
+			? selectedFileIds.filter((el) => el !== id)
+			: [...selectedFileIds, id];
 	};
 
-	const handleDelete = () => {
-		dispatch('delete', { ids: selectedFileIds });
-		selectedFileIds = [];
-	};
-
-	const handleAddFiles = (
+	const handleUploadFiles = async (
 		e: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
 		}
 	) => {
 		const uploadedFiles = e?.currentTarget?.files && e.currentTarget.files;
 
-		files && dispatch('upload', { uploadedFiles });
+		if (!uploadedFiles || !uploadedFiles.length) return;
+
+		const uploadedFileList = [...uploadedFiles];
+
+		if (uploadedFileList.some((el) => ![...FILE_TYPES, ...IMAGE_TYPES].includes(el.type))) {
+			notification = { message: 'Some files unsupported', type: 'error' };
+			return;
+		}
+
+		const formData = new FormData();
+
+		uploadedFileList.forEach((file: File) => {
+			formData.append('files', file, file.name);
+			uploadedFilePlaceholders = [
+				...uploadedFilePlaceholders,
+				{
+					id: nanoid(),
+					name: null,
+					uniqueName: null,
+					url: null,
+					thumbnail: null,
+					fileType: null,
+					createdAt: new Date(),
+					loading: true
+				}
+			];
+		});
+
+		loading = true;
+
+		try {
+			const response = await fetch('/api/v2/files/upload', { method: 'POST', body: formData });
+
+			const newFiles = await response.json();
+
+			// const idx = files.findIndex((file) => file.fileId === fileId);
+
+			files = [...files, ...newFiles];
+
+			notification = { message: 'Successfully uploaded', type: 'success' };
+		} catch (e) {
+			console.error(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+			uploadedFilePlaceholders = [];
+		}
 	};
 
-	const handleCheck = (id: number) => {
-		selectedFileIds = selectedFileIds.some((el) => el === id)
-			? selectedFileIds.filter((el) => el !== id)
-			: [...selectedFileIds, id];
+	const handleDelete = async () => {
+		const ids = selectedFileIds;
+
+		const deletedFiles = files.filter((file) => ids.includes(file.id));
+		loading = true;
+		try {
+			const response = await fetch('/api/v2/files/delete', {
+				method: 'DELETE',
+				body: JSON.stringify(deletedFiles)
+			});
+
+			const successfullyDeletedFileIds = await response.json();
+
+			files = files.filter((file) => !successfullyDeletedFileIds.includes(file.id));
+
+			notification = { message: 'Successfully deleted', type: 'success' };
+
+			selectedFileIds = [];
+		} catch (e) {
+			console.log(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+		}
 	};
 
-	const handleSelectPerPage = (e: ComponentEvents<Pagination>['select-per-page']) => {
+	const handleSearch = debounce(async (e: ComponentEvents<Input>['input']) => {
+		const search = e.detail;
+
+		loading = true;
+		try {
+			const response = await fetch('/api/v2/files/search', {
+				method: 'POST',
+				body: JSON.stringify(search)
+			});
+
+			const searchedResult = await response.json();
+
+			files = searchedResult;
+		} catch (e) {
+			console.error(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+		}
+	}, 500);
+
+	const handleChangeLimit = async (e: ComponentEvents<Pagination>['select-per-page']) => {
 		limit = e.detail.limit;
-		dispatch('change-limit', { limit, page: 1 });
+		loading = true;
+		try {
+			const response = await fetch('/api/v2/files/list', {
+				method: 'POST',
+				body: JSON.stringify(limit)
+			});
+
+			const data = await response.json();
+
+			files = data;
+		} catch (e) {
+			console.error(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+		}
 	};
 
-	const handleNext = async () => {
-		dispatch('next', { page: files.length <= limit ? currentPage : currentPage + 1, limit });
+	const handleSelectAll = () => {
+		selectedFileIds = selectedFileIds.length ? [] : [...files.map((el) => el.id)];
 	};
+
+	// TODO: Pagination not work!!!
+	const handleNext = async () => {
+		console.log({ page: files.length <= limit ? currentPage : currentPage + 1, limit });
+	};
+
 	const handlePrevious = async () => {
-		dispatch('previous', { page: currentPage > 1 ? currentPage - 1 : 1, limit });
+		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, limit });
 	};
 </script>
+
+<Notification
+	message={notification?.message}
+	type={notification?.type}
+	show={Boolean(notification)}
+/>
 
 <div class="files__top">
 	<h1 class="files__title">Files</h1>
@@ -80,6 +202,9 @@
 		</Input>
 	</div>
 
+	<button class="button" on:click={handleSelectAll} disabled={!Boolean(files.length)}
+		>{selectedFileIds.length ? 'Unselect' : 'Select'} All</button
+	>
 	<button
 		class="button files__button"
 		disabled={!Boolean(selectedFileIds.length) || loading}
@@ -96,24 +221,31 @@
 		<input
 			class="files__input"
 			type="file"
-			on:change={handleAddFiles}
+			on:change={handleUploadFiles}
 			multiple
 			disabled={loading}
 		/>
 	</label>
 </div>
-{#if files && files.length}
+{#if renderedFiles && renderedFiles.length}
 	<ul class="files__list">
-		{#each files as file (file.id)}
+		{#each renderedFiles as file (file.id)}
 			<li class="files__item">
-				<div class="files__checkbox">
-					<Checkbox width={30} height={30} on:change={() => handleCheck(file.id)} />
-				</div>
+				{#if !file.loading}
+					<div class="files__checkbox">
+						<Checkbox
+							width={30}
+							height={30}
+							checked={selectedFileIds.includes(file.id)}
+							on:change={() => handleCheck(file.id)}
+						/>
+					</div>
+				{/if}
 				<div class="files__image">
 					{#if file.fileType === 'application/pdf'}
 						<div class="files__pdf"><PDF /></div>
-						<!-- {:else if file.loading}
-						<Spinner /> -->
+					{:else if file.loading}
+						<Spinner />
 					{:else}
 						<img src={file.thumbnail} alt={file.name} />
 					{/if}
@@ -128,25 +260,26 @@
 			</li>
 		{/each}
 	</ul>
-	<Pagination
-		withoutPages
-		perPage={limit}
-		disableNext={currentPage === 1}
-		disablePrevious={files.length < limit}
-		perPageOptions={[
-			{ title: '50', value: 50 },
-			{ title: '100', value: 100 },
-			{ title: '200', value: 200 }
-		]}
-		on:select-per-page={handleSelectPerPage}
-		on:next={handleNext}
-		on:previous={handlePrevious}
-	/>
 {:else if hasError}
 	<p>error...</p>
 {:else}
 	<p>no data</p>
 {/if}
+
+<Pagination
+	withoutPages
+	perPage={limit}
+	disableNext={currentPage === 1}
+	disablePrevious={files.length < limit}
+	perPageOptions={[
+		{ title: '50', value: 50 },
+		{ title: '100', value: 100 },
+		{ title: '200', value: 200 }
+	]}
+	on:select-per-page={handleChangeLimit}
+	on:next={handleNext}
+	on:previous={handlePrevious}
+/>
 
 <style>
 	.files__top {
