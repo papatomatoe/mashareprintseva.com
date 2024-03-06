@@ -20,6 +20,7 @@
 	import Add from '$lib/components/icons/Add.svelte';
 	import Delete from '$lib/components/icons/Delete.svelte';
 	import PDF from '$lib/components/icons/PDF.svelte';
+	import errorIconPath from '$lib/components/icons/error.svg';
 	import Search from '$lib/components/icons/Search.svelte';
 	import Spinner from '$lib/components/icons/Spinner.svelte';
 	import { FILE_TYPES, IMAGE_TYPES } from '$lib/constants/files';
@@ -33,13 +34,9 @@
 	let hasError = false;
 	let selectedFileIds: string[] = [];
 	let uploadedFilePlaceholders: IFile[] = [];
-
 	let notification: { message: string; type: NotificationType } | null = null;
 	let limit = 50;
 	let currentPage = 1;
-
-	$: console.log('🚀 ~ files:', files);
-	$: console.log('🚀 ~ uploadedFilePlaceholders:', uploadedFilePlaceholders);
 
 	$: renderedFiles = [...files, ...uploadedFilePlaceholders];
 
@@ -184,6 +181,16 @@
 	const handlePrevious = async () => {
 		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, limit });
 	};
+
+	const handleError = (
+		e: Event & {
+			currentTarget: EventTarget & Element;
+		}
+	) => {
+		const imageElement = e.currentTarget as HTMLImageElement;
+		imageElement.src = errorIconPath;
+		imageElement.classList.add('files__error');
+	};
 </script>
 
 <Notification
@@ -247,7 +254,7 @@
 					{:else if file.loading}
 						<Spinner />
 					{:else}
-						<img src={file.thumbnail} alt={file.name} />
+						<img src={file.thumbnail} alt={file.name} on:error={handleError} />
 					{/if}
 				</div>
 				<div class="files__info">

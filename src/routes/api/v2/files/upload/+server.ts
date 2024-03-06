@@ -12,7 +12,6 @@ const STATIC_FOLDER_PATH = `${STATIC_PATH}/${UPLOAD_PATH}`;
 export const POST: RequestHandler = async ({ request }) => {
 	const formData = await request.formData();
 	const files = formData.getAll('files');
-
 	if (!files || !files.length) throw error(400, 'Invalid Request Data');
 
 	const savedFiles: unknown[] = [];
@@ -60,7 +59,7 @@ export const POST: RequestHandler = async ({ request }) => {
 							fileInfo.thumbnail = `/${UPLOAD_PATH}/${thumbnail}`;
 						});
 				} else {
-					if (FILE_TYPES.includes(file.type)) return;
+					if (!FILE_TYPES.includes(file.type)) return;
 
 					const buffer = Buffer.from(fileBuffer);
 
