@@ -265,11 +265,6 @@ body::-webkit-scrollbar-thumb {
 	font-style: normal;
 }
 
-img.files__error {
-	width: 100px !important;
-	height: 100px !important;
-}
-
 @media (min-width: 768px) {
 	.bio__content p {
 		margin: 5px auto 30px;
