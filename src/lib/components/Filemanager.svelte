@@ -347,12 +347,6 @@
 		justify-content: center;
 	}
 
-	.files__image img {
-		width: 175px;
-		height: 155px;
-		object-fit: contain;
-	}
-
 	.files__pdf {
 		--color-icon: #252525;
 	}
