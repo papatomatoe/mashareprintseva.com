@@ -23,7 +23,10 @@
 	import Search from '$lib/components/icons/Search.svelte';
 	import Spinner from '$lib/components/icons/Spinner.svelte';
 	import Image from '$lib/components/icons/Image.svelte';
+	import List from '$lib/components/icons/List.svelte';
+	import Grid from '$lib/components/icons/Grid.svelte';
 	import { FILE_TYPES, IMAGE_TYPES } from '$lib/constants/files';
+	import { filesStore } from '$lib/stores/files';
 	import { debounce } from '$lib/utils/debounce';
 	import { nanoid } from 'nanoid';
 	import type { ComponentEvents } from 'svelte';
@@ -170,7 +173,7 @@
 	};
 
 	const handleSelectAll = () => {
-		selectedFileIds = selectedFileIds.length ? [] : [...files.map((el) => el.id)];
+		selectedFileIds = selectedFileIds.length === files.length ? [] : [...files.map((el) => el.id)];
 	};
 
 	// TODO: Pagination not work!!!
@@ -180,6 +183,10 @@
 
 	const handlePrevious = async () => {
 		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, limit });
+	};
+
+	const handleChangeView = () => {
+		$filesStore.view = $filesStore.view === 'list' ? 'grid' : 'list';
 	};
 </script>
 
@@ -191,6 +198,7 @@
 
 <div class="files__top">
 	<h1 class="files__title">Files</h1>
+
 	<div class="files__search">
 		<Input placeholder="search" on:input={handleSearch}>
 			<svelte:fragment slot="icon">
@@ -199,8 +207,15 @@
 		</Input>
 	</div>
 
+	<button class="button files__view" on:click={handleChangeView}>
+		{#if $filesStore.view === 'grid'}
+			<Grid />
+		{:else}
+			<List />
+		{/if}
+	</button>
 	<button class="button" on:click={handleSelectAll} disabled={!Boolean(files.length)}
-		>{selectedFileIds.length ? 'Unselect' : 'Select'} All</button
+		>{selectedFileIds.length === files.length ? 'Unselect' : 'Select'} All</button
 	>
 	<button
 		class="button files__button"
@@ -363,5 +378,9 @@
 
 	.files__input {
 		display: none;
+	}
+
+	.files__view {
+		margin-left: 20px;
 	}
 </style>
