@@ -12,24 +12,25 @@
 </script>
 
 <script lang="ts">
-	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import type { NotificationType } from '$lib/components/Notification.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
-	import Add from '$lib/components/icons/Add.svelte';
-	import Delete from '$lib/components/icons/Delete.svelte';
-	import PDF from '$lib/components/icons/PDF.svelte';
-	import Search from '$lib/components/icons/Search.svelte';
-	import Spinner from '$lib/components/icons/Spinner.svelte';
-	import Image from '$lib/components/icons/Image.svelte';
-	import List from '$lib/components/icons/List.svelte';
-	import Grid from '$lib/components/icons/Grid.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import Add from '$lib/icons/Add.svelte';
+	import Delete from '$lib/icons/Delete.svelte';
+	import Search from '$lib/icons/Search.svelte';
+	import List from '$lib/icons/List.svelte';
+	import Grid from '$lib/icons/Grid.svelte';
 	import { FILE_TYPES, IMAGE_TYPES } from '$lib/constants/files';
-	import { filesStore } from '$lib/stores/files';
+	import { filesStore } from '$lib/stores/files/store';
 	import { debounce } from '$lib/utils/debounce';
 	import { nanoid } from 'nanoid';
 	import type { ComponentEvents } from 'svelte';
+	import GridViewFiles from '$lib/components/GridViewFiles.svelte';
+	import type { ViewType } from '$lib/stores/files/types';
+
+	import Clear from '$lib/icons/Clear.svelte';
 
 	export let files: IFile[] = [];
 	export let loading = false;
@@ -43,7 +44,8 @@
 
 	$: renderedFiles = [...files, ...uploadedFilePlaceholders];
 
-	const handleCheck = (id: string) => {
+	const handleSelect = (e: ComponentEvents<GridViewFiles>['input']) => {
+		const id = e.detail;
 		selectedFileIds = selectedFileIds.some((el) => el === id)
 			? selectedFileIds.filter((el) => el !== id)
 			: [...selectedFileIds, id];
@@ -185,8 +187,8 @@
 		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, limit });
 	};
 
-	const handleChangeView = () => {
-		$filesStore.view = $filesStore.view === 'list' ? 'grid' : 'list';
+	const handleChangeView = (view: ViewType) => {
+		$filesStore.view = view;
 	};
 </script>
 
@@ -207,13 +209,23 @@
 		</Input>
 	</div>
 
-	<button class="button files__view" on:click={handleChangeView}>
-		{#if $filesStore.view === 'grid'}
+	<div class="files__view-control">
+		<button
+			class="button files__view"
+			class:files__view--selected={$filesStore.view === 'grid'}
+			on:click={() => handleChangeView('grid')}
+		>
 			<Grid />
-		{:else}
+		</button>
+		<button
+			class="button files__view"
+			class:files__view--selected={$filesStore.view === 'list'}
+			on:click={() => handleChangeView('list')}
+		>
 			<List />
-		{/if}
-	</button>
+		</button>
+	</div>
+
 	<button class="button" on:click={handleSelectAll} disabled={!Boolean(files.length)}
 		>{selectedFileIds.length === files.length ? 'Unselect' : 'Select'} All</button
 	>
@@ -222,7 +234,9 @@
 		disabled={!Boolean(selectedFileIds.length) || loading}
 		on:click={handleDelete}
 	>
-		<Delete />
+		<Icon name="delete">
+			<Delete />
+		</Icon>
 		Delete selected
 	</button>
 	<label>
@@ -240,38 +254,7 @@
 	</label>
 </div>
 {#if renderedFiles && renderedFiles.length}
-	<ul class="files__list">
-		{#each renderedFiles as file (file.id)}
-			<li class="files__item">
-				{#if !file.loading}
-					<div class="files__checkbox">
-						<Checkbox
-							width={30}
-							height={30}
-							checked={selectedFileIds.includes(file.id)}
-							on:change={() => handleCheck(file.id)}
-						/>
-					</div>
-				{/if}
-				<div class="files__image">
-					{#if file.fileType === 'application/pdf'}
-						<div class="files__pdf"><PDF /></div>
-					{:else if file.loading}
-						<Spinner />
-					{:else}
-						<Image src={file.thumbnail} alt={file.name} />
-					{/if}
-				</div>
-				<div class="files__info">
-					{#if file.name}
-						<h2 class="files__item-title">{file.name}</h2>
-					{:else}
-						<h2 class="files__item-title">loading...</h2>
-					{/if}
-				</div>
-			</li>
-		{/each}
-	</ul>
+	<GridViewFiles files={renderedFiles} {selectedFileIds} on:select={handleSelect} />
 {:else if hasError}
 	<p>error...</p>
 {:else}
@@ -300,7 +283,7 @@
 		padding: 0 0 21px;
 		margin-bottom: 43px;
 		gap: 10px;
-		border-bottom: 1px solid #d9d9d9;
+		border-bottom: 1px solid var(--color-border);
 	}
 	.files__title {
 		font-weight: 700;
@@ -323,10 +306,10 @@
 	.files__button--disabled,
 	.files__button:disabled,
 	.files__button:hover:disabled {
-		background-color: #efefef;
-		color: #d8d8d8;
+		background-color: var(--color-button-disabled);
+		color: var(--color-button-disabled-text);
 		cursor: auto;
-		--color-icon: #d8d8d8;
+		--color-icon: var(--color-button-disabled-icon);
 	}
 	/* .spinner {
 		position: absolute;
@@ -335,52 +318,39 @@
 		transform: translate(-50%, -50%);
 	} */
 
-	.files__list {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, 250px);
-		gap: 20px;
-	}
-
-	.files__item {
-		position: relative;
-		width: 250px;
-		height: 250px;
-		border: 1px solid #d9d9d9;
-		border-radius: 4px;
-	}
-
-	.files__checkbox {
-		position: absolute;
-		top: 5px;
-		left: 5px;
-	}
-	.files__image {
-		width: 100%;
-		height: 200px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.files__pdf {
-		--color-icon: #252525;
-	}
-
-	.files__info {
-		padding: 10px;
-	}
-	.files__item-title {
-		font-size: 12px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
 	.files__input {
 		display: none;
 	}
 
+	.files__view-control {
+		display: flex;
+		gap: 5px;
+		margin-right: 20px;
+	}
+
 	.files__view {
-		margin-left: 20px;
+		height: 36px;
+		width: 36px;
+		display: grid;
+		place-items: center;
+		background-color: var(--color-unselected);
+		--color-icon: var(--color-text);
+	}
+
+	.files__view:hover,
+	.files__view:focus-visible {
+		background-color: var(--color-button-hover);
+		--color-icon: var(--color-button-icon);
+	}
+	.files__view:active {
+		background-color: var(--color-button);
+		--color-icon: var(--color-button-icon);
+	}
+	.files__view--selected,
+	.files__view--selected:hover,
+	.files__view--selected:focus-visible {
+		cursor: auto;
+		background-color: var(--color-text);
+		--color-icon: var(--color-bg);
 	}
 </style>

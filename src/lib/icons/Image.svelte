@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ErrorFile from '$lib/components/icons/ErrorFile.svelte';
+	import ErrorFile from '$lib/icons/ErrorFile.svelte';
 
 	export let src: string | null;
 	export let alt: string | null;

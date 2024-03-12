@@ -95,7 +95,7 @@
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		font: var(--text--font);
+		font: var(--font-main);
 		color: #454545;
 		outline: none;
 		resize: vertical;

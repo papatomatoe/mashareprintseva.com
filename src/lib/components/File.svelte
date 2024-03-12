@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import Spinner from '$lib/components/icons/Spinner.svelte';
-	import Clear from '$lib/components/icons/Clear.svelte';
+	import Spinner from '$lib/icons/Spinner.svelte';
+	import Clear from '$lib/icons/Clear.svelte';
 
 	export let label = '';
 	export let error = '';
@@ -176,7 +176,7 @@
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		font: var(--text--font);
+		font: var(--font-main);
 		color: #454545;
 		outline: none;
 		transition: border-color 0.3s linear;

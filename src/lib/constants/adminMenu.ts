@@ -1,10 +1,10 @@
-import MainPage from '$lib/components/icons/MainPage.svelte';
-import BioPage from '$lib/components/icons/BioPage.svelte';
-import Sections from '$lib/components/icons/Sections.svelte';
-import Projects from '$lib/components/icons/Projects.svelte';
-import Socials from '$lib/components/icons/Socials.svelte';
-import Users from '$lib/components/icons/Users.svelte';
-import Files from '$lib/components/icons/Files.svelte';
+import MainPage from '$lib/icons/MainPage.svelte';
+import BioPage from '$lib/icons/BioPage.svelte';
+import Sections from '$lib/icons/Sections.svelte';
+import Projects from '$lib/icons/Projects.svelte';
+import Socials from '$lib/icons/Socials.svelte';
+import Users from '$lib/icons/Users.svelte';
+import Files from '$lib/icons/Files.svelte';
 
 export const ADMIN_MENU = [
 	{ id: 'MainPage', title: 'Main Page', href: '/admin/main-page', icon: MainPage },

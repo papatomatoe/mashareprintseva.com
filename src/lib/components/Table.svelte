@@ -57,7 +57,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
-	import Edit from '$lib/components/icons/Edit.svelte';
+	import Edit from '$lib/icons/Edit.svelte';
 
 	const dispatch = createEventDispatcher();
 

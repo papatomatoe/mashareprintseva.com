@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Select from '$lib/components/Select.svelte';
-	import Prev from '$lib/components/icons/Prev.svelte';
-	import Next from '$lib/components/icons/Next.svelte';
+	import Prev from '$lib/icons/Prev.svelte';
+	import Next from '$lib/icons/Next.svelte';
 
 	const dispatch = createEventDispatcher();
 

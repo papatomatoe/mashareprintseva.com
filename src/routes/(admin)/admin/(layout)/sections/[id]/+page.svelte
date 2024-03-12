@@ -6,7 +6,7 @@
 	import Textarea from '$lib/components/Textarea.svelte';
 	import File from '$lib/components/File.svelte';
 	import Select, { type IOption } from '$lib/components/Select.svelte';
-	import Remove from '$lib/components/icons/Remove.svelte';
+	import Remove from '$lib/icons/Remove.svelte';
 
 	let order = '1';
 	let orderError = '';

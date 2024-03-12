@@ -1,16 +1,29 @@
 :root {
-	--main-font: 'Roboto', 'Arial', sans-serif;
-	--accent-font: 'Volkhov', 'Times', serif;
+	--font-main: 'Roboto', 'Arial', sans-serif;
+	--font-accent: 'Volkhov', 'Times', serif;
 
 	--color-bg: #fff;
 	--color-text: #454545;
 	--color-accent: #8a6f48;
 	--color-border: #d8d8d8;
+	--color-unselected: #e6e6e6;
+  --color-blockquote: #878787;
 
 	--color-link: #656565;
 	--color-link-border: #656565;
 	--color-link-mob: #efefef;
 	--color-link-border-mob: #fff;
+
+  --color-link-alt: #8a6f48;
+
+	--color-button: #252525;
+	--color-button-text: #efefef;
+	--color-button-icon: #efefef;
+	--color-button-hover: #8a6f48;
+	--color-button-active: #454545;
+	--color-button-disabled: #efefef;
+	--color-button-disabled-text: #d8d8d8;
+	--color-button-disabled-icon: #d8d8d8;
 
 	--color-icon: #000;
 }

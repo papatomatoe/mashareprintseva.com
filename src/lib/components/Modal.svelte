@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Clear from './icons/Clear.svelte';
+	import Clear from '$lib/icons/Clear.svelte';
 
 	export let open: boolean = false;
 

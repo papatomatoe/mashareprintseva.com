@@ -43,7 +43,7 @@
 		font-weight: normal;
 		font-size: 17px;
 		line-height: 1.5;
-		font-family: var(--accent-font);
+		font-family: var(--font-accent);
 		color: var(--color-link-mob);
 		font-style: normal;
 	}

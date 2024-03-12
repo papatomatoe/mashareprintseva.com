@@ -4,10 +4,10 @@
 
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import Clear from '$lib/components/icons/Clear.svelte';
-	import Success from '$lib/components/icons/Success.svelte';
-	import Error from '$lib/components/icons/Error.svelte';
-	import Inform from '$lib/components/icons/Inform.svelte';
+	import Clear from '$lib/icons/Clear.svelte';
+	import Success from '$lib/icons/Success.svelte';
+	import Error from '$lib/icons/Error.svelte';
+	import Inform from '$lib/icons/Inform.svelte';
 
 	export let message = '';
 	export let type: NotificationType = 'default';

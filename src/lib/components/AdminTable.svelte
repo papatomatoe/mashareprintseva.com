@@ -8,9 +8,9 @@
 	} from '$lib/components/Table.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
-	import Add from '$lib/components/icons/Add.svelte';
-	import Search from '$lib/components/icons/Search.svelte';
-	import Delete from '$lib/components/icons/Add.svelte';
+	import Add from '$lib/icons/Add.svelte';
+	import Search from '$lib/icons/Search.svelte';
+	import Delete from '$lib/icons/Add.svelte';
 	import { debounce } from '$lib/utils/debounce';
 	import { searchByData } from '$lib/utils/table';
 

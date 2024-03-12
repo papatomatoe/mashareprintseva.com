@@ -49,7 +49,7 @@
 		background-color: transparent;
 		border: none;
 		text-decoration: underline;
-		font-family: var(--main--font);
+		font-family: var(--font-main);
 		color: #000;
 		cursor: pointer;
 		line-height: 1.5;

@@ -5,7 +5,7 @@
 	import Input from '$lib/components/Input.svelte';
 	import File from '$lib/components/File.svelte';
 	import Select, { type IOption } from '$lib/components/Select.svelte';
-	import Remove from '$lib/components/icons/Remove.svelte';
+	import Remove from '$lib/icons/Remove.svelte';
 
 	let title = '';
 	let titleError = '';
