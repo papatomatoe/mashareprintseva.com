@@ -47,7 +47,7 @@
 		data: Array(76)
 			.fill('')
 			.map((_, idx) => ({
-				id: idx + 1,
+				id: String(idx + 1),
 				published: true,
 				section: 'Contemporary',
 				title: 'Decay in Bloom',

@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
+	import type IFile from '$lib/components/Filemanager.svelte';
+
 	export interface IUser {
-		id: number;
+		id: string;
 		role: 'USER' | 'ADMIN' | 'EDITOR';
 		active: boolean;
 		username: string;
@@ -8,7 +10,7 @@
 		created: string;
 	}
 	export interface ISocial {
-		id: number;
+		id: string;
 		published: boolean;
 		icon: string;
 		title: string;
@@ -16,7 +18,7 @@
 		created: string;
 	}
 	export interface ISection {
-		id: number;
+		id: string;
 		published: boolean;
 		order: number;
 		title: string;
@@ -25,7 +27,7 @@
 	}
 
 	export interface IProject {
-		id: number;
+		id: string;
 		published: boolean;
 		section: string;
 		title: string;
@@ -33,9 +35,9 @@
 		created: string;
 	}
 
-	export type DataType = 'sections' | 'projects' | 'socials' | 'users';
+	export type DataType = 'sections' | 'projects' | 'socials' | 'users' | 'files';
 
-	export type TableData = ISection | IProject | ISocial | IUser;
+	export type TableData = ISection | IProject | ISocial | IUser | IFile;
 
 	export interface ITableData {
 		data: TableData[];
@@ -43,32 +45,34 @@
 	}
 
 	export interface ITableConfig {
-		key: SortKey | 'select' | 'edit';
+		key: string | 'select' | 'edit';
 		title?: string;
 		render?: new (args: { target: any; props?: any }) => ATypedSvelteComponent;
 		sortable?: boolean;
+		width?: number;
 	}
 
 	export type SortDirection = 'direct' | 'reverse';
 
-	export type SortKey = keyof ISection | keyof IProject | keyof ISocial | keyof IUser;
+	export type SortKey = keyof ISection | keyof IProject | keyof ISocial | keyof IUser | keyof IFile;
 </script>
 
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Edit from '$lib/icons/Edit.svelte';
+	import Inform from '$lib/icons/Inform.svelte';
 
 	const dispatch = createEventDispatcher();
 
-	export let data: TableData[] = [];
+	export let data: any[] = [];
 	export let config: ITableConfig[] = [];
-	export let selectedRows: TableData[] = [];
+	export let selectedRowIds: string[] = [];
 
 	let sortKey: SortKey | null = null;
 	let sortDirection: SortDirection | null = null;
 
-	$: isAllCheckboxSelected = Boolean(selectedRows.length);
+	$: isAllCheckboxSelected = Boolean(selectedRowIds.length);
 	$: sortedData =
 		sortKey && sortDirection
 			? [...data].sort((a, b) => {
@@ -116,6 +120,11 @@
 </script>
 
 <table class="table">
+	<colgroup>
+		{#each config as cell (cell.key)}
+			<col width={cell.width} />
+		{/each}
+	</colgroup>
 	<thead>
 		<tr>
 			{#each config as cell (cell.key)}
@@ -172,12 +181,12 @@
 									title={item.active ? 'active' : 'inactive'}
 								/>
 							{:else}
-								<svelte:component this={cell.render} />
+								<svelte:component this={cell.render} {...item} />
 							{/if}
 						{:else if cell.key === 'select'}
 							<Checkbox
 								on:change={() => handleSelect(item)}
-								checked={Boolean(selectedRows.find((row) => row.id === item.id))}
+								checked={Boolean(selectedRowIds.find((id) => id === item.id))}
 							/>
 						{:else if cell.key === 'edit'}
 							<button class="button table__edit" type="button" on:click={() => handleEdit(item)}>
@@ -214,6 +223,23 @@
 	.table td {
 		text-align: left;
 		padding: 14px;
+	}
+
+	.table thead th {
+		position: relative;
+	}
+
+	.table thead th::after {
+		content: '|';
+		color: var(--color-border);
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+	}
+
+	.table thead th:last-child::after {
+		content: '';
 	}
 
 	.table tbody tr {

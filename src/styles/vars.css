@@ -7,14 +7,14 @@
 	--color-accent: #8a6f48;
 	--color-border: #d8d8d8;
 	--color-unselected: #e6e6e6;
-  --color-blockquote: #878787;
+	--color-blockquote: #878787;
 
 	--color-link: #656565;
 	--color-link-border: #656565;
 	--color-link-mob: #efefef;
 	--color-link-border-mob: #fff;
 
-  --color-link-alt: #8a6f48;
+	--color-link-alt: #8a6f48;
 
 	--color-button: #252525;
 	--color-button-text: #efefef;
@@ -26,4 +26,5 @@
 	--color-button-disabled-icon: #d8d8d8;
 
 	--color-icon: #000;
+	--color-icon-dark: #252525;
 }

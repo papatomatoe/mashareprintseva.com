@@ -2,10 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Spinner from '$lib/icons/Spinner.svelte';
-	import Image from '$lib/icons/Image.svelte';
-	import PDF from '$lib/icons/PDF.svelte';
 	import type { IFile } from '$lib/components/Filemanager.svelte';
-
+	import Image from '$lib/components/Image.svelte';
 	export let files: IFile[] = [];
 	export let selectedFileIds: string[] = [];
 
@@ -30,12 +28,10 @@
 				</div>
 			{/if}
 			<div class="files__image">
-				{#if file.fileType === 'application/pdf'}
-					<div class="files__pdf"><PDF /></div>
-				{:else if file.loading}
+				{#if file.loading}
 					<Spinner />
 				{:else}
-					<Image src={file.thumbnail} alt={file.name} />
+					<Image width={100} height={180} {...file} />
 				{/if}
 			</div>
 			<div class="files__info">
@@ -75,10 +71,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-
-	.files__pdf {
-		--color-icon: #252525;
 	}
 
 	.files__info {

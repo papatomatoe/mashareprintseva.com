@@ -8,8 +8,6 @@
 	onMount(async () => {
 		const response = await fetch('/api/v2/files/info');
 		const info = await response.json();
-
-		console.log(info);
 	});
 
 	export let data;

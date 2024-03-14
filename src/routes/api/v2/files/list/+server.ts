@@ -4,12 +4,9 @@ export const POST = async ({ request }) => {
 	try {
 		const data = await request.json();
 
-		console.log(data);
 		// if (!skip || !take) throw error(400, 'Invalid Request Params');
 
 		const response = await db.file.count();
-
-		console.log(response);
 
 		const files = {
 			page: 0,

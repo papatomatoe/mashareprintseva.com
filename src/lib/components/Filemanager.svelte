@@ -12,11 +12,16 @@
 </script>
 
 <script lang="ts">
+	import type { ComponentEvents } from 'svelte';
+	import { nanoid } from 'nanoid';
 	import Input from '$lib/components/Input.svelte';
 	import type { NotificationType } from '$lib/components/Notification.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import GridViewFiles from '$lib/components/GridViewFiles.svelte';
+	import Table from '$lib/components/Table.svelte';
+	import type { TableData, ITableConfig, ITableData } from '$lib/components/Table.svelte';
 	import Add from '$lib/icons/Add.svelte';
 	import Delete from '$lib/icons/Delete.svelte';
 	import Search from '$lib/icons/Search.svelte';
@@ -25,12 +30,10 @@
 	import { FILE_TYPES, IMAGE_TYPES } from '$lib/constants/files';
 	import { filesStore } from '$lib/stores/files/store';
 	import { debounce } from '$lib/utils/debounce';
-	import { nanoid } from 'nanoid';
-	import type { ComponentEvents } from 'svelte';
-	import GridViewFiles from '$lib/components/GridViewFiles.svelte';
 	import type { ViewType } from '$lib/stores/files/types';
-
-	import Clear from '$lib/icons/Clear.svelte';
+	// import Clear from '$lib/icons/Clear.svelte';
+	import Image from '$lib/components/Image.svelte';
+	import DateTime from '$lib/components/DateTime.svelte';
 
 	export let files: IFile[] = [];
 	export let loading = false;
@@ -45,7 +48,12 @@
 	$: renderedFiles = [...files, ...uploadedFilePlaceholders];
 
 	const handleSelect = (e: ComponentEvents<GridViewFiles>['input']) => {
-		const id = e.detail;
+		const item = e.detail;
+
+		const id = typeof item === 'string' ? item : item.id;
+
+		console.log(id);
+
 		selectedFileIds = selectedFileIds.some((el) => el === id)
 			? selectedFileIds.filter((el) => el !== id)
 			: [...selectedFileIds, id];
@@ -190,6 +198,34 @@
 	const handleChangeView = (view: ViewType) => {
 		$filesStore.view = view;
 	};
+
+	const tableConfig: ITableConfig[] = [
+		{
+			key: 'select',
+			width: 50
+		},
+		{
+			key: 'thumbnail',
+			title: 'Preview',
+			width: 50,
+			render: Image
+		},
+		{
+			key: 'name',
+			title: 'File name'
+		},
+		{
+			key: 'fileType',
+			title: 'File type',
+			width: 200
+		},
+		{
+			key: 'createdAt',
+			title: 'Created',
+			render: DateTime,
+			width: 300
+		}
+	];
 </script>
 
 <Notification
@@ -254,7 +290,16 @@
 	</label>
 </div>
 {#if renderedFiles && renderedFiles.length}
-	<GridViewFiles files={renderedFiles} {selectedFileIds} on:select={handleSelect} />
+	{#if $filesStore.view === 'grid'}
+		<GridViewFiles files={renderedFiles} {selectedFileIds} on:select={handleSelect} />
+	{:else}
+		<Table
+			config={tableConfig}
+			data={renderedFiles}
+			selectedRowIds={selectedFileIds}
+			on:select={handleSelect}
+		/>
+	{/if}
 {:else if hasError}
 	<p>error...</p>
 {:else}
