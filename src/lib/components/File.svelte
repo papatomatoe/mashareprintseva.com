@@ -1,18 +1,21 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { SvelteComponent, createEventDispatcher } from 'svelte';
 	import Spinner from '$lib/icons/Spinner.svelte';
 	import Clear from '$lib/icons/Clear.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
 
 	export let label = '';
 	export let error = '';
-	export let name = '';
+	// export let name = '';
 	export let placeholder = "Drag 'n' drop image here, or click to select image";
 	export let required = false;
 	export let fileUrl = '';
 	export let preview = '';
 
-	export let files: FileList | null = null;
 	let loading = false;
+	let files: IFile[] = [];
+	let modal: SvelteComponent;
 
 	const dispatch = createEventDispatcher();
 
@@ -21,7 +24,7 @@
 	};
 
 	const handleClear = () => {
-		files = null;
+		// files = null;
 		error = '';
 		fileUrl = '';
 	};
@@ -43,25 +46,23 @@
 
 	const uploadFile = async (file: File) => {
 		loading = true;
-		try {
-			const formData = new FormData();
-			formData.append('files', file, file.name);
+		// try {
+		// 	const formData = new FormData();
+		// 	formData.append('files', file, file.name);
 
-			const response = await fetch('/api/v2/files/upload', {
-				method: 'POST',
-				body: formData
-			});
+		// 	const response = await fetch('/api/v2/files/upload', {
+		// 		method: 'POST',
+		// 		body: formData
+		// 	});
 
-			console.log(response);
-
-			const [savedFile] = await response.json();
-			preview = savedFile.thumbnail;
-			fileUrl = savedFile.url;
-		} catch (e) {
-			console.error(e);
-		} finally {
-			loading = false;
-		}
+		// 	const [savedFile] = await response.json();
+		// 	preview = savedFile.thumbnail;
+		// 	fileUrl = savedFile.url;
+		// } catch (e) {
+		// 	console.error(e);
+		// } finally {
+		// 	loading = false;
+		// }
 	};
 
 	$: {
@@ -69,6 +70,11 @@
 		console.log(preview);
 	}
 
+	const handleOpenFilemanager = () => {
+		console.log(modal);
+		modal.open();
+	};
+	const handleAddFiles = () => {};
 	const handleAddImage = async (
 		e: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
@@ -79,8 +85,12 @@
 	};
 </script>
 
+<Modal bind:this={modal}>
+	<Filemanager {files} />
+</Modal>
+
 <div class="field">
-	<label class="field__label-wrapper">
+	<div class="field__label-wrapper">
 		{#if label}
 			<p class="field__label">
 				<span class="field__text">
@@ -91,8 +101,8 @@
 				{/if}
 			</p>
 		{/if}
-		<div class="field__wrapper">
-			<input
+		<button type="button" class="field__wrapper" on:click={handleOpenFilemanager}>
+			<!-- <input
 				accept="image/png, image/jpeg"
 				class="field__input"
 				type="file"
@@ -100,9 +110,9 @@
 				on:input={handleClearError}
 				on:change={handleAddImage}
 				{placeholder}
-			/>
-			<input class="field__url" type="text" {name} bind:value={fileUrl} />
-			<input class="field__url" type="text" name="preview" bind:value={preview} />
+			/> -->
+			<!-- <input class="field__url" type="text" {name} bind:value={fileUrl} /> -->
+			<!-- <input class="field__url" type="text" name="preview" bind:value={preview} /> -->
 			<div
 				tabindex="0"
 				role="button"
@@ -121,8 +131,8 @@
 					<p class="field__placeholder">{placeholder}</p>
 				{/if}
 			</div>
-		</div>
-	</label>
+		</button>
+	</div>
 
 	{#if fileUrl}
 		<button class="field__button" type="button" on:click={handleClear}>
@@ -148,65 +158,68 @@
 	.field__text {
 		font-size: 15px;
 		line-height: 23px;
-		color: #252525;
+		color: var(--color-label);
 	}
 
 	.field__required {
-		color: #f00;
+		color: var(--color-error);
 	}
 
 	.field__wrapper {
 		position: relative;
+		background-color: transparent;
+		border: none;
+		padding: 0;
 	}
 
-	.field__input {
+	/* .field__input {
 		display: none;
-	}
+	} */
 
 	.field__container {
 		display: grid;
 		place-items: center;
 		width: 100%;
 		height: 120px;
-		padding: 5px 40px 5px 10px;
-		background: #ffffff;
-		border: 1px solid #d8d8d8;
+		padding: 5px 10px 5px 10px;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
 		border-radius: 4px;
 
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
 		font: var(--font-main);
-		color: #454545;
+		color: var(--color-text);
 		outline: none;
 		transition: border-color 0.3s linear;
 		cursor: pointer;
 	}
 
 	.field__container:hover {
-		border-color: #454545;
+		border-color: var(--color-border);
 	}
 
 	.field__container:focus {
-		border-color: #8a6f48;
+		border-color: var(--color-accent);
 	}
 
 	.field__container--error,
 	.field__container--error:hover,
 	.field__container--error:focus {
-		border-color: #ff0000;
+		border-color: var(--color-error);
 	}
 
-	.field__input::placeholder,
+	/* .field__input::placeholder, */
 	.field__placeholder {
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		color: #d8d8d8;
+		color: var(--color-placeholder);
 	}
 
 	.field__placeholder {
-		position: relative;
+		/* position: relative; */
 		left: 20px;
 	}
 
@@ -217,7 +230,7 @@
 		font-size: 12px;
 		line-height: 14px;
 
-		color: #ff0000;
+		color: var(--color-error);
 	}
 	.field__button {
 		position: absolute;
@@ -232,17 +245,17 @@
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
-		--color-icon: #d8d8d8;
+		--color-icon: var(--color-icon-light);
 		z-index: 1;
 	}
 
 	.field__button:hover,
 	.field__button:focus-visible {
-		--color-icon: #8a6f48;
+		--color-icon: var(--color-icon-accent);
 	}
 
 	.field__button:active {
-		--color-icon: #252525;
+		--color-icon: var(--color-icon-dark);
 	}
 
 	.field__preview {
@@ -267,6 +280,6 @@
 	.field__spinner {
 		position: relative;
 		left: 15px;
-		--color-icon: #d8d8d8;
+		--color-icon: var(--color-icon-light);
 	}
 </style>

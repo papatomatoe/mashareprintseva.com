@@ -1,23 +1,19 @@
 <script lang="ts">
 	import Clear from '$lib/icons/Clear.svelte';
 
-	export let open: boolean = false;
-
 	let dialog: HTMLDialogElement;
 
-	$: {
-		if (dialog) {
-			open ? dialog.showModal() : dialog.close();
-		}
-	}
+	export const open = () => {
+		dialog.showModal();
+	};
 
-	const handleCloseModal = () => {
+	export const close = () => {
 		dialog.close();
 	};
 </script>
 
 <dialog class="modal" bind:this={dialog}>
-	<button type="button" on:click={handleCloseModal}><Clear /></button>
+	<button type="button" on:click={close}><Clear /></button>
 	<slot />
 </dialog>
 

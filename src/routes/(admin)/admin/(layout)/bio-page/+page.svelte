@@ -46,7 +46,6 @@
 		disabled
 	/>
 	<File
-		name="image"
 		label="image"
 		required
 		on:clearError={handleClearFileUrlError}
