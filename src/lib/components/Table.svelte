@@ -61,18 +61,19 @@
 	import { createEventDispatcher } from 'svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Edit from '$lib/icons/Edit.svelte';
-	import Inform from '$lib/icons/Inform.svelte';
+	// import Inform from '$lib/icons/Inform.svelte';
 
 	const dispatch = createEventDispatcher();
 
 	export let data: any[] = [];
 	export let config: ITableConfig[] = [];
 	export let selectedRowIds: string[] = [];
+	export let isAllRowsSelected = false;
 
 	let sortKey: SortKey | null = null;
 	let sortDirection: SortDirection | null = null;
 
-	$: isAllCheckboxSelected = Boolean(selectedRowIds.length);
+	// $: isAllCheckboxSelected = Boolean(selectedRowIds.length);
 	$: sortedData =
 		sortKey && sortDirection
 			? [...data].sort((a, b) => {
@@ -130,7 +131,11 @@
 			{#each config as cell (cell.key)}
 				<th>
 					{#if cell.key === 'select'}
-						<Checkbox on:change={handleCheckAll} checked={isAllCheckboxSelected} isCheckedAll />
+						<Checkbox
+							on:change={handleCheckAll}
+							checked={Boolean(selectedRowIds.length)}
+							isCheckedAll={isAllRowsSelected}
+						/>
 					{:else if cell.title}
 						{#if cell.sortable}
 							<button

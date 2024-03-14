@@ -21,7 +21,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import GridViewFiles from '$lib/components/GridViewFiles.svelte';
 	import Table from '$lib/components/Table.svelte';
-	import type { TableData, ITableConfig, ITableData } from '$lib/components/Table.svelte';
+	import type { ITableConfig } from '$lib/components/Table.svelte';
 	import Add from '$lib/icons/Add.svelte';
 	import Delete from '$lib/icons/Delete.svelte';
 	import Search from '$lib/icons/Search.svelte';
@@ -31,7 +31,6 @@
 	import { filesStore } from '$lib/stores/files/store';
 	import { debounce } from '$lib/utils/debounce';
 	import type { ViewType } from '$lib/stores/files/types';
-	// import Clear from '$lib/icons/Clear.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import DateTime from '$lib/components/DateTime.svelte';
 
@@ -186,6 +185,12 @@
 		selectedFileIds = selectedFileIds.length === files.length ? [] : [...files.map((el) => el.id)];
 	};
 
+	const handleSelectAllInTableView = () => {
+		selectedFileIds =
+			selectedFileIds.length || selectedFileIds.length === files.length
+				? []
+				: [...files.map((el) => el.id)];
+	};
 	// TODO: Pagination not work!!!
 	const handleNext = async () => {
 		console.log({ page: files.length <= limit ? currentPage : currentPage + 1, limit });
@@ -297,7 +302,9 @@
 			config={tableConfig}
 			data={renderedFiles}
 			selectedRowIds={selectedFileIds}
+			isAllRowsSelected={selectedFileIds.length !== files.length}
 			on:select={handleSelect}
+			on:select-all={handleSelectAllInTableView}
 		/>
 	{/if}
 {:else if hasError}
