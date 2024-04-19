@@ -1,24 +1,13 @@
-:root {
-	--main-font: 'Roboto', 'Arial', sans-serif;
-	--accent-font: 'Volkhov', 'Times', serif;
-
-	--color-bg: #fff;
-	--color-text: #454545;
-	--color-accent: #8a6f48;
-	--color-border: #d8d8d8;
-
-	--color-link: #656565;
-	--color-link-border: #656565;
-	--color-link-mob: #efefef;
-	--color-link-border-mob: #fff;
-}
+@import './vars.css';
 
 * {
 	box-sizing: border-box;
 }
 
 html,
-body {
+body,
+#app {
+	position: relative;
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -35,7 +24,7 @@ body {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.5;
-	font-family: var(--main-font);
+	font-family: var(--font-main);
 	color: var(--color-text);
 	font-style: normal;
 	letter-spacing: -0.2px;
@@ -84,7 +73,7 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 }
 
-#app {
+.app-container {
 	min-height: 100%;
 	display: grid;
 	grid-template-rows: min-content 1fr min-content;
@@ -112,17 +101,57 @@ body::-webkit-scrollbar-thumb {
 	margin-bottom: 30px;
 }
 
+.button {
+	padding: 7px;
+	display: block;
+	cursor: pointer;
+	background-color: var(--color-button);
+	border: none;
+	border-radius: 4px;
+
+	font-family: var(--font-main);
+	font-style: normal;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 21px;
+
+	color: var(--color-button-text);
+	cursor: pointer;
+	outline: none;
+
+	transition: background-color 0.2s linear;
+	--color-icon: var(--color-button-icon);
+}
+
+.button:hover,
+.button:focus-visible {
+	background-color: var(--color-button-hover);
+}
+
+.button:active {
+	background-color: var(--color-button-active);
+}
+
+.button--disabled,
+.button:disabled,
+.button:hover:disabled {
+	background-color: var(--color-button-disabled);
+	color: var(--color-button-disabled-text);
+	cursor: auto;
+	--color-icon: var(--color-button-disabled-icon);
+}
+
 .bio__content p:last-of-type {
 	margin-bottom: 10px;
 }
 .bio__content a {
 	text-decoration: underline;
 	display: inline-block;
-	color: #8a6f48;
+	color: var(--color-link-alt);
 	margin: 5px 0;
 }
 .bio__content a:hover,
-.bio__content a:focus {
+.bio__content a:focus-visible {
 	opacity: 0.8;
 }
 .bio__content a:active {
@@ -149,7 +178,7 @@ body::-webkit-scrollbar-thumb {
 	grid-area: link;
 	font-weight: 400;
 	text-decoration: underline;
-	color: #8a6f48;
+	color: var(--color-link-alt);
 	margin-bottom: 100px;
 }
 .project__subtitle blockquote {
@@ -163,8 +192,8 @@ body::-webkit-scrollbar-thumb {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.5;
-	font-family: Roboto, Arial, sans-serif;
-	color: #878787;
+	font-family: var(--font-main);
+	color: var(--color-blockquote);
 	font-style: normal;
 }
 
@@ -172,8 +201,8 @@ body::-webkit-scrollbar-thumb {
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.5;
-	font-family: Roboto, Arial, sans-serif;
-	color: #878787;
+	font-family: var(--font-main);
+	color: var(--color-blockquote);
 	font-style: normal;
 }
 
@@ -184,11 +213,11 @@ body::-webkit-scrollbar-thumb {
 	display: block;
 	text-align: center;
 	text-decoration: underline;
-	color: #8a6f48;
+	color: var(--color-link-alt);
 }
 
 .project__content a:hover,
-.project__content a:focus {
+.project__content a:focus-visible {
 	opacity: 0.8;
 }
 
@@ -221,8 +250,8 @@ body::-webkit-scrollbar-thumb {
 	font-weight: 700;
 	font-size: 18px;
 	line-height: 1.5;
-	font-family: Roboto, Arial, sans-serif;
-	color: #878787;
+	font-family: var(--font-main);
+	color: var(--color-blockquote);
 	font-style: normal;
 }
 .project__content blockquote cite {
@@ -231,10 +260,11 @@ body::-webkit-scrollbar-thumb {
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.5;
-	font-family: Roboto, Arial, sans-serif;
-	color: #878787;
+	font-family: var(--font-main);
+	color: var(--color-blockquote);
 	font-style: normal;
 }
+
 @media (min-width: 768px) {
 	.bio__content p {
 		margin: 5px auto 30px;

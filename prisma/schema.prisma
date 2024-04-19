@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  username      String   @unique
+  passwordHash  String
+  userAuthToken String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  roleId        String
+  role          Roles    @relation(fields: [roleId], references: [id])
+}
+
+model Roles {
+  id   String @id @default(uuid())
+  name String @unique
+  User User[]
+}
+
+model MainPage {
+  id        String  @id @default(uuid())
+  published Boolean
+  title     String  @unique
+  slug      String  @unique
+  content   String
+}
+
+model Bio {
+  id        String  @id @default(uuid())
+  published Boolean
+  title     String  @unique
+  slug      String  @unique
+  image     String
+  preview   String
+  epigraph  String
+  content   String
+}
+
+model File {
+  id         String   @id @default(uuid())
+  name       String?
+  uniqueName String?
+  url        String?
+  thumbnail  String?
+  fileType   String?
+  createdAt  DateTime @default(now())
+}

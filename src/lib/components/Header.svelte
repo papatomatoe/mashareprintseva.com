@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Logo, Nav } from '$lib/components';
+	import Logo from './Logo.svelte';
+	import Nav from './Nav.svelte';
 
 	export let menu: any;
 	export let social: any;
@@ -20,7 +21,6 @@
 
 <header class="header" class:inactive={isMenuOpened}>
 	{#if currentPath === HOME_PATH}
-		<!-- svelte-ignore a11y-missing-attribute -->
 		<a class="header__logo" aria-label="Logo Masha Reprintseva">
 			<Logo />
 		</a>
@@ -115,7 +115,7 @@
 			transition: opacity 0.3s linear;
 		}
 		.header__logo[href]:hover,
-		.header__logo[href]:focus {
+		.header__logo[href]:focus-visible {
 			opacity: 0.7;
 			transition: opacity 0.3s linear;
 		}

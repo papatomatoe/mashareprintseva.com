@@ -18,7 +18,6 @@
 		{#each menu as item (item.id)}
 			<li class="menu__item">
 				{#if currentPath === `/${item.slug}`}
-					<!-- svelte-ignore a11y-missing-attribute -->
 					<a class="link link--current">{item.title}</a>
 				{:else}
 					<a class="link" href="/{item.slug}" on:click={handleCloseMenu}>
@@ -44,7 +43,7 @@
 		font-weight: normal;
 		font-size: 17px;
 		line-height: 1.5;
-		font-family: var(--accent-font);
+		font-family: var(--font-accent);
 		color: var(--color-link-mob);
 		font-style: normal;
 	}
