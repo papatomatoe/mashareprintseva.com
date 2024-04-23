@@ -12,5 +12,5 @@ export const getFileList = async (page = 0, perPage = 50) => {
 
 	const pages = Math.ceil(total / perPage);
 
-	return { total, files, page, perPage, pages };
+	return { files, pagination: { page, perPage, pages, total } };
 };

@@ -1,4 +1,10 @@
 <script context="module" lang="ts">
+	export interface IPagination {
+		total: number;
+		page: number;
+		perPage: number;
+		pages: number;
+	}
 	export interface IFile {
 		id: string;
 		name: string | null;
@@ -35,13 +41,14 @@
 	import DateTime from '$lib/components/DateTime.svelte';
 
 	export let files: IFile[] = [];
+	export let pagination: IPagination | null = null;
 	export let loading = false;
 
 	let hasError = false;
 	let selectedFileIds: string[] = [];
 	let uploadedFilePlaceholders: IFile[] = [];
 	let notification: { message: string; type: NotificationType } | null = null;
-	let limit = 50;
+	let perPage = pagination?.perPage ?? 50;
 	let currentPage = 1;
 
 	$: renderedFiles = [...uploadedFilePlaceholders, ...files];
@@ -164,17 +171,17 @@
 	}, 500);
 
 	const handleChangeLimit = async (e: ComponentEvents<Pagination>['select-per-page']) => {
-		limit = e.detail.limit;
+		perPage = e.detail.limit;
 		loading = true;
 		try {
 			const response = await fetch('/api/v2/files/list', {
 				method: 'POST',
-				body: JSON.stringify(limit)
+				body: JSON.stringify(perPage)
 			});
 
 			const data = await response.json();
 
-			files = data;
+			files = data.files;
 		} catch (e) {
 			console.error(e);
 			notification = { message: 'Something went wrong...', type: 'error' };
@@ -195,11 +202,11 @@
 	};
 	// TODO: Pagination not work!!!
 	const handleNext = async () => {
-		console.log({ page: files.length <= limit ? currentPage : currentPage + 1, limit });
+		console.log({ page: files.length <= perPage ? currentPage : currentPage + 1, perPage });
 	};
 
 	const handlePrevious = async () => {
-		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, limit });
+		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, perPage });
 	};
 
 	const handleChangeView = (view: ViewType) => {
@@ -317,9 +324,9 @@
 
 <Pagination
 	withoutPages
-	perPage={limit}
+	{perPage}
 	disableNext={currentPage === 1}
-	disablePrevious={files.length < limit}
+	disablePrevious={files.length < perPage}
 	perPageOptions={[
 		{ title: '50', value: 50 },
 		{ title: '100', value: 100 },

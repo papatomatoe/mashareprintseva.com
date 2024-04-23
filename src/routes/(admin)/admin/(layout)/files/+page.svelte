@@ -1,16 +1,18 @@
 <script lang="ts">
-	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
+	import Filemanager, { type IFile, type IPagination } from '$lib/components/Filemanager.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
-	let files: IFile[] = [];
+	let files: IFile[];
+	let pagination: IPagination;
 	let loading: boolean = false;
 
 	$: files = data.filesData.files;
+	$: pagination = data.filesData.pagination;
 </script>
 
 <div class="files">
-	<Filemanager {files} {loading} />
+	<Filemanager {files} {pagination} {loading} />
 </div>
 
 <style>
