@@ -44,14 +44,16 @@
 	let limit = 50;
 	let currentPage = 1;
 
-	$: renderedFiles = [...files, ...uploadedFilePlaceholders];
+	$: renderedFiles = [...uploadedFilePlaceholders, ...files];
+
+	export const getFiles = () => {
+		return files.filter((el) => selectedFileIds.includes(el.id));
+	};
 
 	const handleSelect = (e: ComponentEvents<GridViewFiles>['input']) => {
 		const item = e.detail;
 
 		const id = typeof item === 'string' ? item : item.id;
-
-		console.log(id);
 
 		selectedFileIds = selectedFileIds.some((el) => el === id)
 			? selectedFileIds.filter((el) => el !== id)
@@ -79,17 +81,17 @@
 		uploadedFileList.forEach((file: File) => {
 			formData.append('files', file, file.name);
 			uploadedFilePlaceholders = [
-				...uploadedFilePlaceholders,
 				{
 					id: nanoid(),
-					name: null,
-					uniqueName: null,
-					url: null,
-					thumbnail: null,
-					fileType: null,
+					name: 'loading...',
+					uniqueName: '',
+					url: '',
+					thumbnail: '',
+					fileType: '-',
 					createdAt: new Date(),
 					loading: true
-				}
+				},
+				...uploadedFilePlaceholders
 			];
 		});
 
@@ -102,7 +104,7 @@
 
 			// const idx = files.findIndex((file) => file.fileId === fileId);
 
-			files = [...files, ...newFiles];
+			files = [...newFiles, ...files];
 
 			notification = { message: 'Successfully uploaded', type: 'success' };
 		} catch (e) {

@@ -61,6 +61,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import Checkbox from '$lib/components/Checkbox.svelte';
 	import Edit from '$lib/icons/Edit.svelte';
+	import Spinner from '$lib/icons/Spinner.svelte';
 	// import Inform from '$lib/icons/Inform.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -185,6 +186,14 @@
 									published={item.active}
 									title={item.active ? 'active' : 'inactive'}
 								/>
+							{:else if 'loading' in item}
+								{#if cell.key === 'thumbnail'}
+									<div class="table__spinner">
+										<Spinner />
+									</div>
+								{:else if cell.key === 'createdAt'}
+									-
+								{/if}
 							{:else}
 								<svelte:component this={cell.render} {...item} />
 							{/if}
@@ -316,5 +325,12 @@
 		text-transform: uppercase;
 		text-align: center;
 		color: #858585;
+	}
+
+	.table__spinner {
+		width: 50px;
+		height: 50px;
+		display: grid;
+		place-items: center;
 	}
 </style>
