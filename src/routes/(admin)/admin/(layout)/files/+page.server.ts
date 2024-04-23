@@ -6,7 +6,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	try {
 		const files = await getFileList();
-
 		return {
 			pageTitle: 'Admin | Files',
 			filesData: files

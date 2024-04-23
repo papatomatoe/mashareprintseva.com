@@ -16,6 +16,7 @@
 	let loading = false;
 	let files: IFile[] = [];
 	let modal: SvelteComponent;
+	let filemanager: SvelteComponent;
 
 	const dispatch = createEventDispatcher();
 
@@ -70,10 +71,10 @@
 		console.log(preview);
 	}
 
-	const handleOpenFilemanager = () => {
-		console.log(modal);
+	const handleOpenFilemanager = async () => {
 		modal.open();
 	};
+
 	const handleAddFiles = () => {};
 	const handleAddImage = async (
 		e: Event & {
@@ -86,7 +87,7 @@
 </script>
 
 <Modal bind:this={modal}>
-	<Filemanager {files} />
+	<Filemanager bind:this={filemanager} {files} />
 </Modal>
 
 <div class="field">

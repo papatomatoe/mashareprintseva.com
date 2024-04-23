@@ -3,8 +3,6 @@
 	export let height = 17;
 	export let name = '';
 	export let color = 'currentColor';
-
-	$: console.log($$props);
 </script>
 
 <svg
