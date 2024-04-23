@@ -43,6 +43,7 @@
 		--color-icon: var(--color-icon-dark);
 	}
 	.image img {
+		display: block;
 		object-fit: contain;
 	}
 </style>
