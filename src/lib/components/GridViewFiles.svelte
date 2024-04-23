@@ -59,6 +59,9 @@
 		border: 1px solid #d9d9d9;
 		border-radius: 4px;
 	}
+	.files__item:hover {
+		background-color: #f3f3f3;
+	}
 
 	.files__checkbox {
 		position: absolute;
