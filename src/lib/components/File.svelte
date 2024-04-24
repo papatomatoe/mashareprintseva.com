@@ -3,7 +3,7 @@
 	import Spinner from '$lib/icons/Spinner.svelte';
 	import Clear from '$lib/icons/Clear.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
+	import Filemanager from '$lib/components/Filemanager.svelte';
 
 	export let label = '';
 	export let error = '';
@@ -14,7 +14,6 @@
 	export let preview = '';
 
 	let loading = false;
-	let files: IFile[] = [];
 	let modal: SvelteComponent;
 	let filemanager: SvelteComponent;
 
@@ -72,6 +71,7 @@
 	}
 
 	const handleOpenFilemanager = async () => {
+		await filemanager.fetchFilesData();
 		modal.open();
 	};
 
@@ -87,7 +87,7 @@
 </script>
 
 <Modal bind:this={modal}>
-	<Filemanager bind:this={filemanager} {files} />
+	<Filemanager bind:this={filemanager} />
 </Modal>
 
 <div class="field">
