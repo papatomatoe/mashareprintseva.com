@@ -308,7 +308,7 @@
 		/>
 	</label>
 	<p class="files__info">
-		Files directory size: <span class="files__info-value">{info?.size}</span>
+		Files directory size: <span class="files__info-value">{info?.size ?? '-'}</span>
 	</p>
 </div>
 {#if renderedFiles && renderedFiles.length}
