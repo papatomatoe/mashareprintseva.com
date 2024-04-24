@@ -48,8 +48,6 @@
 	let selectedFileIds: string[] = [];
 	let uploadedFilePlaceholders: IFile[] = [];
 	let notification: { message: string; type: NotificationType } | null = null;
-	let perPage = pagination?.perPage ?? 50;
-	let currentPage = 1;
 
 	$: renderedFiles = [...uploadedFilePlaceholders, ...files];
 
@@ -170,24 +168,33 @@
 		}
 	}, 500);
 
-	const handleChangeLimit = async (e: ComponentEvents<Pagination>['select-per-page']) => {
-		perPage = e.detail.limit;
+	const fetchFilesData = async (params: { perPage: number; page: number }) => {
 		loading = true;
 		try {
 			const response = await fetch('/api/v2/files/list', {
 				method: 'POST',
-				body: JSON.stringify(perPage)
+				body: JSON.stringify(params)
 			});
-
 			const data = await response.json();
 
 			files = data.files;
+			pagination = data.pagination;
 		} catch (e) {
 			console.error(e);
 			notification = { message: 'Something went wrong...', type: 'error' };
 		} finally {
 			loading = false;
 		}
+	};
+
+	const handleChangePerPage = async (e: ComponentEvents<Pagination>['select-per-page']) => {
+		await fetchFilesData({ page: 0, perPage: e.detail.perPage });
+	};
+
+	const handleChangePage = async (e: ComponentEvents<Pagination>['select-page']) => {
+		const { page, perPage } = e.detail;
+
+		await fetchFilesData({ page, perPage });
 	};
 
 	const handleSelectAll = () => {
@@ -199,14 +206,6 @@
 			selectedFileIds.length || selectedFileIds.length === files.length
 				? []
 				: [...files.map((el) => el.id)];
-	};
-	// TODO: Pagination not work!!!
-	const handleNext = async () => {
-		console.log({ page: files.length <= perPage ? currentPage : currentPage + 1, perPage });
-	};
-
-	const handlePrevious = async () => {
-		console.log({ page: currentPage > 1 ? currentPage - 1 : 1, perPage });
 	};
 
 	const handleChangeView = (view: ViewType) => {
@@ -323,18 +322,16 @@
 {/if}
 
 <Pagination
-	withoutPages
-	{perPage}
-	disableNext={currentPage === 1}
-	disablePrevious={files.length < perPage}
+	currentPage={pagination?.page}
+	pages={pagination?.pages}
+	perPage={pagination?.perPage}
 	perPageOptions={[
 		{ title: '50', value: 50 },
 		{ title: '100', value: 100 },
 		{ title: '200', value: 200 }
 	]}
-	on:select-per-page={handleChangeLimit}
-	on:next={handleNext}
-	on:previous={handlePrevious}
+	on:select-page={handleChangePage}
+	on:select-per-page={handleChangePerPage}
 />
 
 <style>
