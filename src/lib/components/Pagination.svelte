@@ -6,63 +6,62 @@
 
 	const dispatch = createEventDispatcher();
 
-	const perGroup = 5;
+	const PER_GROUP = 5;
 
 	export let disableNext = false;
 	export let disablePrevious = false;
-
 	export let withoutPages = false;
 	export let pages = 0;
 	export let perPage = 0;
-	export let currentPage = 1;
+	export let currentPage = 0;
 	export let perPageOptions = [
 		{ title: '10', value: 10 },
 		{ title: '50', value: 50 },
 		{ title: '100', value: 100 }
 	];
 
-	$: groups = Math.ceil(pages / 5);
+	$: groups = Math.ceil(pages / PER_GROUP);
 
 	$: pageGroups = Array(groups)
 		.fill('')
 		.map((_, index) =>
 			Array(pages)
 				.fill('')
-				.map((_, idx) => idx + 1)
-				.slice(index * perGroup, index * perGroup + perGroup)
+				.map((_, idx) => idx)
+				.slice(index * PER_GROUP, index * PER_GROUP + PER_GROUP)
 		);
 
 	$: currentGroupIndex = pageGroups.findIndex((el) => el.includes(currentPage));
 
-	$: currentGroup = pageGroups && pageGroups.length ? pageGroups[currentGroupIndex] : [1];
+	$: currentGroup = pageGroups && pageGroups.length ? pageGroups[currentGroupIndex] : [0];
 
 	const handleSelectPerPage = (e: CustomEvent) => {
 		perPage = e.detail.value;
-		dispatch('select-per-page', { limit: perPage });
+		dispatch('select-per-page', { perPage });
 	};
 
 	const handleSelectCurrentPage = (page: number) => {
-		dispatch('select-page', page);
+		dispatch('select-page', { page, perPage });
 	};
 
 	const handleSelectPrevPage = () => {
-		const page = currentPage > 1 ? currentPage - 1 : currentPage;
-		dispatch('select-page', page);
+		const page = currentPage > 0 ? currentPage - 1 : currentPage;
+		dispatch('select-page', { page, perPage });
 	};
 
 	const handleSelectNextPage = () => {
 		const page = currentPage <= pages ? currentPage + 1 : currentPage;
-		dispatch('select-page', page);
+		dispatch('select-page', { page, perPage });
 	};
 
 	const handlePrevious = () => {
 		currentPage = currentPage > 1 ? currentPage - 1 : currentPage;
-		dispatch('previous', { limit: perPage, page: currentPage });
+		dispatch('previous', { perPage, page: currentPage });
 	};
 
 	const handleNext = () => {
 		currentPage = currentPage <= pages ? currentPage + 1 : currentPage;
-		dispatch('next', { limit: perPage, page: currentGroup });
+		dispatch('next', { perPage, page: currentGroup });
 	};
 </script>
 
@@ -99,7 +98,7 @@
 				<button
 					class="button pagination__button"
 					type="button"
-					disabled={currentPage === 1}
+					disabled={currentPage === 0}
 					on:click={handleSelectPrevPage}
 				>
 					<Prev />
@@ -113,7 +112,7 @@
 						type="button"
 						on:click={() => handleSelectCurrentPage(page)}
 					>
-						{page}
+						{page + 1}
 					</button>
 				</li>
 			{/each}
@@ -121,7 +120,7 @@
 			<li class="pagination__item">
 				<button
 					class="button pagination__button"
-					disabled={currentPage >= pages}
+					disabled={currentPage + 1 >= pages}
 					type="button"
 					on:click={handleSelectNextPage}
 				>
