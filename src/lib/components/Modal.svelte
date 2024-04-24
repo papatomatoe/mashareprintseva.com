@@ -18,8 +18,6 @@
 	const action: Action<HTMLBodyElement, boolean> = (body) => {
 		return {
 			update(show) {
-				console.log(show);
-
 				show ? body.classList.add('block-scroll') : body.classList.remove('block-scroll');
 			},
 			destroy() {
@@ -32,8 +30,18 @@
 <svelte:body use:action={show} />
 
 <dialog class="modal" bind:this={dialog}>
-	<button class="modal__button" type="button" on:click={close}><Clear /></button>
-	<slot />
+	<div class="modal__container">
+		<div class="modal__content">
+			<button class="modal__button" type="button" on:click={close}><Clear /></button>
+
+			<slot />
+		</div>
+		{#if $$slots.bottom}
+			<div class="modal__bottom">
+				<slot name="bottom" />
+			</div>
+		{/if}
+	</div>
 </dialog>
 
 <style>
@@ -42,18 +50,33 @@
 	}
 	.modal {
 		position: absolute;
-		padding: 60px;
 		width: 83%;
 		height: 90%;
 		border: none;
+		padding: 0;
 		border-radius: 4px;
 		box-shadow: 0px 10px 100px -30px gray;
 		z-index: 9999;
+		overflow: hidden;
+	}
+
+	.modal__container {
+		padding: 60px;
+		padding-right: 0;
+		height: 100%;
+		width: 100%;
 	}
 
 	.modal::backdrop {
 		background-color: rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(3px);
+	}
+
+	.modal__content {
+		height: 100%;
+		padding: 0;
+		padding-right: 60px;
+		overflow-y: auto;
 	}
 
 	.modal__button {
@@ -77,5 +100,12 @@
 
 	.modal__button:active {
 		--color-icon: var(--color-icon-dark);
+	}
+
+	.modal__bottom {
+		position: absolute;
+		bottom: 10px;
+		background-color: var(--color-bg);
+		width: calc(100% - 120px);
 	}
 </style>
