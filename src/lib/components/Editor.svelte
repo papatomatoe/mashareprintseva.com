@@ -2,7 +2,7 @@
 	import Editor from '@tinymce/tinymce-svelte';
 	import Filemanager, { type IFile } from './Filemanager.svelte';
 	import Modal from './Modal.svelte';
-	import type { ComponentEvents } from 'svelte';
+	import type { ComponentEvents, SvelteComponent } from 'svelte';
 
 	export let value = '';
 	export let id = '';
@@ -11,6 +11,8 @@
 
 	let modalOpen = false;
 	let files: IFile[] = [];
+
+	let modal: SvelteComponent;
 
 	const handleOpenDialog = async () => {
 		modalOpen = true;
@@ -21,10 +23,6 @@
 		});
 
 		files = await response.json();
-	};
-
-	const handleCloseModal = () => {
-		modalOpen = false;
 	};
 
 	const handleAddFiles = async (e: ComponentEvents<Filemanager>['add']) => {
@@ -81,7 +79,7 @@
 		file_picker_types: 'image',
 		// @see https://www.tiny.cloud/docs/tinymce/6/file-image-upload/#interactive-example
 		file_picker_callback: () => {
-			handleOpenDialog();
+			modal.open();
 			// const input = document.createElement('input');
 			// input.setAttribute('type', 'file');
 			// input.setAttribute('accept', 'image/*');
@@ -109,12 +107,12 @@
 />
 <textarea class="editor__textarea" {name} bind:value />
 
-<Modal open={modalOpen}>
+<Modal bind:this={modal}>
 	<Filemanager on:add={handleAddFiles} {files} />
 	<button
 		type="button"
 		on:click={() => {
-			modalOpen = false;
+			modal.close();
 		}}>Cancel</button
 	>
 </Modal>
