@@ -9,10 +9,11 @@
 
 	$: files = data.filesData.files;
 	$: pagination = data.filesData.pagination;
+	$: info = data.filesData.info;
 </script>
 
 <div class="files">
-	<Filemanager {files} {pagination} {loading} />
+	<Filemanager {info} {files} {pagination} {loading} />
 </div>
 
 <style>

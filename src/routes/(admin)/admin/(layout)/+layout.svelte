@@ -3,12 +3,6 @@
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import Logo from '$lib/components/Logo.svelte';
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
-	import { onMount } from 'svelte';
-
-	onMount(async () => {
-		const response = await fetch('/api/v2/files/info');
-		const info = await response.json();
-	});
 
 	export let data;
 

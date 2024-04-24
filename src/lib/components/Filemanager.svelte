@@ -15,6 +15,11 @@
 		createdAt: Date;
 		loading?: boolean;
 	}
+
+	export interface IInfo {
+		size: string;
+		bytes: number;
+	}
 </script>
 
 <script lang="ts">
@@ -42,6 +47,7 @@
 
 	export let files: IFile[] = [];
 	export let pagination: IPagination | null = null;
+	export let info: IInfo | null = null;
 	export let loading = false;
 
 	let hasError = false;
@@ -179,6 +185,7 @@
 
 			files = data.files;
 			pagination = data.pagination;
+			info = data.info;
 		} catch (e) {
 			console.error(e);
 			notification = { message: 'Something went wrong...', type: 'error' };
@@ -249,7 +256,6 @@
 
 <div class="files__top">
 	<h1 class="files__title">Files</h1>
-
 	<div class="files__search">
 		<Input placeholder="search" on:input={handleSearch}>
 			<svelte:fragment slot="icon">
@@ -301,6 +307,9 @@
 			disabled={loading}
 		/>
 	</label>
+	<p class="files__info">
+		Files directory size: <span class="files__info-value">{info?.size}</span>
+	</p>
 </div>
 {#if renderedFiles && renderedFiles.length}
 	{#if $filesStore.view === 'grid'}
@@ -337,6 +346,7 @@
 <style>
 	.files__top {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		padding: 0 0 21px;
 		margin-bottom: 43px;
@@ -369,12 +379,6 @@
 		cursor: auto;
 		--color-icon: var(--color-button-disabled-icon);
 	}
-	/* .spinner {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	} */
 
 	.files__input {
 		display: none;
@@ -410,5 +414,13 @@
 		cursor: auto;
 		background-color: var(--color-text);
 		--color-icon: var(--color-bg);
+	}
+
+	.files__info {
+		width: 100%;
+		padding: 10px 0 0;
+	}
+	.files__info-value {
+		font-weight: 700;
 	}
 </style>
