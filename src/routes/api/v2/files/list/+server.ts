@@ -1,9 +1,9 @@
 import { error, json } from '@sveltejs/kit';
 import { getFileList } from '$lib/database/db';
 export const POST = async ({ request }) => {
-	const perPage = await request.json();
+	const { perPage, page } = await request.json();
 	try {
-		const data = await getFileList(0, perPage);
+		const data = await getFileList(page, perPage);
 
 		return json({ ...data });
 	} catch (e) {
