@@ -174,7 +174,12 @@
 		}
 	}, 500);
 
-	const fetchFilesData = async (params: { perPage: number; page: number }) => {
+	export const fetchFilesData = async (
+		params = {
+			page: 0,
+			perPage: 50
+		}
+	) => {
 		loading = true;
 		try {
 			const response = await fetch('/api/v2/files/list', {
