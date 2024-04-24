@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SvelteComponent, createEventDispatcher } from 'svelte';
+	import { SvelteComponent, createEventDispatcher, type ComponentEvents } from 'svelte';
 	import Spinner from '$lib/icons/Spinner.svelte';
 	import Clear from '$lib/icons/Clear.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -14,6 +14,8 @@
 	export let preview = '';
 
 	let loading = false;
+	let isDisabledSelectButton = true;
+
 	let modal: SvelteComponent;
 	let filemanager: SvelteComponent;
 
@@ -84,10 +86,21 @@
 		const file = e?.currentTarget?.files && e.currentTarget.files[0];
 		file && (await uploadFile(file));
 	};
+
+	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
+		isDisabledSelectButton = e.detail.ids.length !== 1;
+	};
 </script>
 
 <Modal bind:this={modal}>
-	<Filemanager bind:this={filemanager} />
+	<Filemanager bind:this={filemanager} on:check={handleCheckFiles} />
+
+	<div class="file-modal-panel" slot="bottom">
+		<button type="button" class="button button--cancel" on:click={() => modal.close()}
+			>Cancel</button
+		>
+		<button type="button" class="button" disabled={isDisabledSelectButton}>Select</button>
+	</div>
 </Modal>
 
 <div class="field">
@@ -147,6 +160,11 @@
 </div>
 
 <style>
+	.file-modal-panel {
+		display: flex;
+		justify-content: flex-end;
+		gap: 10px;
+	}
 	.field {
 		position: relative;
 	}

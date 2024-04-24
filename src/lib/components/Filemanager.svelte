@@ -44,6 +44,9 @@
 	import type { ViewType } from '$lib/stores/files/types';
 	import Image from '$lib/components/Image.svelte';
 	import DateTime from '$lib/components/DateTime.svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let files: IFile[] = [];
 	export let pagination: IPagination | null = null;
@@ -60,6 +63,12 @@
 	export const getFiles = () => {
 		return files.filter((el) => selectedFileIds.includes(el.id));
 	};
+
+	const handleFileCheck = (ids: string[]) => {
+		dispatch('check', { ids });
+	};
+
+	$: handleFileCheck(selectedFileIds);
 
 	const handleSelect = (e: ComponentEvents<GridViewFiles>['input']) => {
 		const item = e.detail;
@@ -146,7 +155,7 @@
 
 			selectedFileIds = [];
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			notification = { message: 'Something went wrong...', type: 'error' };
 		} finally {
 			loading = false;
