@@ -27,6 +27,10 @@
 	--color-button-disabled-text: #d8d8d8;
 	--color-button-disabled-icon: #d8d8d8;
 
+	--color-button-cancel: #e6e6e6;
+	--color-button-cancel-text: #454545;
+	--color-button-cancel-hover-text: #efefef;
+
 	--color-icon: #000;
 	--color-icon-dark: #252525;
 	--color-icon-light: #d8d8d8;

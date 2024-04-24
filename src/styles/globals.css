@@ -144,6 +144,16 @@ p {
 	--color-icon: var(--color-button-disabled-icon);
 }
 
+.button--cancel {
+	background-color: var(--color-button-cancel);
+	color: var(--color-button-cancel-text);
+}
+
+.button--cancel:hover,
+.button--cancel:focus-visible {
+	color: var(--color-button-cancel-hover-text);
+}
+
 .bio__content p:last-of-type {
 	margin-bottom: 10px;
 }
