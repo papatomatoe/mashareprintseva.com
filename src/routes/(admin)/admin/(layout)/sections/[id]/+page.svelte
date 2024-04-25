@@ -1,6 +1,6 @@
 <script lang="ts">
 	import slugify from 'slugify';
-	import Editor from '$lib/components/Editor.svelte';
+	import Editor from '$lib/components/EditorOld.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Textarea from '$lib/components/Textarea.svelte';
@@ -17,7 +17,11 @@
 	let altTitle = '';
 	let description = '';
 	let subtitle = '';
-	let images: FileList | null = null;
+
+	let image = '';
+	let imagePreview = '';
+	let imageError = '';
+
 	let options = [
 		{ title: 'The Unseen Hues', value: '1' },
 		{ title: 'Serendipity of Man', value: '2' },
@@ -50,9 +54,19 @@
 	const handleRemoveProject = <T>(id: T) => {
 		selectedProjects = selectedProjects.filter((el) => el.value !== id);
 	};
+
+	const handleClearImageError = () => {
+		imageError = '';
+	};
+
+	const handleSubmit = () => {
+		if (!image) imageError = '';
+	};
+
+	$: hasErrors = Boolean(imageError);
 </script>
 
-<Form title="New Item">
+<Form title="New Item" {hasErrors} on:submit={handleSubmit}>
 	<div class="form__fields form__fields--top">
 		<Input label="id" name="id" disabled />
 		<Input
@@ -95,11 +109,12 @@
 			<Textarea name="subtitle" label="subtitle" value={subtitle} />
 		</div>
 		<File
-			name="image"
 			label="image"
-			placeholder="Drag 'n' drop image here, or click to select image"
 			required
-			bind:files={images}
+			on:clearError={handleClearImageError}
+			bind:fileUrl={image}
+			bind:preview={imagePreview}
+			error={imageError}
 		/>
 	</div>
 	<div class="editor">

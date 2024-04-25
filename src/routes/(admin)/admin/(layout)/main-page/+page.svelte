@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Input from '$lib/components/Input.svelte';
 	import Form from '$lib/components/Form.svelte';
-	import Editor from '$lib/components/Editor.svelte';
+	import Editor from '$lib/components/EditorOld.svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
 	export let data;

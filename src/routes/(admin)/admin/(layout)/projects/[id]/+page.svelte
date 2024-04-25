@@ -1,6 +1,6 @@
 <script lang="ts">
 	import slugify from 'slugify';
-	import Editor from '$lib/components/Editor.svelte';
+	import Editor from '$lib/components/EditorOld.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import File from '$lib/components/File.svelte';
@@ -9,12 +9,21 @@
 
 	let title = '';
 	let titleError = '';
+
 	let slug = '';
 	let slugError = '';
+
 	let description = '';
 	let subtitle = '';
-	let images: FileList | null = null;
-	let preview: FileList | null = null;
+
+	let titleImage = '';
+	let titleImageThumbnail = '';
+	let titleImageError = '';
+
+	let previewListImage = '';
+	let previewListImageThumbnail = '';
+	let previewListImageError = '';
+
 	let options = [
 		{ title: 'The Unseen Hues', value: '1' },
 		{ title: 'Serendipity of Man', value: '2' },
@@ -44,9 +53,24 @@
 	const handleRemoveSection = <T>(id: T) => {
 		selectedSection = null;
 	};
+
+	const handleSubmit = () => {
+		if (!titleImage) titleImageError = 'require';
+		if (!previewListImage) previewListImageError = 'require';
+	};
+
+	const handleClearPreviewError = () => {
+		previewListImageError = '';
+	};
+
+	const handleClearTitleImageError = () => {
+		titleImageError = '';
+	};
+
+	$: hasErrors = Boolean(previewListImageError) || Boolean(titleImageError);
 </script>
 
-<Form title="New Item">
+<Form title="New Item" {hasErrors} on:submit={handleSubmit}>
 	<div class="form__fields form__fields--top">
 		<Input label="id" name="id" disabled />
 		<Input
@@ -75,18 +99,20 @@
 	</div>
 	<div class="form__fields form__fields--mid">
 		<File
-			name="image"
 			label="preview"
-			placeholder="Drag 'n' drop image here, or click to select image"
 			required
-			bind:files={preview}
+			on:clearError={handleClearPreviewError}
+			bind:fileUrl={previewListImage}
+			bind:preview={previewListImageThumbnail}
+			error={previewListImageError}
 		/>
 		<File
-			name="image"
 			label="image"
-			placeholder="Drag 'n' drop image here, or click to select image"
 			required
-			bind:files={images}
+			on:clearError={handleClearTitleImageError}
+			bind:fileUrl={titleImage}
+			bind:preview={titleImageThumbnail}
+			error={titleImageError}
 		/>
 	</div>
 	<div class="editor">
