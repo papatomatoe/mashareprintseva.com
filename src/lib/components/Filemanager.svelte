@@ -64,6 +64,10 @@
 		return files.filter((el) => selectedFileIds.includes(el.id));
 	};
 
+	export const resetSelection = () => {
+		selectedFileIds = [];
+	};
+
 	const handleFileCheck = (ids: string[]) => {
 		dispatch('check', { ids });
 	};
@@ -121,8 +125,6 @@
 			const response = await fetch('/api/v2/files/upload', { method: 'POST', body: formData });
 
 			const newFiles = await response.json();
-
-			// const idx = files.findIndex((file) => file.fileId === fileId);
 
 			files = [...newFiles, ...files];
 
