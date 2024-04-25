@@ -7,7 +7,6 @@
 
 	export let label = '';
 	export let error = '';
-	// export let name = '';
 	export let placeholder = "Drag 'n' drop image here, or click to select image";
 	export let required = false;
 	export let fileUrl = '';
@@ -26,7 +25,6 @@
 	};
 
 	const handleClear = () => {
-		// files = null;
 		error = '';
 		fileUrl = '';
 	};
@@ -48,43 +46,39 @@
 
 	const uploadFile = async (file: File) => {
 		loading = true;
-		// try {
-		// 	const formData = new FormData();
-		// 	formData.append('files', file, file.name);
+		try {
+			const formData = new FormData();
+			formData.append('files', file, file.name);
 
-		// 	const response = await fetch('/api/v2/files/upload', {
-		// 		method: 'POST',
-		// 		body: formData
-		// 	});
+			const response = await fetch('/api/v2/files/upload', {
+				method: 'POST',
+				body: formData
+			});
 
-		// 	const [savedFile] = await response.json();
-		// 	preview = savedFile.thumbnail;
-		// 	fileUrl = savedFile.url;
-		// } catch (e) {
-		// 	console.error(e);
-		// } finally {
-		// 	loading = false;
-		// }
+			const [savedFile] = await response.json();
+			preview = savedFile.thumbnail;
+			fileUrl = savedFile.url;
+		} catch (e) {
+			console.error(e);
+		} finally {
+			loading = false;
+		}
 	};
 
-	$: {
-		console.log(fileUrl);
-		console.log(preview);
-	}
-
 	const handleOpenFilemanager = async () => {
+		handleClearError();
 		await filemanager.fetchFilesData();
 		modal.open();
 	};
 
-	const handleAddFiles = () => {};
-	const handleAddImage = async (
-		e: Event & {
-			currentTarget: EventTarget & HTMLInputElement;
-		}
-	) => {
-		const file = e?.currentTarget?.files && e.currentTarget.files[0];
-		file && (await uploadFile(file));
+	const handleAddFiles = () => {
+		const [file] = filemanager.getFiles();
+
+		fileUrl = file.url;
+		preview = file.thumbnail;
+
+		filemanager.resetSelection();
+		modal.close();
 	};
 
 	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
@@ -96,10 +90,17 @@
 	<Filemanager bind:this={filemanager} on:check={handleCheckFiles} />
 
 	<div class="file-modal-panel" slot="bottom">
-		<button type="button" class="button button--cancel" on:click={() => modal.close()}
-			>Cancel</button
+		<button
+			type="button"
+			class="button button--cancel"
+			on:click={() => {
+				filemanager.resetSelection();
+				modal.close();
+			}}>Cancel</button
 		>
-		<button type="button" class="button" disabled={isDisabledSelectButton}>Select</button>
+		<button type="button" class="button" disabled={isDisabledSelectButton} on:click={handleAddFiles}
+			>Select</button
+		>
 	</div>
 </Modal>
 
@@ -116,17 +117,8 @@
 			</p>
 		{/if}
 		<button type="button" class="field__wrapper" on:click={handleOpenFilemanager}>
-			<!-- <input
-				accept="image/png, image/jpeg"
-				class="field__input"
-				type="file"
-				bind:files
-				on:input={handleClearError}
-				on:change={handleAddImage}
-				{placeholder}
-			/> -->
-			<!-- <input class="field__url" type="text" {name} bind:value={fileUrl} /> -->
-			<!-- <input class="field__url" type="text" name="preview" bind:value={preview} /> -->
+			<input class="field__url" type="hidden" name="image" bind:value={fileUrl} />
+			<input class="field__url" type="hidden" name="preview" bind:value={preview} />
 			<div
 				tabindex="0"
 				role="button"
@@ -191,10 +183,6 @@
 		padding: 0;
 	}
 
-	/* .field__input {
-		display: none;
-	} */
-
 	.field__container {
 		display: grid;
 		place-items: center;
@@ -229,7 +217,6 @@
 		border-color: var(--color-error);
 	}
 
-	/* .field__input::placeholder, */
 	.field__placeholder {
 		font-weight: 300;
 		font-size: 14px;
@@ -238,7 +225,6 @@
 	}
 
 	.field__placeholder {
-		/* position: relative; */
 		left: 20px;
 	}
 
@@ -290,10 +276,6 @@
 	.field__image {
 		height: 100%;
 		object-fit: contain;
-	}
-
-	.field__url {
-		display: none;
 	}
 
 	.field__spinner {
