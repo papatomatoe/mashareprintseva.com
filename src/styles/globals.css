@@ -151,7 +151,7 @@ p {
 
 .button--cancel:hover,
 .button--cancel:focus-visible {
-	color: var(--color--gray-95-hover-text);
+	color: var(--color--gray-95);
 }
 
 .bio__content p:last-of-type {
