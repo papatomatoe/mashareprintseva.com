@@ -11,4 +11,5 @@ vite.config.ts.timestamp-*
 /.zed
 /.vscode
 /static/upload
-prisma/dev.db
+/prisma/dev.db
+/prisma/migrations/*
