@@ -83,7 +83,7 @@
 		>
 			<path
 				d="M1 1L5.5 5L10 1"
-				stroke="#D8D8D8"
+				stroke="var(--color--gray-85)"
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
@@ -123,21 +123,21 @@
 	}
 	.select__button:hover,
 	.select__button:focus-visible {
-		background-color: #d8d8d8;
+		background-color: var(--color--gray-85);
 	}
 
 	.select__button--selected {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background-color: #fff;
-		border: 1px solid #d8d8d8;
+		background-color: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 	}
 
 	.select__button--selected:hover,
 	.select__button--selected:focus-visible {
-		background-color: #fff;
-		border: 1px solid #d8d8d8;
+		background-color: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 	}
 	.icons--open {
 		transform: rotateZ(180deg);
@@ -149,13 +149,13 @@
 		position: absolute;
 		width: 100%;
 		top: calc(100% + 2px);
-		border: 1px solid #d8d8d8;
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
-		background-color: #fff;
+		background-color: var(--color--white);
 		gap: 4px;
 	}
 
 	.select__placeholder {
-		color: #d8d8d8;
+		color: var(--color--gray-85);
 	}
 </style>

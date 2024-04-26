@@ -31,8 +31,8 @@
 		place-items: center;
 		width: 14px;
 		height: 14px;
-		background-color: #fff;
-		border: 1px solid #858585;
+		background-color: var(--color--white);
+		border: 1px solid var(--color--gray-50);
 		border-radius: 4px;
 		cursor: pointer;
 	}
@@ -42,11 +42,11 @@
 	}
 
 	.input:checked + .element {
-		border-color: #858585;
-		background-color: #858585;
+		border-color: var(--color--gray-50);
+		background-color: var(--color--gray-50);
 	}
 	.input:checked + .element .element__icon {
 		display: grid;
-		--color-icon: #fff;
+		--color-icon: var(--color--white);
 	}
 </style>

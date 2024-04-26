@@ -53,7 +53,7 @@
 					>
 						<path
 							d="M8 1L1 8.5L8 16M14 1L7 8.5L14 16M20 1L13 8.5L20 16"
-							stroke="#D8D8D8"
+							stroke="var(--color--gray-85)"
 							stroke-width="2"
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -107,7 +107,7 @@
 		padding: 12px 40px;
 		align-items: center;
 		gap: 22px;
-		border-bottom: 2px solid #d8d8d8;
+		border-bottom: 2px solid var(--color--gray-85);
 	}
 
 	.header__logo {
@@ -125,7 +125,7 @@
 		font-weight: 600;
 		font-size: 14px;
 		line-height: 21px;
-		color: #454545;
+		color: var(--color--gray-30);
 	}
 
 	.header__logout {
@@ -144,7 +144,7 @@
 
 	.main__menu {
 		position: relative;
-		border-right: 2px solid #d8d8d8;
+		border-right: 2px solid var(--color--gray-85);
 	}
 
 	.main--dashboard {
@@ -161,8 +161,8 @@
 		left: calc(100% - 18px);
 		border-radius: 50%;
 
-		background-color: #252525;
-		border: 2px solid #d8d8d8;
+		background-color: var(--color--gray-15);
+		border: 2px solid var(--color--gray-85);
 		cursor: pointer;
 		outline: none;
 
@@ -172,10 +172,10 @@
 	}
 	.menu__collapse:hover,
 	.menu__collapse:focus-visible {
-		background-color: #8a6f48;
+		background-color: var(--color--primary);
 	}
 	.menu__collapse:active {
-		background-color: #454545;
+		background-color: var(--color--gray-30);
 	}
 
 	.menu__collapse--collapsed {
@@ -203,7 +203,7 @@
 
 		text-transform: uppercase;
 
-		color: #8a6f48;
+		color: var(--color--primary);
 	}
 	.menu__list {
 		display: grid;
@@ -226,36 +226,36 @@
 		font-size: 14px;
 		line-height: 21px;
 
-		color: #000000;
+		color: var(--color--black);
 	}
 
 	.menu__link:hover,
 	.menu__link:focus-visible {
-		background-color: #d8d8d8;
+		background-color: var(--color--gray-85);
 	}
 
 	.menu__link:active {
-		background-color: #8a6f48;
-		--color-icon: #fff;
+		background-color: var(--color--primary);
+		--color-icon: var(--color--white);
 	}
 
 	.menu__link:active span {
-		color: #fff;
+		color: var(--color--white);
 	}
 
 	.menu__link--current,
 	.menu__link--current:hover,
 	.menu__link--current:focus-visible,
 	.menu__link--current:active {
-		background-color: #8a6f48;
-		--color-icon: #fff;
+		background-color: var(--color--primary);
+		--color-icon: var(--color--white);
 	}
 
 	.menu__link--current span,
 	.menu__link--current:hover span,
 	.menu__link--current:focus-visible span,
 	.menu__link--current:active span {
-		color: #fff;
+		color: var(--color--white);
 	}
 
 	.main__wrapper {

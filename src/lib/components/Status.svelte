@@ -8,15 +8,15 @@
 <style>
 	.status {
 		width: 77px;
-		color: #822121;
-		background-color: #f39090;
+		color: var(--color--red-dark);
+		background-color: var(--color--red-light);
 		padding: 0 10px;
 		border-radius: 4px;
 		text-align: center;
 	}
 	.status--published {
-		color: #21824e;
-		background-color: #90f3be;
+		color: var(--color--green-dark);
+		background-color: var(--color--green-light);
 	}
 
 	.status--dot {

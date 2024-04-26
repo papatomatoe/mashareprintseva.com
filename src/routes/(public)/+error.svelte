@@ -33,7 +33,7 @@
 	.error__title {
 		margin: 0;
 		font-size: 24px;
-		color: #8a6f48;
+		color: var(--color--primary);
 	}
 
 	.error__buttons {
@@ -49,15 +49,15 @@
 		background-color: transparent;
 		border: none;
 		text-decoration: underline;
-		font-family: var(--font-main);
-		color: #000;
+		font-family: var(--font--primary);
+		color: var(--color--black);
 		cursor: pointer;
 		line-height: 1.5;
 		font-size: 15px;
 	}
 	.error__button:hover,
 	.error__button:focus {
-		color: #8a6f48;
+		color: var(--color--primary);
 	}
 	.error__button:active {
 		opacity: 0.7;

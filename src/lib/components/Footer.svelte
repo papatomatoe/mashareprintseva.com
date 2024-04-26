@@ -19,8 +19,8 @@
 	}
 
 	.footer__wrapper {
-		border-top: 1px solid #d8d8d8;
-		border-bottom: 1px solid #d8d8d8;
+		border-top: 1px solid var(--color--gray-85);
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 
 	.footer__copy {
@@ -30,9 +30,9 @@
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 1.5;
-		font-family: 'Volkhov', 'Georgia', serif;
+		font-family: var(--font--secondary);
 		text-align: center;
-		color: #858585;
+		color: var(--color--gray-50);
 		font-style: normal;
 	}
 	@media (min-width: 768px) {
@@ -42,7 +42,7 @@
 	}
 	@media (min-width: 1200px) {
 		.footer {
-			border-top: 1px solid #d8d8d8;
+			border-top: 1px solid var(--color--gray-85);
 			width: 100%;
 			padding-top: 25px;
 			padding-bottom: 25px;

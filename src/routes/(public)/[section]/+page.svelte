@@ -42,7 +42,7 @@
 		padding-top: 20px;
 		height: 100%;
 
-		border-top: 1px solid #d8d8d8;
+		border-top: 1px solid var(--color--gray-85);
 	}
 	.section__title {
 		margin-bottom: 50px;
@@ -50,8 +50,8 @@
 		font-weight: bold;
 		font-size: 28px;
 		line-height: 1.5;
-		font-family: 'Volkhov', 'Times', serif;
-		color: #000000;
+		font-family: var(--font--secondary);
+		color: var(--color--black);
 		font-style: normal;
 	}
 	.section__subtitle {
@@ -59,14 +59,14 @@
 		font-weight: bold;
 		font-size: 14px;
 		line-height: 1.5;
-		font-family: 'Volkhov', 'Times', serif;
-		color: #656565;
+		font-family: var(--font--secondary);
+		color: var(--color--gray-50);
 		font-style: normal;
 	}
 	.section__description {
 		padding-bottom: 30px;
 		margin-bottom: 50px;
-		border-bottom: 1px solid #d8d8d8;
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 	.section__image {
 		width: 100%;

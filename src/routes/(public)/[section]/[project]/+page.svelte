@@ -49,8 +49,8 @@
 		font-weight: 700;
 		font-size: 28px;
 		line-height: 1.5;
-		font-family: Volkhov, Times, serif;
-		color: #000;
+		font-family: var(--font--secondary);
+		color: var(--color--black);
 		font-style: normal;
 	}
 
@@ -64,7 +64,7 @@
 	.projects {
 		padding-top: 50px;
 		margin-top: 100px;
-		border-top: 1px solid #d8d8d8;
+		border-top: 1px solid var(--color--gray-85);
 	}
 	@media (min-width: 768px) {
 		.project {

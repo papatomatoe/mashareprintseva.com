@@ -45,26 +45,26 @@
 		content: '/';
 		padding: 0 6px 0 3px;
 		font-weight: 500;
-		color: #8a6f48;
+		color: var(--color--primary);
 	}
 
 	.breadcrumbs__link {
 		font-weight: 400;
-		color: #8a6f48;
+		color: var(--color--primary);
 		transition: color 0.2s;
 	}
 
 	.breadcrumbs__link:hover,
 	.breadcrumbs__link:focus-visible {
-		color: #454545;
+		color: var(--color--gray-30);
 	}
 	.breadcrumbs__link:active {
-		color: #d8d8d8;
+		color: var(--color--gray-85);
 	}
 	.breadcrumbs__link--current,
 	.breadcrumbs__link--current:hover,
 	.breadcrumbs__link--current:focus-visible,
 	.breadcrumbs__link--current:active {
-		color: #000;
+		color: var(--color--black);
 	}
 </style>

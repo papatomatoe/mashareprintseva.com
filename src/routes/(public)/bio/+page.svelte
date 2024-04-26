@@ -39,13 +39,13 @@
 		font-weight: bold;
 		font-size: 17px;
 		line-height: 1.5;
-		font-family: 'Volkhov', 'Times', serif;
-		color: #000000;
+		font-family: var(--font--secondary);
+		color: var(--color--black);
 		font-style: normal;
 		letter-spacing: -0.4px;
 
-		border-top: 1px solid #d8d8d8;
-		border-bottom: 1px solid #d8d8d8;
+		border-top: 1px solid var(--color--gray-85);
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 
 	@media (min-width: 768px) {

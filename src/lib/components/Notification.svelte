@@ -67,20 +67,20 @@
 		right: 20px;
 		width: 250px;
 		min-height: 50px;
-		background-color: #fff;
+		background-color: var(--color--white);
 		border-radius: 4px;
 		box-shadow: 0px 4px 15px -2px rgba(0, 0, 0, 0.2);
 		pointer-events: all;
 		z-index: 1;
-		--color-icon: #2391ff;
+		--color-icon: var(--color--blue);
 	}
 
 	.notification__success {
-		--color-icon: #21824e;
+		--color-icon: var(--color--green-dark);
 	}
 
 	.notification__error {
-		--color-icon: #ff0000;
+		--color-icon: var(--color--red);
 	}
 
 	.notification__button {
@@ -90,8 +90,8 @@
 		display: grid;
 		place-items: center;
 		padding: 0;
-		background-color: #fff;
-		--color-icon: #d8d8d8;
+		background-color: var(--color--white);
+		--color-icon: var(--color--gray-85);
 		top: 0;
 		right: 0;
 	}

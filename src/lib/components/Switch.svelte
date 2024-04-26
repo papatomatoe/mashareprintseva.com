@@ -23,8 +23,8 @@
 		position: relative;
 		width: 33px;
 		height: 19px;
-		background-color: #fff;
-		border: 1px solid #d8d8d8;
+		background-color: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 10px;
 	}
 
@@ -35,19 +35,19 @@
 		height: 15px;
 		top: 1px;
 		left: 1px;
-		background-color: #d8d8d8;
+		background-color: var(--color--gray-85);
 		border-radius: 50%;
 		transition: left 0.1s ease-in-out;
 	}
 	.switch__input:checked + .switch__element {
-		background-color: #90f3be;
-		border-color: #21824e;
+		background-color: var(--color--green-light);
+		border-color: var(--color--green-dark);
 	}
 	.switch__input:checked + .switch__element::after {
-		background-color: #21824e;
+		background-color: var(--color--green-dark);
 		left: 15px;
 	}
 	.switch__label--checked {
-		color: #21824e;
+		color: var(--color--green-dark);
 	}
 </style>

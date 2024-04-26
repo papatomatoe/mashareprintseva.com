@@ -95,11 +95,11 @@
 	}
 	.modal__button:hover,
 	.modal__button:focus-visible {
-		--color-icon: var(--color-icon-accent);
+		--color-icon: var(--color--primary);
 	}
 
 	.modal__button:active {
-		--color-icon: var(--color-icon-dark);
+		--color-icon: var(--color--gray-15);
 	}
 
 	.modal__bottom {

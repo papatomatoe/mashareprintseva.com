@@ -230,7 +230,7 @@
 
 	.table thead {
 		border-radius: 4px 4px 0 0;
-		background-color: #efefef;
+		background-color: var(--color--gray-95);
 	}
 
 	.table th,
@@ -245,7 +245,7 @@
 
 	.table thead th::after {
 		content: '|';
-		color: var(--color-border);
+		color: var(--color--gray-85);
 		position: absolute;
 		top: 50%;
 		right: 0;
@@ -257,11 +257,11 @@
 	}
 
 	.table tbody tr {
-		border-bottom: 1px solid #efefef;
+		border-bottom: 1px solid var(--color--gray-95);
 	}
 
 	.table tbody tr:hover {
-		background-color: #fcfcfc;
+		background-color: var(--color--gray-95);
 	}
 
 	.table__button {
@@ -274,8 +274,8 @@
 
 	.table__button:hover,
 	.table__button:focus-visible {
-		color: #858585;
-		--color-icon: #858585;
+		color: var(--color--gray-50);
+		--color-icon: var(--color--gray-50);
 	}
 
 	.table__edit {
@@ -285,18 +285,18 @@
 		height: 40px;
 		place-items: center;
 		background-color: transparent;
-		--color-icon: #000;
+		--color-icon: var(--color--black);
 	}
 
 	.table__edit:hover,
 	.table__edit:focus-visible {
 		background-color: transparent;
-		--color-icon: #8a6f48;
+		--color-icon: var(--color--primary);
 	}
 
 	.table__edit:active {
 		background-color: transparent;
-		--color-icon: #858585;
+		--color-icon: var(--color--gray-50);
 	}
 
 	.table__sort {
@@ -316,7 +316,7 @@
 	}
 
 	table tbody tr.table__tr--no-data:hover {
-		background-color: #fff;
+		background-color: var(--color--white);
 	}
 	.table__no-data {
 		width: 100%;
@@ -324,7 +324,7 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		text-align: center;
-		color: #858585;
+		color: var(--color--gray-50);
 	}
 
 	.table__spinner {

@@ -181,15 +181,15 @@
 		place-items: center;
 		width: 32px;
 		height: 32px;
-		background-color: #fff;
-		--color-icon: #d8d8d8;
+		background-color: var(--color--white);
+		--color-icon: var(--color--gray-85);
 	}
 
 	.select__button:hover,
 	.select__button:focus-visible {
-		--color-icon: #8a6f48;
+		--color-icon: var(--color--primary);
 	}
 	.select__button:active {
-		--color-icon: #454545;
+		--color-icon: var(--color--gray-30);
 	}
 </style>

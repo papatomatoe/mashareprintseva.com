@@ -73,7 +73,7 @@
 	}
 	.header__button svg {
 		stroke-width: 3;
-		stroke: var(--color-accent);
+		stroke: var(--color--primary);
 	}
 
 	.inactive {

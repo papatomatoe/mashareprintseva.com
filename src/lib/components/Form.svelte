@@ -42,7 +42,7 @@
 		padding: 0 0 21px;
 		margin-bottom: 43px;
 		gap: 43px;
-		border-bottom: 1px solid #d9d9d9;
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 	.form__title {
 		margin-right: auto;

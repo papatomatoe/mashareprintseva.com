@@ -169,11 +169,11 @@
 	.field__text {
 		font-size: 15px;
 		line-height: 23px;
-		color: var(--color-label);
+		color: var(--color--gray-15);
 	}
 
 	.field__required {
-		color: var(--color-error);
+		color: var(--color--red);
 	}
 
 	.field__wrapper {
@@ -190,38 +190,38 @@
 		height: 120px;
 		padding: 5px 10px 5px 10px;
 		background: var(--color-bg);
-		border: 1px solid var(--color-border);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		font: var(--font-main);
-		color: var(--color-text);
+		font: var(--font--primary);
+		color: var(--color--gray-30);
 		outline: none;
 		transition: border-color 0.3s linear;
 		cursor: pointer;
 	}
 
 	.field__container:hover {
-		border-color: var(--color-border);
+		border-color: var(--color--gray-85);
 	}
 
 	.field__container:focus {
-		border-color: var(--color-accent);
+		border-color: var(--color--primary);
 	}
 
 	.field__container--error,
 	.field__container--error:hover,
 	.field__container--error:focus {
-		border-color: var(--color-error);
+		border-color: var(--color--red);
 	}
 
 	.field__placeholder {
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		color: var(--color-placeholder);
+		color: var(--color--gray-85);
 	}
 
 	.field__placeholder {
@@ -235,7 +235,7 @@
 		font-size: 12px;
 		line-height: 14px;
 
-		color: var(--color-error);
+		color: var(--color--red);
 	}
 	.field__button {
 		position: absolute;
@@ -250,17 +250,17 @@
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
-		--color-icon: var(--color-icon-light);
+		--color-icon: var(--color--gray-85);
 		z-index: 1;
 	}
 
 	.field__button:hover,
 	.field__button:focus-visible {
-		--color-icon: var(--color-icon-accent);
+		--color-icon: var(--color--primary);
 	}
 
 	.field__button:active {
-		--color-icon: var(--color-icon-dark);
+		--color-icon: var(--color--gray-15);
 	}
 
 	.field__preview {
@@ -281,6 +281,6 @@
 	.field__spinner {
 		position: relative;
 		left: 15px;
-		--color-icon: var(--color-icon-light);
+		--color-icon: var(--color--gray-85);
 	}
 </style>

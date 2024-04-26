@@ -43,13 +43,13 @@
 		font-weight: normal;
 		font-size: 17px;
 		line-height: 1.5;
-		font-family: var(--font-accent);
-		color: var(--color-link-mob);
+		font-family: var(--font--secondary);
+		color: var(--color--gray-95);
 		font-style: normal;
 	}
 
 	.link--current {
-		border-bottom: 1px solid var(--color-link-border-mob);
+		border-bottom: 1px solid var(--color--white);
 	}
 
 	@media (min-width: 768px) {
@@ -71,11 +71,11 @@
 
 		.link {
 			font-size: 14px;
-			color: var(--color-link);
+			color: var(--color--gray-50);
 		}
 
 		.link--current {
-			border-color: var(--color-link-border);
+			border-color: var(--color--gray-50);
 		}
 	}
 
@@ -99,7 +99,7 @@
 
 		.link[href]:hover,
 		.link[href]:focus {
-			color: var(--color-accent);
+			color: var(--color--primary);
 
 			transition: color 0.3s linear;
 		}

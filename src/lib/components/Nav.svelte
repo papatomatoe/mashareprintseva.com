@@ -39,7 +39,7 @@
 		height: 100%;
 		overflow-y: auto;
 
-		background-color: #252525;
+		background-color: var(--color--gray-15);
 		transform: translateY(-110%);
 
 		transition: transform 0.2s linear;
@@ -64,8 +64,8 @@
 		font-weight: 400;
 		font-size: 22px;
 		line-height: 1.5;
-		font-family: 'Volkhov', 'Times', serif;
-		color: #efefef;
+		font-family: var(--font--secondary);
+		color: var(--color--gray-95);
 		font-style: normal;
 	}
 
@@ -78,7 +78,7 @@
 		border: none;
 	}
 	.nav__button svg {
-		stroke: #ffffff;
+		stroke: var(--color--white);
 		stroke-width: 3;
 	}
 	.nav--show {

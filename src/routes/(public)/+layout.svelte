@@ -52,7 +52,7 @@
 		padding-bottom: 20px;
 		align-items: center;
 		flex-grow: 1;
-		border-top: 1px solid #d8d8d8;
+		border-top: 1px solid var(--color--gray-85);
 	}
 	@media (min-width: 768px) {
 		.container {
@@ -68,7 +68,7 @@
 			width: 960px;
 			margin: 0 auto;
 
-			border-top: 1px solid var(--color-border);
+			border-top: 1px solid var(--color--gray-85);
 		}
 		.content {
 			width: 100%;

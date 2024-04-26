@@ -15,7 +15,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-	background-color: var(--color-accent);
+	background-color: var(--color--primary);
 	border-radius: 10px;
 	border: 1px solid var(--color-bg);
 }
@@ -40,8 +40,8 @@ body {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.5;
-	font-family: var(--font-main);
-	color: var(--color-text);
+	font-family: var(--font--primary);
+	color: var(--color--gray-30);
 	font-style: normal;
 	letter-spacing: -0.2px;
 
@@ -108,50 +108,50 @@ p {
 	padding: 7px;
 	display: block;
 	cursor: pointer;
-	background-color: var(--color-button);
+	background-color: var(--color--gray-15);
 	border: none;
 	border-radius: 4px;
 
-	font-family: var(--font-main);
+	font-family: var(--font--primary);
 	font-style: normal;
 	font-weight: 300;
 	font-size: 14px;
 	line-height: 21px;
 
-	color: var(--color-button-text);
+	color: var(--color--gray-95);
 	cursor: pointer;
 	outline: none;
 
 	transition: background-color 0.2s linear;
-	--color-icon: var(--color-button-icon);
+	--color-icon: var(--color--gray-95);
 }
 
 .button:hover,
 .button:focus-visible {
-	background-color: var(--color-button-hover);
+	background-color: var(--color--primary);
 }
 
 .button:active {
-	background-color: var(--color-button-active);
+	background-color: var(--color--gray-15-active);
 }
 
 .button--disabled,
 .button:disabled,
 .button:hover:disabled {
-	background-color: var(--color-button-disabled);
-	color: var(--color-button-disabled-text);
+	background-color: var(--color--gray-95);
+	color: var(--color--gray-85);
 	cursor: auto;
-	--color-icon: var(--color-button-disabled-icon);
+	--color-icon: var(--color--gray-85);
 }
 
 .button--cancel {
-	background-color: var(--color-button-cancel);
-	color: var(--color-button-cancel-text);
+	background-color: var(--color--gray-95);
+	color: var(--color--gray-95-text);
 }
 
 .button--cancel:hover,
 .button--cancel:focus-visible {
-	color: var(--color-button-cancel-hover-text);
+	color: var(--color--gray-95-hover-text);
 }
 
 .bio__content p:last-of-type {
@@ -160,7 +160,7 @@ p {
 .bio__content a {
 	text-decoration: underline;
 	display: inline-block;
-	color: var(--color-link-alt);
+	color: var(--color--primary);
 	margin: 5px 0;
 }
 .bio__content a:hover,
@@ -191,7 +191,7 @@ p {
 	grid-area: link;
 	font-weight: 400;
 	text-decoration: underline;
-	color: var(--color-link-alt);
+	color: var(--color--primary);
 	margin-bottom: 100px;
 }
 .project__subtitle blockquote {
@@ -205,8 +205,8 @@ p {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.5;
-	font-family: var(--font-main);
-	color: var(--color-blockquote);
+	font-family: var(--font--primary);
+	color: var(--color--gray-50);
 	font-style: normal;
 }
 
@@ -214,8 +214,8 @@ p {
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.5;
-	font-family: var(--font-main);
-	color: var(--color-blockquote);
+	font-family: var(--font--primary);
+	color: var(--color--gray-50);
 	font-style: normal;
 }
 
@@ -226,7 +226,7 @@ p {
 	display: block;
 	text-align: center;
 	text-decoration: underline;
-	color: var(--color-link-alt);
+	color: var(--color--primary);
 }
 
 .project__content a:hover,
@@ -263,8 +263,8 @@ p {
 	font-weight: 700;
 	font-size: 18px;
 	line-height: 1.5;
-	font-family: var(--font-main);
-	color: var(--color-blockquote);
+	font-family: var(--font--primary);
+	color: var(--color--gray-50);
 	font-style: normal;
 }
 .project__content blockquote cite {
@@ -273,8 +273,8 @@ p {
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.5;
-	font-family: var(--font-main);
-	color: var(--color-blockquote);
+	font-family: var(--font--primary);
+	color: var(--color--gray-50);
 	font-style: normal;
 }
 

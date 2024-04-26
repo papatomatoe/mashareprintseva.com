@@ -113,15 +113,15 @@
 		max-width: 424px;
 		width: 80%;
 		margin: 0 auto;
-		background: #ffffff;
-		border: 1px solid #d8d8d8;
+		background: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 	}
 	.form__logo {
 		padding: 28px;
 		display: grid;
 		place-items: center;
-		border-bottom: 1px solid #d8d8d8;
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 
 	.form__fields {
@@ -142,42 +142,42 @@
 	.form__label {
 		font-size: 15px;
 		line-height: 23px;
-		color: #252525;
+		color: var(--color--gray-15);
 	}
 
 	.form__input {
 		padding: 5px 10px;
-		background: #ffffff;
-		border: 1px solid #d8d8d8;
+		background: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		font: var(--font-main);
-		color: #454545;
+		font: var(--font--primary);
+		color: var(--color--gray-30);
 		outline: none;
 
 		transition: border-color 0.3s linear;
 	}
 
 	.form__input:hover {
-		border-color: #454545;
+		border-color: var(--color--gray-30);
 	}
 
 	.form__input:focus-visible {
-		border-color: #8a6f48;
+		border-color: var(--color--primary);
 	}
 
 	.form__input--error {
-		border-color: #ff0000;
+		border-color: var(--color--red);
 	}
 
 	.form__input::placeholder {
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		color: #d8d8d8;
+		color: var(--color--gray-85);
 	}
 
 	.form__field-error {
@@ -187,7 +187,7 @@
 		font-size: 9px;
 		line-height: 14px;
 
-		color: #ff0000;
+		color: var(--color--red);
 	}
 
 	.form__error {
@@ -195,8 +195,8 @@
 		width: 100%;
 		left: 0;
 		bottom: 108px;
-		background-color: #ff0000;
-		color: #ffffff;
+		background-color: var(--color--red);
+		color: var(--color--white);
 		padding: 5px;
 		text-align: center;
 	}

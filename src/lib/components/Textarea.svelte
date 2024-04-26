@@ -72,11 +72,11 @@
 	.field__text {
 		font-size: 15px;
 		line-height: 23px;
-		color: #252525;
+		color: var(--color--gray-15);
 	}
 
 	.field__required {
-		color: #f00;
+		color: var(--color--red);
 	}
 
 	.field__wrapper {
@@ -88,37 +88,37 @@
 		height: 100%;
 		min-height: 100%;
 		padding: 5px 40px 5px 10px;
-		background: #ffffff;
-		border: 1px solid #d8d8d8;
+		background: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		font: var(--font-main);
-		color: #454545;
+		font: var(--font--primary);
+		color: var(--color--gray-30);
 		outline: none;
 		resize: vertical;
 		transition: border-color 0.3s linear;
 	}
 
 	.field__input:hover {
-		border-color: #454545;
+		border-color: var(--color--gray-30);
 	}
 
 	.field__input:focus-visible {
-		border-color: #8a6f48;
+		border-color: var(--color--primary);
 	}
 
 	.field__input--error {
-		border-color: #ff0000;
+		border-color: var(--color--red);
 	}
 
 	.field__input::placeholder {
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		color: #d8d8d8;
+		color: var(--color--gray-85);
 	}
 
 	.field__error {
@@ -128,7 +128,7 @@
 		font-size: 9px;
 		line-height: 14px;
 
-		color: #ff0000;
+		color: var(--color--red);
 	}
 	.field__button {
 		position: absolute;
@@ -143,15 +143,15 @@
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
-		--color-icon: #d8d8d8;
+		--color-icon: var(--color--gray-85);
 	}
 
 	.field__button:hover,
 	.field__button:focus-visible {
-		--color-icon: #8a6f48;
+		--color-icon: var(--color--primary);
 	}
 
 	.field__button:active {
-		--color-icon: #252525;
+		--color-icon: var(--color--gray-15);
 	}
 </style>

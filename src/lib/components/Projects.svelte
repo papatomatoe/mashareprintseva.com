@@ -33,8 +33,8 @@
 		font-weight: bold;
 		font-size: 17px;
 		line-height: 24px;
-		font-family: 'Volkhov', 'Times', serif;
-		color: #454545;
+		font-family: var(--font--secondary);
+		color: var(--color--gray-30);
 		font-style: normal;
 	}
 	.projects__image {
@@ -77,7 +77,7 @@
 			transform: scale(1.04);
 		}
 		.projects__link:hover .projects__title {
-			color: #8a6f48;
+			color: var(--color--primary);
 		}
 		.projects__link:active img {
 			opacity: 0.8;

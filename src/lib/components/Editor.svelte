@@ -225,20 +225,20 @@
 
 <style>
 	.editor {
-		border: var(--border);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 	}
 
 	.editor__controls {
 		display: flex;
-		border-bottom: var(--border);
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 
 	.editor__buttons {
 		display: flex;
 		gap: 2px;
 		padding: 2px 4px;
-		border-right: var(--border);
+		border-right: 1px solid var(--color--gray-85);
 	}
 
 	div.editor__buttons:last-of-type {
@@ -252,7 +252,7 @@
 		display: grid;
 		place-items: center;
 		background-color: transparent;
-		color: var(--color-button);
+		color: var(--color--gray-15);
 		font-weight: 400;
 	}
 	.editor__button--bold {
@@ -267,8 +267,8 @@
 	}
 
 	button.active {
-		background: black;
-		color: white;
+		background: var(--color--black);
+		color: var(--color--white);
 	}
 
 	.editor__element {
@@ -286,14 +286,14 @@
 		display: none;
 		flex-direction: column;
 		gap: 10px;
-		background-color: #fff;
-		border: var(--border);
+		background-color: var(--color--white);
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 		width: 300px;
 		top: 100%;
 		right: 0;
 		z-index: 1;
-		box-shadow: 0 3px 10px -7px black;
+		box-shadow: 0 3px 10px -7px var(--color--black);
 	}
 
 	.editor__popover-show {
@@ -312,7 +312,7 @@
 	}
 
 	:global(.editor__element blockquote) {
-		border-left: 2px solid #ccc;
+		border-left: 2px solid var(--color--gray-85);
 		margin-left: 1.5rem;
 		padding-left: 1rem;
 	}

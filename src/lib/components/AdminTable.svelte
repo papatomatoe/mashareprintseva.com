@@ -125,7 +125,7 @@
 		padding: 0 0 21px;
 		margin-bottom: 43px;
 		gap: 10px;
-		border-bottom: 1px solid #d9d9d9;
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 	.container__title {
 		font-weight: 700;
@@ -147,9 +147,9 @@
 	}
 	.container__button:disabled,
 	.container__button:hover:disabled {
-		background-color: #efefef;
-		color: #d8d8d8;
+		background-color: var(--color--gray-95);
+		color: var(--color--gray-85);
 		cursor: auto;
-		--color-icon: #d8d8d8;
+		--color-icon: var(--color--gray-85);
 	}
 </style>

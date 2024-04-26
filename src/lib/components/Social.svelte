@@ -94,7 +94,7 @@
 	}
 
 	.social--footer .social__link {
-		color: #ffffff;
+		color: var(--color--white);
 	}
 
 	@media (min-width: 768px) {

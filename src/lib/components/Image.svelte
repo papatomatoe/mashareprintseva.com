@@ -40,7 +40,7 @@
 
 <style>
 	.image {
-		--color-icon: var(--color-icon-dark);
+		--color-icon: var(--color--gray-15);
 	}
 	.image img {
 		display: block;

@@ -1,42 +1,22 @@
 :root {
-	--font-main: 'Roboto', 'Arial', sans-serif;
-	--font-accent: 'Volkhov', 'Times', serif;
+	--font--primary: 'Roboto', 'Arial', sans-serif;
+	--font--secondary: 'Volkhov', 'Times', serif;
 
-	--color-bg: #fff;
-	--color-text: #454545;
-	--color-accent: #8a6f48;
-	--color-border: #d8d8d8;
-	--color-unselected: #e6e6e6;
-	--color-blockquote: #878787;
-	--color-label: #252525;
-	--color-placeholder: #d8d8d8;
+	--color--white: #ffffff;
+	--color--black: #000000;
+	--color--primary: #8a6f48;
+	--color--secondary: #480008;
+	--color--gary-15: #252525;
+	--color--gary-30: #4d4d4d;
+	--color--gary-50: #808080;
+	--color--gary-85: #d9d9d9;
+	--color--gary-95: #f2f2f2;
+	--color--red: #ff0d0d;
+	--color--red-light: #f39090;
+	--color--red-dark: #822121;
+	--color--green-light: #90f3be;
+	--color--green-dark: #21824e;
+	--color--blue: #2391ff;
 
-	--color-link: #656565;
-	--color-link-border: #656565;
-	--color-link-mob: #efefef;
-	--color-link-border-mob: #fff;
-
-	--color-link-alt: #8a6f48;
-
-	--color-button: #252525;
-	--color-button-text: #efefef;
-	--color-button-icon: #efefef;
-	--color-button-hover: #8a6f48;
-	--color-button-active: #454545;
-	--color-button-disabled: #efefef;
-	--color-button-disabled-text: #d8d8d8;
-	--color-button-disabled-icon: #d8d8d8;
-
-	--color-button-cancel: #e6e6e6;
-	--color-button-cancel-text: #454545;
-	--color-button-cancel-hover-text: #efefef;
-
-	--color-icon: #000;
-	--color-icon-dark: #252525;
-	--color-icon-light: #d8d8d8;
-	--color-icon-accent: #8a6f48;
-
-	--color-error: #ff0000;
-
-	--border: 1px solid #d8d8d8;
+	--color-icon: #000000;
 }

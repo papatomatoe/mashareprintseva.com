@@ -367,7 +367,7 @@
 		padding: 0 0 21px;
 		margin-bottom: 43px;
 		gap: 10px;
-		border-bottom: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color--gray-85);
 	}
 	.files__title {
 		font-weight: 700;
@@ -390,10 +390,10 @@
 	.files__button--disabled,
 	.files__button:disabled,
 	.files__button:hover:disabled {
-		background-color: var(--color-button-disabled);
-		color: var(--color-button-disabled-text);
+		background-color: var(--color--gray-95);
+		color: var(--color--gray-85);
 		cursor: auto;
-		--color-icon: var(--color-button-disabled-icon);
+		--color-icon: var(--color--gray-85);
 	}
 
 	.files__input {
@@ -411,24 +411,24 @@
 		width: 36px;
 		display: grid;
 		place-items: center;
-		background-color: var(--color-unselected);
-		--color-icon: var(--color-text);
+		background-color: var(--color--gray-95);
+		--color-icon: var(--color--gray-30);
 	}
 
 	.files__view:hover,
 	.files__view:focus-visible {
-		background-color: var(--color-button-hover);
-		--color-icon: var(--color-button-icon);
+		background-color: var(--color--primary);
+		--color-icon: var(--color--gray-95);
 	}
 	.files__view:active {
-		background-color: var(--color-button);
-		--color-icon: var(--color-button-icon);
+		background-color: var(--color--gray-15);
+		--color-icon: var(--color--gray-95);
 	}
 	.files__view--selected,
 	.files__view--selected:hover,
 	.files__view--selected:focus-visible {
 		cursor: auto;
-		background-color: var(--color-text);
+		background-color: var(--color--gray-30);
 		--color-icon: var(--color-bg);
 	}
 

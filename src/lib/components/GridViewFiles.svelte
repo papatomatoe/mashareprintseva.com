@@ -56,11 +56,11 @@
 		position: relative;
 		width: 250px;
 		height: 250px;
-		border: 1px solid #d9d9d9;
+		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 	}
 	.files__item:hover {
-		background-color: #f3f3f3;
+		background-color: var(--color--gray-95);
 	}
 
 	.files__checkbox {
