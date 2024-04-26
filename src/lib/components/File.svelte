@@ -4,6 +4,7 @@
 	import Clear from '$lib/icons/Clear.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import Filemanager from '$lib/components/Filemanager.svelte';
+	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
 
 	export let label = '';
 	export let error = '';
@@ -84,23 +85,21 @@
 	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
 		isDisabledSelectButton = e.detail.ids.length !== 1;
 	};
+
+	const handleCancel = () => {
+		filemanager.resetSelection();
+		modal.close();
+	};
 </script>
 
 <Modal bind:this={modal}>
 	<Filemanager bind:this={filemanager} on:check={handleCheckFiles} />
-
-	<div class="file-modal-panel" slot="bottom">
-		<button
-			type="button"
-			class="button button--cancel"
-			on:click={() => {
-				filemanager.resetSelection();
-				modal.close();
-			}}>Cancel</button
-		>
-		<button type="button" class="button" disabled={isDisabledSelectButton} on:click={handleAddFiles}
-			>Select</button
-		>
+	<div slot="bottom">
+		<ConfirmPanel
+			disabled={isDisabledSelectButton}
+			on:cancel={handleCancel}
+			on:confirm={handleAddFiles}
+		/>
 	</div>
 </Modal>
 
@@ -152,11 +151,6 @@
 </div>
 
 <style>
-	.file-modal-panel {
-		display: flex;
-		justify-content: flex-end;
-		gap: 10px;
-	}
 	.field {
 		position: relative;
 	}
