@@ -1,14 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { SvelteComponent, onMount, type ComponentEvents } from 'svelte';
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Link from '@tiptap/extension-link';
+	import Image from '@tiptap/extension-image';
 	import UndoLink from '$lib/icons/Undo.svelte';
 	import RedoLink from '$lib/icons/Redo.svelte';
 	import BulletListLink from '$lib/icons/BulletList.svelte';
 	import OrderedListLink from '$lib/icons/OrderedList.svelte';
 	import LinkIcon from '$lib/icons/Link.svelte';
 	import Input from '$lib/components/Input.svelte';
+	import ImageIcon from '$lib/icons/Image.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
+	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
+	import Popover from '$lib/components/Popover.svelte';
 
 	export let label = '';
 	export let name = '';
@@ -16,16 +22,26 @@
 
 	let element: HTMLDivElement;
 	let editor: Editor;
+	let modal: SvelteComponent;
+	let filemanager: SvelteComponent;
+	let linkPopover: SvelteComponent;
+	let imagePopover: SvelteComponent;
 
 	let url = '';
 
-	let isLinkPopoverShow = false;
+	let imageUrl = '';
+	let imageAlt = '';
+	let imageWidth = '';
+	let imageHeight = '';
+
+	let isDisabledSelectButton = false;
 
 	onMount(() => {
 		editor = new Editor({
 			element: element,
 			extensions: [
 				StarterKit,
+				Image,
 				Link.configure({
 					openOnClick: false,
 					autolink: true
@@ -50,7 +66,65 @@
 
 		editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
 	};
+
+	const handleCloseLinkPopover = () => {
+		linkPopover.close();
+		url = '';
+	};
+
+	const handleConfirmAddLink = () => {
+		handleSetLink();
+		handleCloseLinkPopover();
+	};
+
+	const handleAddImages = () => {
+		const images: IFile[] = filemanager.getFiles();
+
+		if (images && images.length) {
+			images.forEach((image) => {
+				image.url && editor.chain().focus().setImage({ src: image.url }).run();
+			});
+		}
+	};
+
+	const handleCloseImagePopover = () => {
+		imagePopover.close();
+		imageUrl = '';
+		imageAlt = '';
+		imageWidth = '';
+		imageHeight = '';
+	};
+
+	const handleConfirmAddImage = () => {
+		// handleAddImages(); // NOTE: check function
+		handleCloseImagePopover();
+	};
+
+	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
+		isDisabledSelectButton = !e.detail.ids.length;
+	};
+
+	const handleOpenFilemanager = async () => {
+		await filemanager.fetchFilesData();
+		modal.open();
+	};
+
+	const handleCancel = () => {
+		filemanager.resetSelection();
+		modal.close();
+	};
 </script>
+
+<Modal bind:this={modal}>
+	<Filemanager bind:this={filemanager} on:check={handleCheckFiles} />
+	<div slot="bottom">
+		<ConfirmPanel
+			disabled={isDisabledSelectButton}
+			on:cancel={handleCancel}
+			on:confirm={handleAddImages}
+		/>
+	</div>
+</Modal>
 
 <p>{label}</p>
 <div class="editor">
@@ -179,40 +253,46 @@
 				</button>
 			</div>
 			<div class="editor__buttons">
-				<div class="editor__link">
+				<div class="editor__wrapper">
 					<button
 						class="button editor__button"
 						type="button"
 						on:click={() => {
-							isLinkPopoverShow = true;
+							linkPopover.open();
 							url = editor.getAttributes('link').href ?? '';
 						}}
 						class:active={editor.isActive('link')}
+						aria-label="add link"
 					>
 						<LinkIcon />
 					</button>
-					<div class="editor__popover popover" class:editor__popover-show={isLinkPopoverShow}>
+					<Popover
+						bind:this={linkPopover}
+						on:cancel={handleCloseLinkPopover}
+						on:confirm={handleConfirmAddLink}
+					>
 						<Input label="URL:" placeholder="https://example.net" bind:value={url} />
-						<div class="popover__buttons">
-							<button
-								class="button button--cancel"
-								type="button"
-								on:click={() => {
-									isLinkPopoverShow = false;
-									url = '';
-								}}>Cancel</button
-							>
-							<button
-								class="button"
-								type="button"
-								on:click={() => {
-									handleSetLink();
-									isLinkPopoverShow = false;
-									url = '';
-								}}>Add</button
-							>
-						</div>
-					</div>
+					</Popover>
+				</div>
+				<div class="editor__wrapper">
+					<button
+						class="button editor__button"
+						type="button"
+						aria-label="add image"
+						on:click={() => {
+							imagePopover.open();
+						}}><ImageIcon /></button
+					>
+					<Popover
+						bind:this={imagePopover}
+						on:cancel={handleCloseImagePopover}
+						on:confirm={handleConfirmAddImage}
+					>
+						<Input label="URL:" placeholder="https://example.net" bind:value={imageUrl} />
+						<Input label="Alt attribute:" placeholder="Alt attribute text" bind:value={imageAlt} />
+						<Input label="Width:" placeholder="100" bind:value={imageWidth} />
+						<Input label="Height:" placeholder="100" bind:value={imageHeight} />
+					</Popover>
 				</div>
 			</div>
 		</div>
@@ -254,7 +334,21 @@
 		background-color: transparent;
 		color: var(--color--gray-15);
 		font-weight: 400;
+		--color--icon: var(--color--black);
 	}
+
+	.editor__button:hover,
+	.editor__button:focus-visible {
+		background-color: var(--color--gray-95);
+	}
+
+	.editor__button:disabled {
+		--color--icon: var(--color--gray-50);
+	}
+	.editor__button:disabled:hover {
+		background-color: var(--color--white);
+	}
+
 	.editor__button--bold {
 		font-weight: 700;
 		font-size: 18px;
@@ -266,9 +360,12 @@
 		font-style: italic;
 	}
 
-	button.active {
+	.active,
+	.active:hover,
+	.active:focus-visible {
 		background: var(--color--black);
 		color: var(--color--white);
+		--color--icon: var(--color--white);
 	}
 
 	.editor__element {
@@ -276,38 +373,13 @@
 		padding: 20px;
 	}
 
-	.editor__link {
+	.editor__wrapper {
 		position: relative;
 	}
 
-	.editor__popover {
-		position: absolute;
-		padding: 10px;
-		display: none;
-		flex-direction: column;
-		gap: 10px;
-		background-color: var(--color--white);
-		border: 1px solid var(--color--gray-85);
-		border-radius: 4px;
-		width: 300px;
-		top: 100%;
-		right: 0;
-		z-index: 1;
-		box-shadow: 0 3px 10px -7px var(--color--black);
-	}
-
-	.editor__popover-show {
-		display: flex;
-	}
-
-	.popover__buttons {
-		display: flex;
-		gap: 10px;
-		justify-content: end;
-	}
 	:global(.editor__element > div) {
 		height: 100%;
-		min-height: 100%;
+		min-height: inherit;
 		outline: 0;
 	}
 
@@ -317,8 +389,12 @@
 		padding-left: 1rem;
 	}
 
-	:global(.editor__element ul, .editor__element ol) {
+	:global(.editor__element ul) {
 		margin: 5px 0 5px 40px;
+	}
+
+	:global(.editor__element ol) {
+		margin: 5px 0;
 	}
 	:global(.editor__element ul li) {
 		list-style-type: disc;
