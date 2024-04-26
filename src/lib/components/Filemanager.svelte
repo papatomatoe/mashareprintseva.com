@@ -393,7 +393,7 @@
 		background-color: var(--color--gray-95);
 		color: var(--color--gray-85);
 		cursor: auto;
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 
 	.files__input {
@@ -412,24 +412,24 @@
 		display: grid;
 		place-items: center;
 		background-color: var(--color--gray-95);
-		--color-icon: var(--color--gray-30);
+		--color--icon: var(--color--gray-30);
 	}
 
 	.files__view:hover,
 	.files__view:focus-visible {
 		background-color: var(--color--primary);
-		--color-icon: var(--color--gray-95);
+		--color--icon: var(--color--gray-95);
 	}
 	.files__view:active {
 		background-color: var(--color--gray-15);
-		--color-icon: var(--color--gray-95);
+		--color--icon: var(--color--gray-95);
 	}
 	.files__view--selected,
 	.files__view--selected:hover,
 	.files__view--selected:focus-visible {
 		cursor: auto;
 		background-color: var(--color--gray-30);
-		--color-icon: var(--color-bg);
+		--color--icon: var(--color--white);
 	}
 
 	.files__info {

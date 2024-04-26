@@ -1,15 +1,15 @@
 <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
 	><defs
 		><linearGradient id="mingcuteLoadingFill0" x1="50%" x2="50%" y1="5.271%" y2="91.793%"
-			><stop offset="0%" stop-color="var(--color-icon)" /><stop
+			><stop offset="0%" stop-color="var(--color--icon)" /><stop
 				offset="100%"
-				stop-color="var(--color-icon)"
+				stop-color="var(--color--icon)"
 				stop-opacity=".55"
 			/></linearGradient
 		><linearGradient id="mingcuteLoadingFill1" x1="50%" x2="50%" y1="15.24%" y2="87.15%"
-			><stop offset="0%" stop-color="var(--color-icon)" stop-opacity="0" /><stop
+			><stop offset="0%" stop-color="var(--color--icon)" stop-opacity="0" /><stop
 				offset="100%"
-				stop-color="var(--color-icon)"
+				stop-color="var(--color--icon)"
 				stop-opacity=".55"
 			/></linearGradient
 		></defs

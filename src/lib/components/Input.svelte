@@ -164,16 +164,16 @@
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 
 	.field__button:hover,
 	.field__button:focus-visible {
-		--color-icon: var(--color--primary);
+		--color--icon: var(--color--primary);
 	}
 
 	.field__button:active {
-		--color-icon: var(--color--gray-15);
+		--color--icon: var(--color--gray-15);
 	}
 
 	.field__button--clear {
@@ -196,7 +196,7 @@
 		left: 5px;
 		transform: translate(0, -50%);
 
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 
 	.field__disabled .field__label .field__text {

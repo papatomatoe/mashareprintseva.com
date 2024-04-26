@@ -50,7 +50,7 @@
 				>
 					<path
 						d="M13.4525 14.6066L8.42291 19.6362L9.97046 21.1837L15 16.1542L20.0295 21.1837L21.5771 19.6362L16.5476 14.6066L21.5771 9.57709L20.0295 8.02954L15 13.0591L9.97046 8.02954L8.42291 9.57709L13.4525 14.6066Z"
-						fill="var(--color-icon)"
+						fill="var(--color--icon)"
 					/>
 				</svg>
 			</button>
@@ -143,15 +143,15 @@
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 
 	.field__button:hover,
 	.field__button:focus-visible {
-		--color-icon: var(--color--primary);
+		--color--icon: var(--color--primary);
 	}
 
 	.field__button:active {
-		--color-icon: var(--color--gray-15);
+		--color--icon: var(--color--gray-15);
 	}
 </style>

@@ -1,6 +1,6 @@
 <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path
 		d="M3.73077 5.61538V16H13.2692V5.61538M6.61539 6.19231V14.2692M10.3846 6.19231V14.2692M2 3.30769H6.03846M6.03846 3.30769H10.9615M6.03846 3.30769V1H10.9615V3.30769M10.9615 3.30769H15"
-		stroke="var(--color-icon)"
+		stroke="var(--color--icon)"
 	/>
 </svg>

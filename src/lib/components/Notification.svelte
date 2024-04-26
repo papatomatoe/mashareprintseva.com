@@ -72,15 +72,15 @@
 		box-shadow: 0px 4px 15px -2px rgba(0, 0, 0, 0.2);
 		pointer-events: all;
 		z-index: 1;
-		--color-icon: var(--color--blue);
+		--color--icon: var(--color--blue);
 	}
 
 	.notification__success {
-		--color-icon: var(--color--green-dark);
+		--color--icon: var(--color--green-dark);
 	}
 
 	.notification__error {
-		--color-icon: var(--color--red);
+		--color--icon: var(--color--red);
 	}
 
 	.notification__button {
@@ -91,7 +91,7 @@
 		place-items: center;
 		padding: 0;
 		background-color: var(--color--white);
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 		top: 0;
 		right: 0;
 	}

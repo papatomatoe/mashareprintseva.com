@@ -250,17 +250,17 @@
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 		z-index: 1;
 	}
 
 	.field__button:hover,
 	.field__button:focus-visible {
-		--color-icon: var(--color--primary);
+		--color--icon: var(--color--primary);
 	}
 
 	.field__button:active {
-		--color-icon: var(--color--gray-15);
+		--color--icon: var(--color--gray-15);
 	}
 
 	.field__preview {
@@ -281,6 +281,6 @@
 	.field__spinner {
 		position: relative;
 		left: 15px;
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 </style>

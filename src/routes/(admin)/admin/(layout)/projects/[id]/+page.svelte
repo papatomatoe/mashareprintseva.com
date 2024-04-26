@@ -182,14 +182,14 @@
 		width: 32px;
 		height: 32px;
 		background-color: var(--color--white);
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 
 	.select__button:hover,
 	.select__button:focus-visible {
-		--color-icon: var(--color--primary);
+		--color--icon: var(--color--primary);
 	}
 	.select__button:active {
-		--color-icon: var(--color--gray-30);
+		--color--icon: var(--color--gray-30);
 	}
 </style>

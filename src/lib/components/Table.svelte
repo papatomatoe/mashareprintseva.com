@@ -156,7 +156,7 @@
 										fill="none"
 										xmlns="http://www.w3.org/2000/svg"
 									>
-										<path d="M4 0L7.4641 4.5H0.535898L4 0Z" fill="var(--color-icon)" />
+										<path d="M4 0L7.4641 4.5H0.535898L4 0Z" fill="var(--color--icon)" />
 									</svg>
 								{/if}
 							</button>
@@ -275,7 +275,7 @@
 	.table__button:hover,
 	.table__button:focus-visible {
 		color: var(--color--gray-50);
-		--color-icon: var(--color--gray-50);
+		--color--icon: var(--color--gray-50);
 	}
 
 	.table__edit {
@@ -285,18 +285,18 @@
 		height: 40px;
 		place-items: center;
 		background-color: transparent;
-		--color-icon: var(--color--black);
+		--color--icon: var(--color--black);
 	}
 
 	.table__edit:hover,
 	.table__edit:focus-visible {
 		background-color: transparent;
-		--color-icon: var(--color--primary);
+		--color--icon: var(--color--primary);
 	}
 
 	.table__edit:active {
 		background-color: transparent;
-		--color-icon: var(--color--gray-50);
+		--color--icon: var(--color--gray-50);
 	}
 
 	.table__sort {

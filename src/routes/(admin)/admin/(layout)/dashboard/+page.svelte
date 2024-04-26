@@ -58,12 +58,12 @@
 	.dashboard__link:focus-visible {
 		border-color: var(--color--primary);
 		color: var(--color--primary);
-		--color-icon: var(--color--primary);
+		--color--icon: var(--color--primary);
 	}
 
 	.dashboard__link:active {
 		border-color: var(--color--gray-85);
 		color: var(--color--gray-85);
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 </style>

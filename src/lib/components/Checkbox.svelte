@@ -47,6 +47,6 @@
 	}
 	.input:checked + .element .element__icon {
 		display: grid;
-		--color-icon: var(--color--white);
+		--color--icon: var(--color--white);
 	}
 </style>

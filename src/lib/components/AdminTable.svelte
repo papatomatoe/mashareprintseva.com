@@ -150,6 +150,6 @@
 		background-color: var(--color--gray-95);
 		color: var(--color--gray-85);
 		cursor: auto;
-		--color-icon: var(--color--gray-85);
+		--color--icon: var(--color--gray-85);
 	}
 </style>

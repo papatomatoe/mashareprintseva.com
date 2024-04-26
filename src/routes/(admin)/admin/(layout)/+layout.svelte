@@ -236,7 +236,7 @@
 
 	.menu__link:active {
 		background-color: var(--color--primary);
-		--color-icon: var(--color--white);
+		--color--icon: var(--color--white);
 	}
 
 	.menu__link:active span {
@@ -248,7 +248,7 @@
 	.menu__link--current:focus-visible,
 	.menu__link--current:active {
 		background-color: var(--color--primary);
-		--color-icon: var(--color--white);
+		--color--icon: var(--color--white);
 	}
 
 	.menu__link--current span,
