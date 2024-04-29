@@ -19,7 +19,7 @@
 	};
 </script>
 
-<label class="field">
+<label class="field" class:field--without-label={!label}>
 	{#if label}
 		<p class="field__label">
 			<span class="field__text">
@@ -67,6 +67,10 @@
 		width: 100%;
 		display: grid;
 		grid-template-rows: min-content 1fr;
+	}
+
+	.field--without-label {
+		display: block;
 	}
 
 	.field__text {
