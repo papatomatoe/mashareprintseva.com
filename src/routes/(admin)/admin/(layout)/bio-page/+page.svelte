@@ -1,5 +1,4 @@
 <script lang="ts">
-	import EditorOld from '$lib/components/EditorOld.svelte';
 	import Editor from '$lib/components/Editor.svelte';
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
@@ -55,9 +54,6 @@
 		error={fileUrlError}
 	/>
 	<Textarea name="epigraph" label="epigraph" placeholder="enter epigraph" value={epigraph} />
-	<div class="editor">
-		<EditorOld id="bio-page-content" name="content" label="content" bind:value={content} />
-	</div>
 
 	<div class="editor">
 		<Editor name="content" label="content" bind:value={content} />
