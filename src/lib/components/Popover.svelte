@@ -40,7 +40,7 @@
 		background-color: var(--color--white);
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
-		width: 300px;
+		width: 400px;
 		top: 100%;
 		right: 0;
 		z-index: 1;
@@ -55,5 +55,6 @@
 		display: flex;
 		gap: 10px;
 		justify-content: end;
+		margin-top: 10px;
 	}
 </style>
