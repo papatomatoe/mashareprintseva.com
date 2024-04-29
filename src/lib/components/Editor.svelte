@@ -3,6 +3,7 @@
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Link from '@tiptap/extension-link';
+	import TextAlign from '@tiptap/extension-text-align';
 	import ImageExtension from '@tiptap/extension-image';
 	import UndoLink from '$lib/icons/Undo.svelte';
 	import RedoLink from '$lib/icons/Redo.svelte';
@@ -16,6 +17,12 @@
 	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
 	import Popover from '$lib/components/Popover.svelte';
 	import Upload from '$lib/icons/Upload.svelte';
+	import Textarea from '$lib/components/Textarea.svelte';
+	import Source from '$lib/icons/Source.svelte';
+	import Fullscreen from '$lib/icons/Fullscreen.svelte';
+	import AlignLeft from '$lib/icons/AlignLeft.svelte';
+	import AlignCenter from '$lib/icons/AlignCenter.svelte';
+	import AlignRight from '$lib/icons/AlignRight.svelte';
 
 	export let label = '';
 	export let name = '';
@@ -23,7 +30,8 @@
 
 	let element: HTMLDivElement;
 	let editor: Editor;
-	let modal: SvelteComponent;
+	let modalFileManager: SvelteComponent;
+	let modalHTMLEditor: SvelteComponent;
 	let filemanager: SvelteComponent;
 	let linkPopover: SvelteComponent;
 	let imagePopover: SvelteComponent;
@@ -33,13 +41,19 @@
 	let imageUrl = '';
 	let imageAlt = '';
 
+	let sourceHTML = '';
+
 	let isDisabledSelectButton = false;
+	let isFullscreenMode = false;
 
 	onMount(() => {
 		editor = new Editor({
 			element: element,
 			extensions: [
 				StarterKit,
+				TextAlign.configure({
+					types: ['heading', 'paragraph']
+				}),
 				ImageExtension,
 				Link.configure({
 					openOnClick: false,
@@ -49,6 +63,9 @@
 			content: value,
 			onTransaction: () => {
 				editor = editor;
+			},
+			onUpdate: ({ editor }) => {
+				value = editor.getHTML();
 			}
 		});
 
@@ -99,7 +116,7 @@
 		imageUrl = image.url;
 
 		filemanager.resetSelection();
-		modal.close();
+		modalFileManager.close();
 	};
 
 	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
@@ -108,28 +125,55 @@
 
 	const handleOpenFilemanager = async () => {
 		await filemanager.fetchFilesData();
-		modal.open();
+		modalFileManager.open();
 	};
 
-	const handleCancel = () => {
+	const handleCancelSelectImage = () => {
 		filemanager.resetSelection();
-		modal.close();
+		modalFileManager.close();
+	};
+
+	const handleOpenHTMLEditorModal = () => {
+		sourceHTML = editor.getHTML();
+		modalHTMLEditor.open();
+	};
+
+	const handleCancelEditHTML = () => {
+		modalHTMLEditor.close();
+	};
+
+	const handleConfirmEditHTML = () => {
+		editor.commands.setContent(sourceHTML);
+		modalHTMLEditor.close();
+	};
+
+	const handleFullscreenMode = () => {
+		isFullscreenMode = !isFullscreenMode;
 	};
 </script>
 
-<Modal bind:this={modal}>
+<Modal bind:this={modalFileManager}>
 	<Filemanager bind:this={filemanager} on:check={handleCheckFiles} />
 	<div slot="bottom">
 		<ConfirmPanel
 			disabled={isDisabledSelectButton}
-			on:cancel={handleCancel}
+			on:cancel={handleCancelSelectImage}
 			on:confirm={handleConfirmSelectImage}
 		/>
 	</div>
 </Modal>
 
+<Modal bind:this={modalHTMLEditor}>
+	<div class="html__field">
+		<Textarea bind:value={sourceHTML} />
+	</div>
+	<div class="html__controls" slot="bottom">
+		<ConfirmPanel on:cancel={handleCancelEditHTML} on:confirm={handleConfirmEditHTML} />
+	</div>
+</Modal>
+
 <p>{label}</p>
-<div class="editor">
+<div class="editor" class:editor--fullscreen={isFullscreenMode}>
 	{#if editor}
 		<div class="editor__controls">
 			<div class="editor__buttons">
@@ -238,6 +282,29 @@
 			<div class="editor__buttons">
 				<button
 					class="button editor__button"
+					class:active={editor.isActive({ textAlign: 'left' })}
+					type="button"
+					aria-label="align left"
+					on:click={() => editor.chain().focus().setTextAlign('left').run()}><AlignLeft /></button
+				>
+				<button
+					class="button editor__button"
+					class:active={editor.isActive({ textAlign: 'center' })}
+					type="button"
+					on:click={() => editor.chain().focus().setTextAlign('center').run()}
+					aria-label="align center"><AlignCenter /></button
+				>
+				<button
+					class="button editor__button"
+					class:active={editor.isActive({ textAlign: 'right' })}
+					type="button"
+					on:click={() => editor.chain().focus().setTextAlign('right').run()}
+					aria-label="align right"><AlignRight /></button
+				>
+			</div>
+			<div class="editor__buttons">
+				<button
+					class="button editor__button"
 					type="button"
 					on:click={() => editor.chain().focus().toggleBulletList().run()}
 					class:active={editor.isActive('bulletList')}
@@ -305,6 +372,22 @@
 					</Popover>
 				</div>
 			</div>
+			<div class="editor__buttons">
+				<button
+					class="button editor__button"
+					type="button"
+					aria-label="open HTML source editor"
+					on:click={handleOpenHTMLEditorModal}
+				>
+					<Source />
+				</button>
+				<button
+					class="button editor__button"
+					type="button"
+					aria-label="toggle fullscreen"
+					on:click={handleFullscreenMode}><Fullscreen /></button
+				>
+			</div>
 		</div>
 	{/if}
 
@@ -317,6 +400,16 @@
 	.editor {
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
+	}
+
+	.editor--fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: var(--color--white);
+		z-index: 1;
 	}
 
 	.editor__controls {
@@ -411,6 +504,22 @@
 		background-color: var(--color--gray-50);
 	}
 
+	.html__field {
+		height: 100%;
+	}
+
+	:global(.html__field .field) {
+		height: 100%;
+	}
+	:global(.html__field .field .field__wrapper) {
+		height: 99%;
+	}
+
+	.html__controls {
+		display: flex;
+		justify-content: end;
+	}
+
 	:global(.editor__element > div) {
 		height: 100%;
 		min-height: inherit;
@@ -438,5 +547,9 @@
 	:global(.editor__element ol li) {
 		list-style-type: decimal;
 		margin: 10px 0;
+	}
+
+	:global(.editor__element img) {
+		width: 500px;
 	}
 </style>
