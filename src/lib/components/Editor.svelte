@@ -3,7 +3,7 @@
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Link from '@tiptap/extension-link';
-	import Image from '@tiptap/extension-image';
+	import ImageExtension from '@tiptap/extension-image';
 	import UndoLink from '$lib/icons/Undo.svelte';
 	import RedoLink from '$lib/icons/Redo.svelte';
 	import BulletListLink from '$lib/icons/BulletList.svelte';
@@ -12,9 +12,10 @@
 	import Input from '$lib/components/Input.svelte';
 	import ImageIcon from '$lib/icons/Image.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
+	import Filemanager from '$lib/components/Filemanager.svelte';
 	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
 	import Popover from '$lib/components/Popover.svelte';
+	import Upload from '$lib/icons/Upload.svelte';
 
 	export let label = '';
 	export let name = '';
@@ -31,8 +32,6 @@
 
 	let imageUrl = '';
 	let imageAlt = '';
-	let imageWidth = '';
-	let imageHeight = '';
 
 	let isDisabledSelectButton = false;
 
@@ -41,7 +40,7 @@
 			element: element,
 			extensions: [
 				StarterKit,
-				Image,
+				ImageExtension,
 				Link.configure({
 					openOnClick: false,
 					autolink: true
@@ -78,12 +77,8 @@
 	};
 
 	const handleAddImages = () => {
-		const images: IFile[] = filemanager.getFiles();
-
-		if (images && images.length) {
-			images.forEach((image) => {
-				image.url && editor.chain().focus().setImage({ src: image.url }).run();
-			});
+		if (imageUrl) {
+			editor.chain().focus().setImage({ src: imageUrl, alt: imageAlt }).run();
 		}
 	};
 
@@ -91,17 +86,24 @@
 		imagePopover.close();
 		imageUrl = '';
 		imageAlt = '';
-		imageWidth = '';
-		imageHeight = '';
 	};
 
 	const handleConfirmAddImage = () => {
-		// handleAddImages(); // NOTE: check function
+		handleAddImages();
 		handleCloseImagePopover();
 	};
 
+	const handleConfirmSelectImage = () => {
+		const [image] = filemanager.getFiles();
+
+		imageUrl = image.url;
+
+		filemanager.resetSelection();
+		modal.close();
+	};
+
 	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
-		isDisabledSelectButton = !e.detail.ids.length;
+		isDisabledSelectButton = e.detail.ids.length !== 1;
 	};
 
 	const handleOpenFilemanager = async () => {
@@ -121,7 +123,7 @@
 		<ConfirmPanel
 			disabled={isDisabledSelectButton}
 			on:cancel={handleCancel}
-			on:confirm={handleAddImages}
+			on:confirm={handleConfirmSelectImage}
 		/>
 	</div>
 </Modal>
@@ -288,10 +290,18 @@
 						on:cancel={handleCloseImagePopover}
 						on:confirm={handleConfirmAddImage}
 					>
-						<Input label="URL:" placeholder="https://example.net" bind:value={imageUrl} />
+						<div class="editor__popover-container editor__popover-container--url">
+							<Input label="URL:" placeholder="https://example.net" bind:value={imageUrl} />
+							<button
+								class="button editor__button editor__button--upload"
+								type="button"
+								aria-label="open filemanager"
+								on:click={handleOpenFilemanager}
+							>
+								<Upload />
+							</button>
+						</div>
 						<Input label="Alt attribute:" placeholder="Alt attribute text" bind:value={imageAlt} />
-						<Input label="Width:" placeholder="100" bind:value={imageWidth} />
-						<Input label="Height:" placeholder="100" bind:value={imageHeight} />
 					</Popover>
 				</div>
 			</div>
@@ -375,6 +385,30 @@
 
 	.editor__wrapper {
 		position: relative;
+	}
+
+	.editor__popover-container {
+		display: grid;
+		gap: 10px;
+	}
+
+	.editor__popover-container--url {
+		grid-template-columns: 1fr 34px;
+		align-items: end;
+	}
+
+	.editor__button--upload {
+		background-color: var(--color--black);
+		--color--icon: var(--color--white);
+	}
+
+	.editor__button--upload:hover,
+	.editor__button--upload:focus-visible {
+		background-color: var(--color--primary);
+	}
+
+	.editor__button--upload:active {
+		background-color: var(--color--gray-50);
 	}
 
 	:global(.editor__element > div) {
