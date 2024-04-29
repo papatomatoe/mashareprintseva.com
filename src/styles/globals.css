@@ -132,7 +132,7 @@ p {
 }
 
 .button:active {
-	background-color: var(--color--gray-15-active);
+	background-color: var(--color--gray-50);
 }
 
 .button--disabled,
@@ -146,7 +146,7 @@ p {
 
 .button--cancel {
 	background-color: var(--color--gray-95);
-	color: var(--color--gray-95-text);
+	color: var(--color--gray-15);
 }
 
 .button--cancel:hover,
