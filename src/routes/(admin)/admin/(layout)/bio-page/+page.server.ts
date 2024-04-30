@@ -1,6 +1,7 @@
 import { db } from '$lib/database/db';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import xss from 'xss';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) throw redirect(302, '/admin/login');
@@ -32,11 +33,21 @@ export const actions = {
 			return fail(400, { invalid: true });
 		}
 
+		const sanitizedContent = xss(content);
+
 		try {
 			await db.bio.upsert({
 				where: { title: 'bio' },
 				update: { published, content, image, epigraph, preview },
-				create: { title: 'bio', slug: 'bio', published, content, image, epigraph, preview }
+				create: {
+					title: 'bio',
+					slug: 'bio',
+					content: sanitizedContent,
+					published,
+					image,
+					epigraph,
+					preview
+				}
 			});
 			return { success: true };
 		} catch (e) {
