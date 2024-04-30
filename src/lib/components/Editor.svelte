@@ -168,7 +168,11 @@
 		<Textarea bind:value={sourceHTML} />
 	</div>
 	<div class="html__controls" slot="bottom">
-		<ConfirmPanel on:cancel={handleCancelEditHTML} on:confirm={handleConfirmEditHTML} />
+		<ConfirmPanel
+			on:cancel={handleCancelEditHTML}
+			on:confirm={handleConfirmEditHTML}
+			confirmText="Done"
+		/>
 	</div>
 </Modal>
 
@@ -398,6 +402,7 @@
 
 <style>
 	.editor {
+		min-width: 803px;
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 	}
