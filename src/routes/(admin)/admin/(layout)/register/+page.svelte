@@ -12,7 +12,6 @@
 
 	<form
 		class="form"
-		action="?/register"
 		method="POST"
 		use:enhance={() => {
 			return async ({ result }) => {
