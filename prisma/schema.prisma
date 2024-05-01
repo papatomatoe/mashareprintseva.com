@@ -52,3 +52,35 @@ model File {
   fileType   String?
   createdAt  DateTime @default(now())
 }
+
+model Section {
+  id        String    @id @default(uuid())
+  published Boolean
+  order     Int
+  title     String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  image     String
+  altTitle  String
+  content   String
+  projects  Project[]
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  published Boolean
+  sectionId String
+  section   Section  @relation(fields: [sectionId], references: [id])
+  title     String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Social {
+  id        String   @id @default(uuid())
+  icon      String
+  title     String   @unique
+  link      String
+  published Boolean
+  createdAt DateTime @default(now())
+}
