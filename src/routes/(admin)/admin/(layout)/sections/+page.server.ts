@@ -5,9 +5,9 @@ import { db } from '$lib/database/db';
 export const load = (async ({ locals }) => {
 	if (!locals.user) throw redirect(302, '/admin/login');
 
-	const section = await db.section.findMany();
+	const sections = await db.section.findMany();
 
-	console.log(section);
+	console.log(sections);
 
 	return {
 		pageTitle: 'Admin | Sections'

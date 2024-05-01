@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import Switch from '$lib/components/Switch.svelte';
 	export let title = '';
 	export let published = false;
@@ -14,8 +14,12 @@
 	use:enhance={({ cancel }) => {
 		if (hasErrors) cancel();
 		return async ({ result }) => {
-			invalidateAll();
-			await applyAction(result);
+			if (result.type === 'redirect') {
+				goto(result.location);
+			} else {
+				invalidateAll();
+				await applyAction(result);
+			}
 		};
 	}}
 >

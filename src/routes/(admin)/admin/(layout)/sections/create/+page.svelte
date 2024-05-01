@@ -7,6 +7,8 @@
 	import Editor from '$lib/components/Editor.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import type { ComponentEvents } from 'svelte';
+	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
+	export let form;
 
 	let projects = [
 		{ id: '1', title: 'The Unseen Hues', published: true },
@@ -74,8 +76,18 @@
 
 		selectedProjects = [...selectedProjects, selectedProject];
 	};
+	$: showNotification = Boolean(form);
+	$: notificationMessage = form
+		? form?.success
+			? 'Successfully saved'
+			: form.message ?? 'Error'
+		: '';
+	$: notificationType = (
+		form ? (form.success ? 'success' : 'error') : 'default'
+	) as NotificationType;
 </script>
 
+<Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Create New Section" {published} {hasErrors} on:submit={handleSubmit}>
 	<div class="row row--top">
 		<Input
