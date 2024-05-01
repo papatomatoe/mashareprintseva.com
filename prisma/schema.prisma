@@ -56,9 +56,10 @@ model File {
 model Section {
   id        String    @id @default(uuid())
   published Boolean
-  order     Int
+  order     Int       @unique
   title     String    @unique
   slug      String    @unique
+  subtitle  String
   createdAt DateTime  @default(now())
   image     String
   altTitle  String
