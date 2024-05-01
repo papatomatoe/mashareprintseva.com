@@ -175,229 +175,234 @@
 		/>
 	</div>
 </Modal>
-
-<p>{label}</p>
-<div class="editor" class:editor--fullscreen={isFullscreenMode}>
-	{#if editor}
-		<div class="editor__controls">
-			<div class="editor__buttons">
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().undo().run()}
-					disabled={!editor.can().chain().focus().undo().run()}
-					aria-label="undo"
-				>
-					<UndoLink />
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().redo().run()}
-					disabled={!editor.can().chain().focus().redo().run()}
-					aria-label="redo"
-				>
-					<RedoLink />
-				</button>
-			</div>
-			<div class="editor__buttons">
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-					class:active={editor.isActive('heading', { level: 1 })}
-				>
-					h1
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-					class:active={editor.isActive('heading', { level: 2 })}
-				>
-					h2
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-					class:active={editor.isActive('heading', { level: 3 })}
-				>
-					h3
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-					class:active={editor.isActive('heading', { level: 4 })}
-				>
-					h4
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-					class:active={editor.isActive('heading', { level: 5 })}
-				>
-					h5
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-					class:active={editor.isActive('heading', { level: 6 })}
-				>
-					h6
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().setParagraph().run()}
-					class:active={editor.isActive('paragraph')}
-				>
-					p
-				</button>
-				<button
-					class="button editor__button"
-					on:click={() => editor.chain().focus().toggleBlockquote().run()}
-					class:active={editor.isActive('blockquote')}
-				>
-					"
-				</button>
-			</div>
-			<div class="editor__buttons">
-				<button
-					class="button editor__button editor__button--bold"
-					on:click={() => editor.chain().focus().toggleBold().run()}
-					disabled={!editor.can().chain().focus().toggleBold().run()}
-					class:active={editor.isActive('bold')}
-				>
-					B
-				</button>
-				<button
-					class="button editor__button editor__button--italic"
-					on:click={() => editor.chain().focus().toggleItalic().run()}
-					disabled={!editor.can().chain().focus().toggleItalic().run()}
-					class:active={editor.isActive('italic')}
-				>
-					I
-				</button>
-			</div>
-			<div class="editor__buttons">
-				<button
-					class="button editor__button"
-					class:active={editor.isActive({ textAlign: 'left' })}
-					type="button"
-					aria-label="align left"
-					on:click={() => editor.chain().focus().setTextAlign('left').run()}><AlignLeft /></button
-				>
-				<button
-					class="button editor__button"
-					class:active={editor.isActive({ textAlign: 'center' })}
-					type="button"
-					on:click={() => editor.chain().focus().setTextAlign('center').run()}
-					aria-label="align center"><AlignCenter /></button
-				>
-				<button
-					class="button editor__button"
-					class:active={editor.isActive({ textAlign: 'right' })}
-					type="button"
-					on:click={() => editor.chain().focus().setTextAlign('right').run()}
-					aria-label="align right"><AlignRight /></button
-				>
-			</div>
-			<div class="editor__buttons">
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleBulletList().run()}
-					class:active={editor.isActive('bulletList')}
-					aria-label="bullet list"
-				>
-					<BulletListLink />
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					on:click={() => editor.chain().focus().toggleOrderedList().run()}
-					class:active={editor.isActive('orderedList')}
-				>
-					<OrderedListLink />
-				</button>
-			</div>
-			<div class="editor__buttons">
-				<div class="editor__wrapper">
+<div>
+	<p>{label}</p>
+	<div class="editor" class:editor--fullscreen={isFullscreenMode}>
+		{#if editor}
+			<div class="editor__controls">
+				<div class="editor__buttons">
 					<button
 						class="button editor__button"
 						type="button"
-						on:click={() => {
-							linkPopover.open();
-							url = editor.getAttributes('link').href ?? '';
-						}}
-						class:active={editor.isActive('link')}
-						aria-label="add link"
+						on:click={() => editor.chain().focus().undo().run()}
+						disabled={!editor.can().chain().focus().undo().run()}
+						aria-label="undo"
 					>
-						<LinkIcon />
+						<UndoLink />
 					</button>
-					<Popover
-						bind:this={linkPopover}
-						on:cancel={handleCloseLinkPopover}
-						on:confirm={handleConfirmAddLink}
-					>
-						<Input label="URL:" placeholder="https://example.net" bind:value={url} />
-					</Popover>
-				</div>
-				<div class="editor__wrapper">
 					<button
 						class="button editor__button"
 						type="button"
-						aria-label="add image"
-						on:click={() => {
-							imagePopover.open();
-						}}><ImageIcon /></button
+						on:click={() => editor.chain().focus().redo().run()}
+						disabled={!editor.can().chain().focus().redo().run()}
+						aria-label="redo"
 					>
-					<Popover
-						bind:this={imagePopover}
-						on:cancel={handleCloseImagePopover}
-						on:confirm={handleConfirmAddImage}
+						<RedoLink />
+					</button>
+				</div>
+				<div class="editor__buttons">
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+						class:active={editor.isActive('heading', { level: 1 })}
 					>
-						<div class="editor__popover-container editor__popover-container--url">
-							<Input label="URL:" placeholder="https://example.net" bind:value={imageUrl} />
-							<button
-								class="button editor__button editor__button--upload"
-								type="button"
-								aria-label="open filemanager"
-								on:click={handleOpenFilemanager}
-							>
-								<Upload />
-							</button>
-						</div>
-						<Input label="Alt attribute:" placeholder="Alt attribute text" bind:value={imageAlt} />
-					</Popover>
+						h1
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+						class:active={editor.isActive('heading', { level: 2 })}
+					>
+						h2
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+						class:active={editor.isActive('heading', { level: 3 })}
+					>
+						h3
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+						class:active={editor.isActive('heading', { level: 4 })}
+					>
+						h4
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
+						class:active={editor.isActive('heading', { level: 5 })}
+					>
+						h5
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
+						class:active={editor.isActive('heading', { level: 6 })}
+					>
+						h6
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().setParagraph().run()}
+						class:active={editor.isActive('paragraph')}
+					>
+						p
+					</button>
+					<button
+						class="button editor__button"
+						on:click={() => editor.chain().focus().toggleBlockquote().run()}
+						class:active={editor.isActive('blockquote')}
+					>
+						"
+					</button>
+				</div>
+				<div class="editor__buttons">
+					<button
+						class="button editor__button editor__button--bold"
+						on:click={() => editor.chain().focus().toggleBold().run()}
+						disabled={!editor.can().chain().focus().toggleBold().run()}
+						class:active={editor.isActive('bold')}
+					>
+						B
+					</button>
+					<button
+						class="button editor__button editor__button--italic"
+						on:click={() => editor.chain().focus().toggleItalic().run()}
+						disabled={!editor.can().chain().focus().toggleItalic().run()}
+						class:active={editor.isActive('italic')}
+					>
+						I
+					</button>
+				</div>
+				<div class="editor__buttons">
+					<button
+						class="button editor__button"
+						class:active={editor.isActive({ textAlign: 'left' })}
+						type="button"
+						aria-label="align left"
+						on:click={() => editor.chain().focus().setTextAlign('left').run()}><AlignLeft /></button
+					>
+					<button
+						class="button editor__button"
+						class:active={editor.isActive({ textAlign: 'center' })}
+						type="button"
+						on:click={() => editor.chain().focus().setTextAlign('center').run()}
+						aria-label="align center"><AlignCenter /></button
+					>
+					<button
+						class="button editor__button"
+						class:active={editor.isActive({ textAlign: 'right' })}
+						type="button"
+						on:click={() => editor.chain().focus().setTextAlign('right').run()}
+						aria-label="align right"><AlignRight /></button
+					>
+				</div>
+				<div class="editor__buttons">
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleBulletList().run()}
+						class:active={editor.isActive('bulletList')}
+						aria-label="bullet list"
+					>
+						<BulletListLink />
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().toggleOrderedList().run()}
+						class:active={editor.isActive('orderedList')}
+					>
+						<OrderedListLink />
+					</button>
+				</div>
+				<div class="editor__buttons">
+					<div class="editor__wrapper">
+						<button
+							class="button editor__button"
+							type="button"
+							on:click={() => {
+								linkPopover.open();
+								url = editor.getAttributes('link').href ?? '';
+							}}
+							class:active={editor.isActive('link')}
+							aria-label="add link"
+						>
+							<LinkIcon />
+						</button>
+						<Popover
+							bind:this={linkPopover}
+							on:cancel={handleCloseLinkPopover}
+							on:confirm={handleConfirmAddLink}
+						>
+							<Input label="URL:" placeholder="https://example.net" bind:value={url} />
+						</Popover>
+					</div>
+					<div class="editor__wrapper">
+						<button
+							class="button editor__button"
+							type="button"
+							aria-label="add image"
+							on:click={() => {
+								imagePopover.open();
+							}}><ImageIcon /></button
+						>
+						<Popover
+							bind:this={imagePopover}
+							on:cancel={handleCloseImagePopover}
+							on:confirm={handleConfirmAddImage}
+						>
+							<div class="editor__popover-container editor__popover-container--url">
+								<Input label="URL:" placeholder="https://example.net" bind:value={imageUrl} />
+								<button
+									class="button editor__button editor__button--upload"
+									type="button"
+									aria-label="open filemanager"
+									on:click={handleOpenFilemanager}
+								>
+									<Upload />
+								</button>
+							</div>
+							<Input
+								label="Alt attribute:"
+								placeholder="Alt attribute text"
+								bind:value={imageAlt}
+							/>
+						</Popover>
+					</div>
+				</div>
+				<div class="editor__buttons">
+					<button
+						class="button editor__button"
+						type="button"
+						aria-label="open HTML source editor"
+						on:click={handleOpenHTMLEditorModal}
+					>
+						<Source />
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						aria-label="toggle fullscreen"
+						on:click={handleFullscreenMode}><Fullscreen /></button
+					>
 				</div>
 			</div>
-			<div class="editor__buttons">
-				<button
-					class="button editor__button"
-					type="button"
-					aria-label="open HTML source editor"
-					on:click={handleOpenHTMLEditorModal}
-				>
-					<Source />
-				</button>
-				<button
-					class="button editor__button"
-					type="button"
-					aria-label="toggle fullscreen"
-					on:click={handleFullscreenMode}><Fullscreen /></button
-				>
-			</div>
-		</div>
-	{/if}
+		{/if}
 
-	<div class="editor__element" bind:this={element} />
+		<div class="editor__element" bind:this={element} />
 
-	<input type="hidden" {name} bind:value />
+		<input type="hidden" {name} bind:value />
+	</div>
 </div>
 
 <style>

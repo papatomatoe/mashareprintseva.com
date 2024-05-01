@@ -1,20 +1,10 @@
 <script lang="ts">
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import Status from '$lib/components/Status.svelte';
-	import type { ITableData, ITableConfig } from '$lib/components/Table.svelte';
-	const tableData: ITableData = {
-		data: Array(200)
-			.fill('')
-			.map((_, idx) => ({
-				id: idx + 1,
-				published: true,
-				order: 8,
-				title: 'Contemporary',
-				slug: 'contemporary',
-				created: '22.10.2023 10:30'
-			})),
-		type: 'sections'
-	};
+	import type { ITableConfig } from '$lib/components/Table.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	let config: ITableConfig[] = [
 		{
@@ -62,7 +52,6 @@
 
 <AdminTable
 	title="Sections"
-	{tableData}
 	{config}
 	on:crate={handleAddNewItem}
 	on:delete={handleDeleteItems}

@@ -91,7 +91,7 @@
 			<Delete />
 			Delete selected
 		</button>
-		<a class="button container__button" href={`${currentPath}/new`}>
+		<a class="button container__button" href={`${currentPath}/create`}>
 			<Add />
 			New Item
 		</a>
@@ -100,7 +100,6 @@
 		<Table
 			data={tableDataPerPage}
 			{config}
-			{selectedRows}
 			on:select-all={handleSelectAll}
 			on:select={handleSelect}
 			on:edit
