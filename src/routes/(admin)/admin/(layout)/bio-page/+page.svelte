@@ -4,8 +4,10 @@
 	import Input from '$lib/components/Input.svelte';
 	import Textarea from '$lib/components/Textarea.svelte';
 	import File from '$lib/components/File.svelte';
+	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
 	export let data;
+	export let form;
 
 	let title = 'Bio';
 	let slug = 'bio';
@@ -25,8 +27,14 @@
 	};
 
 	$: hasErrors = Boolean(fileUrlError);
+	$: showNotification = Boolean(form);
+	$: notificationMessage = form ? (form?.success ? 'Successfully saved' : 'Error') : '';
+	$: notificationType = (
+		form ? (form.success ? 'success' : 'error') : 'default'
+	) as NotificationType;
 </script>
 
+<Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Bio Page" {published} {hasErrors} on:submit={handleSubmit}>
 	<Input
 		label="title"
