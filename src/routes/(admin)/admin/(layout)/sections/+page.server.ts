@@ -7,9 +7,8 @@ export const load = (async ({ locals }) => {
 
 	const sections = await db.section.findMany();
 
-	console.log(sections);
-
 	return {
-		pageTitle: 'Admin | Sections'
+		pageTitle: 'Admin | Sections',
+		sections
 	};
 }) satisfies PageServerLoad;
