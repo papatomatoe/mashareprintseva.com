@@ -2,6 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import Repeat from '$lib/icons/Repeat.svelte';
 	import Clear from '$lib/icons/Clear.svelte';
+	import { debounce } from '$lib/utils/debounce';
+	import Search from '$lib/icons/Search.svelte';
 
 	export let label = '';
 	export let value = '';
@@ -13,8 +15,11 @@
 	export let isSlug = false;
 	export let disabled = false;
 
+	$: isSearch = type === 'search';
+	$: withIcon = $$slots.icon;
+
 	const typeAction = (node: HTMLInputElement) => {
-		node.type = type;
+		node.type = isSearch ? 'text' : type;
 	};
 
 	const dispatch = createEventDispatcher();
@@ -23,7 +28,7 @@
 		value = '';
 		error = '';
 		dispatch('clearError');
-		dispatch('input', '');
+		isSearch ? dispatch('search', '') : dispatch('input', '');
 	};
 
 	const handleRegenerate = () => {
@@ -36,7 +41,10 @@
 		dispatch('input', target.value);
 	};
 
-	$: withIcon = $$slots.icon;
+	const handleSearch = debounce((e: Event) => {
+		const target = e.target as HTMLInputElement;
+		dispatch('search', target.value);
+	}, 500);
 </script>
 
 <label class="field" class:field__disabled={disabled}>
@@ -51,15 +59,23 @@
 		</p>
 	{/if}
 	<div class="field__wrapper">
-		<div class="field__icon"><slot name="icon" /></div>
+		{#if withIcon}
+			<div class="field__icon">
+				<slot name="icon" />
+			</div>
+		{:else if isSearch}
+			<div class="field__icon">
+				<Search />
+			</div>
+		{/if}
 		<input
 			class="field__input"
 			class:field__input--error={error}
-			class:field__input--with-icon={withIcon}
+			class:field__input--with-icon={withIcon || isSearch}
 			use:typeAction
 			bind:value
 			on:change
-			on:input={handleInput}
+			on:input={isSearch ? handleSearch : handleInput}
 			{name}
 			{placeholder}
 			{disabled}
