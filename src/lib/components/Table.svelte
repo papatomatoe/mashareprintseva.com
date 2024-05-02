@@ -23,7 +23,8 @@
 		order: number;
 		title: string;
 		slug: string;
-		created: string;
+		image: string;
+		createdAt: Date;
 	}
 
 	export interface IProject {
