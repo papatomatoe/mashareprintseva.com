@@ -1,22 +1,28 @@
+<script context="module" lang="ts">
+	export const getBreadcrumbsData = (path: string) =>
+		path
+			.split('/')
+			.slice(1)
+			.reduce<any>((acc, el, idx, arr) => {
+				let path = '';
+				for (let i = 0; i <= idx; i += 1) {
+					path += `/${arr[i]}`;
+				}
+
+				if (el === 'admin') {
+					return [...acc, { title: 'dashboard', path: '/admin/dashboard' }];
+				}
+
+				return [...acc, { title: el, path }];
+			}, []);
+</script>
+
 <script lang="ts">
 	import { page } from '$app/stores';
 
 	$: currentPath = $page.url.pathname;
-	$: breadcrumbsData = currentPath
-		.split('/')
-		.slice(1)
-		.reduce<any>((acc, el, idx, arr) => {
-			let path = '';
-			for (let i = 0; i <= idx; i += 1) {
-				path += `/${arr[i]}`;
-			}
-
-			if (el === 'admin') {
-				return [...acc, { title: 'dashboard', path: '/admin/dashboard' }];
-			}
-
-			return [...acc, { title: el, path }];
-		}, []);
+	$: breadcrumbsData =
+		'breadcrumbs' in $page.data ? $page.data.breadcrumbs : getBreadcrumbsData(currentPath);
 </script>
 
 <ul class="breadcrumbs">
