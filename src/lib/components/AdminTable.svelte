@@ -22,16 +22,16 @@
 
 	let selectedRows: TableData[] = [];
 	let searchResultData = tableData.data;
-	let perPage = 10;
-	let currentPage = 1;
+	// // let perPage = 10;
+	// let currentPage = 1;
 
 	$: currentPath = $page.url.pathname;
-	$: pages = Math.ceil(searchResultData.length / perPage);
+	// $: pages = Math.ceil(searchResultData.length / perPage);
 
-	$: tableDataPerPage = searchResultData.slice(
-		currentPage * perPage - perPage,
-		currentPage * perPage
-	);
+	// $: tableDataPerPage = searchResultData.slice(
+	// 	currentPage * perPage - perPage,
+	// 	currentPage * perPage
+	// );
 
 	const handleSelectAll = () => {
 		selectedRows = selectedRows.length ? [] : [...tableData.data];
@@ -62,14 +62,14 @@
 		search(e.detail);
 	}, 500);
 
-	const handleSelectPerPage = (e: CustomEvent) => {
-		perPage = e.detail;
-	};
+	// const handleSelectPerPage = (e: CustomEvent) => {
+	// 	perPage = e.detail;
+	// };
 
-	const handleSelectCurrentPage = (e: CustomEvent) => {
-		console.log(e.detail);
-		currentPage = e.detail;
-	};
+	// const handleSelectCurrentPage = (e: CustomEvent) => {
+	// 	console.log(e.detail);
+	// 	currentPage = e.detail;
+	// };
 </script>
 
 <div class="container">
@@ -98,19 +98,19 @@
 	</div>
 	<div class="container__bottom">
 		<Table
-			data={tableDataPerPage}
+			data={tableData.data}
 			{config}
 			on:select-all={handleSelectAll}
 			on:select={handleSelect}
 			on:edit
 		/>
-		<Pagination
+		<!-- <Pagination
 			{pages}
 			{perPage}
 			{currentPage}
 			on:select-per-page={handleSelectPerPage}
 			on:select-page={handleSelectCurrentPage}
-		/>
+		/> -->
 	</div>
 </div>
 

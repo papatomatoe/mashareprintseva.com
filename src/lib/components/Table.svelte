@@ -3,11 +3,11 @@
 
 	export interface IUser {
 		id: string;
-		role: 'USER' | 'ADMIN' | 'EDITOR';
-		active: boolean;
+		role: string;
+		// active: boolean;
 		username: string;
-		email: string;
-		created: string;
+		// email: string;
+		createdAt: Date;
 	}
 	export interface ISocial {
 		id: string;
@@ -94,7 +94,7 @@
 					}
 
 					return 0;
-			  })
+				})
 			: data;
 
 	const renderTd = (item: Record<string, any>, key: string) => item[key];

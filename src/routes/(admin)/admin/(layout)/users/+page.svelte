@@ -1,58 +1,63 @@
 <script lang="ts">
 	import AdminTable from '$lib/components/AdminTable.svelte';
-	import Status from '$lib/components/Status.svelte';
+	import DateTime from '$lib/components/DateTime.svelte';
 	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
-	const tableData: ITableData = {
-		data: Array(7)
-			.fill('')
-			.map((_, idx) => ({
-				id: idx + 1,
-				active: true,
-				role: 'USER',
-				username: 'test',
-				email: 'test@test.test',
-				created: '22.10.2023 10:30'
-			})),
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+
+	$: users = data.users;
+
+	$: tableData = {
+		data:
+			users?.map(({ id, username, createdAt, role }) => ({
+				id,
+				username,
+				createdAt,
+				role: role?.name ?? ''
+			})) ?? [],
 		type: 'users'
-	};
+	} as ITableData;
 
 	let config: ITableConfig[] = [
 		{
 			key: 'select'
 		},
+		// {
+		// 	key: 'id',
+		// 	title: 'id',
+		// 	sortable: true
+		// },
+		// {
+		// 	key: 'active',
+		// 	title: 'state',
+		// 	sortable: true,
+		// 	render: Status
 		{
-			key: 'id',
-			title: 'id',
+			key: 'username',
+			title: 'Username',
 			sortable: true
 		},
-		{
-			key: 'active',
-			title: 'state',
-			sortable: true,
-			render: Status
-		},
+		// },
 		{
 			key: 'role',
 			title: 'role',
 			sortable: true
 		},
+		// {
+		// 	key: 'icon',
+		// 	title: 'icon'
+		// },
+
+		// {
+		// 	key: 'email',
+		// 	title: 'email',
+		// 	sortable: true
+		// },
 		{
-			key: 'icon',
-			title: 'icon'
-		},
-		{
-			key: 'username',
-			title: 'username',
-			sortable: true
-		},
-		{
-			key: 'email',
-			title: 'email',
-			sortable: true
-		},
-		{
-			key: 'created',
+			key: 'createdAt',
 			title: 'created',
+			render: DateTime,
 			sortable: true
 		},
 		{
