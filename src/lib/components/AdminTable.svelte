@@ -6,13 +6,13 @@
 		type ITableData,
 		type ITableConfig
 	} from '$lib/components/Table.svelte';
-	import Pagination from '$lib/components/Pagination.svelte';
+	// import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Add from '$lib/icons/Add.svelte';
-	import Search from '$lib/icons/Search.svelte';
-	import Delete from '$lib/icons/Add.svelte';
-	import { debounce } from '$lib/utils/debounce';
-	import { searchByData } from '$lib/utils/table';
+	// import Search from '$lib/icons/Search.svelte';
+	import Delete from '$lib/icons/Delete.svelte';
+	// import { debounce } from '$lib/utils/debounce';
+	// import { searchByData } from '$lib/utils/table';
 
 	const dispatch = createEventDispatcher();
 
@@ -47,20 +47,19 @@
 			: [...selectedRows, item];
 	};
 	const handleDelete = () => dispatch('delete', selectedRows);
-	const handleAddNewItem = () => dispatch('crate');
+	// const handleAddNewItem = () => dispatch('crate');
 
-	const search = (val: string) => {
-		const value = val.toLocaleLowerCase();
-		if (!tableData.data) return;
+	// const search = (val: string) => {
+	// 	const value = val.toLocaleLowerCase();
+	// 	if (!tableData.data) return;
 
-		searchResultData = searchByData(value, tableData);
+	// 	searchResultData = searchByData(value, tableData);
+	// 	selectedRows = [];
+	// };
 
-		selectedRows = [];
-	};
-
-	const handleSearch = debounce((e: ComponentEvents<Input>['input']) => {
-		search(e.detail);
-	}, 500);
+	// const handleSearch = debounce((e: ComponentEvents<Input>['input']) => {
+	// 	search(e.detail);
+	// }, 500);
 
 	// const handleSelectPerPage = (e: CustomEvent) => {
 	// 	perPage = e.detail;
@@ -76,14 +75,11 @@
 	<div class="container__top">
 		<h1 class="container__title">{title}</h1>
 		<div class="container__search">
-			<Input placeholder="search" on:input={handleSearch}>
-				<svelte:fragment slot="icon">
-					<Search />
-				</svelte:fragment>
-			</Input>
+			<Input placeholder="search" type="search" on:search />
 		</div>
 
 		<button
+			type="button"
 			class="button container__button"
 			disabled={Boolean(!selectedRows.length || !searchResultData.length)}
 			on:click={handleDelete}
