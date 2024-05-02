@@ -4,7 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { db } from '$lib/database/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	if (locals.user) throw redirect(302, '/admin/dashboard');
+	if (locals.user) redirect(302, '/admin/dashboard');
 
 	return {
 		pageTitle: 'Admin | Login'
@@ -50,7 +50,7 @@ const login: Action = async ({ cookies, request }) => {
 		maxAge: 60 * 60 * 24 * 30
 	});
 
-	throw redirect(302, '/admin/dashboard');
+	redirect(302, '/admin/dashboard');
 };
 
 export const actions: Actions = { login };

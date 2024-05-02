@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from './$types';
 import xss from 'xss';
 
 export const load = (async ({ locals }) => {
-	if (!locals.user) throw redirect(302, '/admin/login');
+	if (!locals.user) redirect(302, '/admin/login');
 
 	const projects = await db.project.findMany();
 
@@ -58,6 +58,6 @@ export const actions = {
 			return fail(400, response);
 		}
 
-		throw redirect(303, '/admin/sections');
+		redirect(303, '/admin/sections');
 	}
 } satisfies Actions;

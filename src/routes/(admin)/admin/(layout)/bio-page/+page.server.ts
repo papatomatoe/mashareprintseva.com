@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from './$types';
 import xss from 'xss';
 
 export const load = (async ({ locals }) => {
-	if (!locals.user) throw redirect(302, '/admin/login');
+	if (!locals.user) redirect(302, '/admin/login');
 
 	const bio = await db.bio.findFirst();
 
