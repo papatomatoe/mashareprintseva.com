@@ -259,6 +259,7 @@
 					</button>
 					<button
 						class="button editor__button"
+						type="button"
 						on:click={() => editor.chain().focus().toggleBlockquote().run()}
 						class:active={editor.isActive('blockquote')}
 					>
@@ -268,6 +269,7 @@
 				<div class="editor__buttons">
 					<button
 						class="button editor__button editor__button--bold"
+						type="button"
 						on:click={() => editor.chain().focus().toggleBold().run()}
 						disabled={!editor.can().chain().focus().toggleBold().run()}
 						class:active={editor.isActive('bold')}
@@ -276,6 +278,7 @@
 					</button>
 					<button
 						class="button editor__button editor__button--italic"
+						type="button"
 						on:click={() => editor.chain().focus().toggleItalic().run()}
 						disabled={!editor.can().chain().focus().toggleItalic().run()}
 						class:active={editor.isActive('italic')}
