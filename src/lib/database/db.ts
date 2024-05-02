@@ -39,6 +39,23 @@ export const createSection = async (data: any) => {
 		return { success: false, message };
 	}
 };
+export const updateSection = async (id: string, data: any) => {
+	try {
+		await db.section.update({ where: { id }, data });
+
+		return { success: true };
+	} catch (e) {
+		console.log(e);
+		const prismaError = e as PrismaClientKnownRequestError;
+
+		const errorMessage = PRISMA_ERROR[prismaError.code];
+		const errorTarget = prismaError.meta?.target;
+
+		const message = errorTarget ? `${errorMessage}: "${errorTarget}"` : prismaError.message;
+
+		return { success: false, message };
+	}
+};
 export const getUsers = async () => {
 	const users = await db.user.findMany({
 		select: {
@@ -50,4 +67,13 @@ export const getUsers = async () => {
 	});
 
 	return users;
+};
+
+export const getSection = async (id: string) => {
+	try {
+		const section = db.section.findUnique({ where: { id } });
+		return section;
+	} catch (e) {
+		console.error(e);
+	}
 };
