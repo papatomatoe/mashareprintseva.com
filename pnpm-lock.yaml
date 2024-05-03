@@ -14,21 +14,60 @@ importers:
       '@tiptap/core':
         specifier: 2.3.1
         version: 2.3.1(@tiptap/pm@2.3.1)
+      '@tiptap/extension-blockquote':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-bold':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-bullet-list':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-document':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-dropcursor':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
+      '@tiptap/extension-gapcursor':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
+      '@tiptap/extension-hard-break':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-heading':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-history':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-image':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-italic':
         specifier: 2.3.1
         version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-link':
         specifier: 2.3.1
         version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
+      '@tiptap/extension-list-item':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-ordered-list':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-paragraph':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-text':
+        specifier: 2.3.1
+        version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-text-align':
         specifier: 2.3.1
         version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/pm':
         specifier: 2.3.1
         version: 2.3.1
-      '@tiptap/starter-kit':
-        specifier: 2.3.1
-        version: 2.3.1(@tiptap/pm@2.3.1)
       bcrypt:
         specifier: 5.1.1
         version: 5.1.1
@@ -586,17 +625,6 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
-  '@tiptap/extension-code-block@2.3.1':
-    resolution: {integrity: sha512-rM7T+DWuOShariPl5vknNFMesPOFQrhMjmms9Ql636sSxOcnkb0d39NFbUpI/r5noFDC6Km+lAebF0Rx2MxpKQ==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-      '@tiptap/pm': ^2.0.0
-
-  '@tiptap/extension-code@2.3.1':
-    resolution: {integrity: sha512-bVX0EnDZoRXnoA7dyoZe7w2gdRjxmFEcsatHLkcr3R3x4k9oSgZXLe1C2jGbjJWr4j32tYXZ1cpKte6f1WUKzg==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-
   '@tiptap/extension-document@2.3.1':
     resolution: {integrity: sha512-uWYbzAV95JnetFBduWRI9n2QbQfmznQ7I6XzfZxuTAO2KcWGvHPBS7F00COO9Y67FZAPMbuQ1njtCJK0nClOPw==}
     peerDependencies:
@@ -626,12 +654,6 @@ packages:
 
   '@tiptap/extension-history@2.3.1':
     resolution: {integrity: sha512-m+W6qTP4V0PHqqKnXw/ma18a62O0Cqp5FDWtSarOuxx6W4FpVr4A3Uxfbp4RigZEYanLcX4UJOWL4nWsFdYWHw==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-      '@tiptap/pm': ^2.0.0
-
-  '@tiptap/extension-horizontal-rule@2.3.1':
-    resolution: {integrity: sha512-IPgCFkiT6Y5BSFBQMTXS6gq2Ust6otMzRwddoI0RC8tl/tMftFBEPqYKADWVQeQb4C6AQydRjUbmAwHpBH31Eg==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
@@ -667,11 +689,6 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
-  '@tiptap/extension-strike@2.3.1':
-    resolution: {integrity: sha512-fpsVewcnaYk37TAF4JHkwH9O6Ml7JooF1v/Eh9p7PSItNcEfg/3RLlJL3c53RzLWdlunjgptM/M0alPV0Zyq4A==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-
   '@tiptap/extension-text-align@2.3.1':
     resolution: {integrity: sha512-EhV8xuCKdy0abZNALW0AwgqK3KeFzUFmRiKETTkfZb9Y2Jqz8HVGJT8EAAIMfEMkO9AaRMoGRIDMCx3vQsiJlw==}
     peerDependencies:
@@ -684,9 +701,6 @@ packages:
 
   '@tiptap/pm@2.3.1':
     resolution: {integrity: sha512-jdd1PFAFeewcu1rWsiqoCc04u5NCplHVjsGPN4jxUmqKdU0YN/9sp7h8gRG6YN1GZRoC1Y6KD+WPLMdzkwizZQ==}
-
-  '@tiptap/starter-kit@2.3.1':
-    resolution: {integrity: sha512-VGk1o5y5f2ZHKkvP2WNj8BH7FGak0d0cjxQiXP1n5w8eS0vFnTkCz3JbCPM+KTKobsBmxd2vSC3ElgP9E9d2xw==}
 
   '@types/bcrypt@5.0.2':
     resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
@@ -2234,15 +2248,6 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
-  '@tiptap/extension-code-block@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)':
-    dependencies:
-      '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
-      '@tiptap/pm': 2.3.1
-
-  '@tiptap/extension-code@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
-    dependencies:
-      '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
-
   '@tiptap/extension-document@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
@@ -2270,11 +2275,6 @@ snapshots:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
       '@tiptap/pm': 2.3.1
 
-  '@tiptap/extension-horizontal-rule@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)':
-    dependencies:
-      '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
-      '@tiptap/pm': 2.3.1
-
   '@tiptap/extension-image@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
@@ -2298,10 +2298,6 @@ snapshots:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
   '@tiptap/extension-paragraph@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
-    dependencies:
-      '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
-
-  '@tiptap/extension-strike@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
@@ -2333,30 +2329,6 @@ snapshots:
       prosemirror-trailing-node: 2.0.8(prosemirror-model@1.20.0)(prosemirror-state@1.4.3)(prosemirror-view@1.33.6)
       prosemirror-transform: 1.8.0
       prosemirror-view: 1.33.6
-
-  '@tiptap/starter-kit@2.3.1(@tiptap/pm@2.3.1)':
-    dependencies:
-      '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
-      '@tiptap/extension-blockquote': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-bold': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-bullet-list': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-code': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-code-block': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
-      '@tiptap/extension-document': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-dropcursor': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
-      '@tiptap/extension-gapcursor': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
-      '@tiptap/extension-hard-break': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-heading': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-history': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
-      '@tiptap/extension-horizontal-rule': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
-      '@tiptap/extension-italic': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-list-item': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-ordered-list': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-paragraph': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-strike': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-text': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-    transitivePeerDependencies:
-      - '@tiptap/pm'
 
   '@types/bcrypt@5.0.2':
     dependencies:
