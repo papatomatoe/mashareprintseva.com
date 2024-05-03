@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { SvelteComponent, onMount, type ComponentEvents } from 'svelte';
 	import { Editor } from '@tiptap/core';
-	import StarterKit from '@tiptap/starter-kit';
-	import Link from '@tiptap/extension-link';
-	import TextAlign from '@tiptap/extension-text-align';
-	import ImageExtension from '@tiptap/extension-image';
+
 	import UndoLink from '$lib/icons/Undo.svelte';
 	import RedoLink from '$lib/icons/Redo.svelte';
 	import BulletListLink from '$lib/icons/BulletList.svelte';
@@ -23,6 +20,7 @@
 	import AlignLeft from '$lib/icons/AlignLeft.svelte';
 	import AlignCenter from '$lib/icons/AlignCenter.svelte';
 	import AlignRight from '$lib/icons/AlignRight.svelte';
+	import { CUSTOM_EXTENSIONS } from '$lib/configs/tiptap';
 
 	export let label = '';
 	export let name = '';
@@ -49,17 +47,7 @@
 	onMount(() => {
 		editor = new Editor({
 			element: element,
-			extensions: [
-				StarterKit,
-				TextAlign.configure({
-					types: ['heading', 'paragraph']
-				}),
-				ImageExtension,
-				Link.configure({
-					openOnClick: false,
-					autolink: true
-				})
-			],
+			extensions: CUSTOM_EXTENSIONS,
 			content: value,
 			onTransaction: () => {
 				editor = editor;
@@ -143,7 +131,7 @@
 	};
 
 	const handleConfirmEditHTML = () => {
-		editor.commands.setContent(sourceHTML);
+		editor.commands.setContent(sourceHTML, true);
 		modalHTMLEditor.close();
 	};
 
@@ -265,6 +253,13 @@
 					>
 						"
 					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().setHardBreak().run()}
+					>
+						br
+					</button>
 				</div>
 				<div class="editor__buttons">
 					<button
@@ -273,6 +268,7 @@
 						on:click={() => editor.chain().focus().toggleBold().run()}
 						disabled={!editor.can().chain().focus().toggleBold().run()}
 						class:active={editor.isActive('bold')}
+						aria-label="set bold text"
 					>
 						B
 					</button>
@@ -282,6 +278,7 @@
 						on:click={() => editor.chain().focus().toggleItalic().run()}
 						disabled={!editor.can().chain().focus().toggleItalic().run()}
 						class:active={editor.isActive('italic')}
+						aria-label="set italic text"
 					>
 						I
 					</button>
@@ -539,18 +536,31 @@
 		outline: 0;
 	}
 
-	:global(.editor__element blockquote) {
-		border-left: 2px solid var(--color--gray-85);
-		margin-left: 1.5rem;
-		padding-left: 1rem;
+	:global(.editor__element h1),
+	:global(.editor__element h2),
+	:global(.editor__element h3),
+	:global(.editor__element h4),
+	:global(.editor__element h5),
+	:global(.editor__element h6),
+	:global(.editor__element p) {
+		padding: 10px 0;
 	}
 
+	:global(.editor__element blockquote) {
+		border-left: 2px solid var(--color--gray-85);
+		padding: 20px 0 20px 20px;
+		margin: 20px 20px 20px 40px;
+	}
+
+	:global(.editor__element blockquote > p) {
+		padding: 5px 0;
+	}
 	:global(.editor__element ul) {
-		margin: 5px 0 5px 40px;
+		margin: 20px 0 20px 40px;
 	}
 
 	:global(.editor__element ol) {
-		margin: 5px 0;
+		margin: 20px 0;
 	}
 	:global(.editor__element ul li) {
 		list-style-type: disc;
@@ -564,5 +574,10 @@
 
 	:global(.editor__element img) {
 		width: 500px;
+		padding: 20px 0;
+	}
+
+	:global(.editor__element a) {
+		color: var(--color--primary);
 	}
 </style>
