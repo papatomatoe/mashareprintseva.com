@@ -70,6 +70,3 @@
 	on:delete={handleDeleteItems}
 	on:edit={handleEditItem}
 />
-
-<style>
-</style>

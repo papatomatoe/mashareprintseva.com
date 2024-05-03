@@ -5,12 +5,7 @@
 	export let data: PageData;
 	export let form: ActionData;
 
-	$: console.log(form);
-
 	$: section = data.section;
 </script>
 
 <SectionForm {section} {form} />
-
-<style>
-</style>
