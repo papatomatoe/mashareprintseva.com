@@ -1,4 +1,4 @@
-import { getSection, updateSection } from '$lib/database/db';
+import { getSection, updateSection } from '$lib/services/sections';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

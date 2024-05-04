@@ -1,4 +1,5 @@
-import { createSection, db } from '$lib/database/db';
+import { db } from '$lib/database/db';
+import { createSection } from '$lib/services/sections';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
