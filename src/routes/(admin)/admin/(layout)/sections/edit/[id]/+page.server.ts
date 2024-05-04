@@ -1,8 +1,6 @@
-import { createSection, getSection, updateSection } from '$lib/database/db';
+import { getSection, updateSection } from '$lib/database/db';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import xss from 'xss';
-import { OPTIONS } from '$lib/constants/xssConfig';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	if (!locals.user) redirect(302, '/admin/login');
@@ -56,9 +54,6 @@ export const actions = {
 			return fail(400, { invalid: true });
 		}
 
-		// const sanitizedContent = xss(content, OPTIONS); // NOTE: some unexpected behavior, leave unsanitized.
-		const sanitizedContent = content;
-
 		const response = await updateSection(id, {
 			published,
 			order,
@@ -68,7 +63,7 @@ export const actions = {
 			image,
 			thumbnail,
 			altTitle,
-			content: sanitizedContent,
+			content,
 			...(projects.length && { projects })
 		});
 
