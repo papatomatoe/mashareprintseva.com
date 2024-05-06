@@ -9,20 +9,14 @@
 	import type { ComponentEvents } from 'svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
-	import type { Project } from '@prisma/client';
+	import type { Project, Section } from '@prisma/client';
 
 	export let form;
 	export let project: Project | null = null;
 
-	let sections = [
-		{ id: '1', title: 'The Unseen Hues', published: true },
-		{ id: '2', title: 'Serendipity of Man', published: true },
-		{ id: '3', title: 'Intricate Proportion No.21', published: true },
-		{ id: '4', title: 'In a Former Home', published: false },
-		{ id: '5', title: 'Vortex Constellation', published: true }
-	];
+	export let sections: Section[] = [];
 
-	let selectedSection: Record<string, string | boolean> | null = sections[0];
+	let selectedSection: Section | null = null;
 
 	let id = project?.id ?? '';
 	let title = project?.title ?? '';
@@ -131,6 +125,8 @@
 			bind:fileUrl={projectPreviewUrl}
 			bind:preview={projectPreviewThumbnail}
 			error={projectPreviewUrlError}
+			name="projectPreview"
+			thumbnailName="projectPreviewThumbnail"
 		/>
 		<File
 			label="main image"

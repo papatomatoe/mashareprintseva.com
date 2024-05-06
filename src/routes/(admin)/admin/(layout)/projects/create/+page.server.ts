@@ -1,4 +1,5 @@
 import { createSection, getSections } from '$lib/services/sections';
+import { createProject } from '$lib/services/projects';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -8,7 +9,7 @@ export const load = (async ({ locals }) => {
 	const sections = await getSections();
 	return {
 		sections,
-		pageTitle: 'Admin | Create New Section'
+		pageTitle: 'Admin | Create New Project'
 	};
 }) satisfies PageServerLoad;
 
@@ -16,47 +17,47 @@ export const actions = {
 	default: async ({ request }) => {
 		const data = await request.formData();
 
-		const order = Number(data.get('order'));
 		const published = Boolean(data.get('published'));
 		const content = data.get('content');
 		const image = data.get('image');
-		const thumbnail = data.get('preview');
+		const thumbnail = data.get('thumbnail');
+		const preview = data.get('projectPreview');
+		const previewThumbnail = data.get('projectPreviewThumbnail');
 		const title = data.get('title');
-		const subtitle = data.get('subtitle');
 		const slug = data.get('slug');
-		const altTitle = data.get('altTitle');
-		const projects = JSON.parse(String(data.get('projects')));
+		const subtitle = data.get('subtitle');
+		const section = JSON.parse(String(data.get('section')));
 
 		if (
-			typeof order !== 'number' ||
 			typeof content !== 'string' ||
 			typeof image !== 'string' ||
 			typeof thumbnail !== 'string' ||
+			typeof preview !== 'string' ||
+			typeof previewThumbnail !== 'string' ||
 			typeof title !== 'string' ||
 			typeof subtitle !== 'string' ||
-			typeof slug !== 'string' ||
-			typeof altTitle !== 'string'
+			typeof slug !== 'string'
 		) {
 			return fail(400, { invalid: true });
 		}
 
-		const response = await createSection({
+		const response = await createProject({
 			published,
-			order,
 			title,
 			slug,
 			subtitle,
 			image,
 			thumbnail,
-			altTitle,
+			preview,
+			previewThumbnail,
 			content,
-			...(projects.length && { projects })
+			...(section && { sectionId: section.id })
 		});
 
 		if (!response.success) {
 			return fail(400, response);
 		}
 
-		redirect(303, '/admin/sections');
+		redirect(303, '/admin/projects');
 	}
 } satisfies Actions;
