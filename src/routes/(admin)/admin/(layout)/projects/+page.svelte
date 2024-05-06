@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import DateTime from '$lib/components/DateTime.svelte';
+	import SectionLink from '$lib/components/SectionLink.svelte';
 	import Status from '$lib/components/Status.svelte';
 	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
 	import type { PageData } from './$types';
@@ -33,7 +34,8 @@
 		{
 			key: 'section',
 			title: 'section',
-			sortable: true
+			sortable: true,
+			render: SectionLink
 		},
 		{
 			key: 'title',
