@@ -87,7 +87,17 @@ export const CUSTOM_EXTENSIONS = [
 	}),
 	Link.extend({
 		addAttributes() {
-			return attributesConfig;
+			return {
+				...attributesConfig,
+				href: {
+					default: '',
+					renderHTML: (attributes: AttributeType) => {
+						return {
+							href: attributes.href
+						};
+					}
+				}
+			};
 		}
 	}).configure({
 		openOnClick: false,

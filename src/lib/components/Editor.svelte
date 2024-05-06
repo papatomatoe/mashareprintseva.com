@@ -483,6 +483,8 @@
 
 	.editor__element {
 		min-height: 200px;
+		max-height: 600px;
+		overflow-y: auto;
 		padding: 20px;
 	}
 
