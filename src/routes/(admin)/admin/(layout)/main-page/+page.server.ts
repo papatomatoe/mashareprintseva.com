@@ -1,7 +1,6 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/database/db';
-import xss from 'xss';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) redirect(302, '/admin/login');
@@ -25,13 +24,11 @@ export const actions = {
 			return fail(400, { invalid: true });
 		}
 
-		const sanitizedContent = xss(content);
-
 		try {
 			await db.mainPage.upsert({
 				where: { title: 'mainPage' },
 				update: { published, content },
-				create: { title: 'mainPage', slug: '', content: sanitizedContent, published }
+				create: { title: 'mainPage', slug: '', content, published }
 			});
 			return { success: true };
 		} catch (e) {

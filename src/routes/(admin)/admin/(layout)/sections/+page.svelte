@@ -94,7 +94,7 @@
 
 			const deletedIds = await response.json();
 
-			sections = sections.filter((section) => !deletedIds.includes(section.id));
+			sections = sections?.filter((section) => !deletedIds.includes(section.id)) ?? [];
 
 			notification = { message: 'Successfully deleted', type: 'success' };
 		} catch (e) {

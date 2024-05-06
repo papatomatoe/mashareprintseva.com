@@ -110,7 +110,7 @@
 		<Input
 			label="title"
 			name="title"
-			placeholder="enter page title"
+			placeholder="enter section title"
 			bind:value={title}
 			on:input={(e) => (slug = slugify(e.detail, { lower: true }))}
 			error={titleError}

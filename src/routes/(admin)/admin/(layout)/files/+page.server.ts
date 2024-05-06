@@ -1,4 +1,4 @@
-import { getFileList } from '$lib/database/db';
+import { getFileList } from '$lib/services/files';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals }) => {

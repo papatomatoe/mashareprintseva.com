@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { getFileList } from '$lib/database/db';
+import { getFileList } from '$lib/services/files';
 export const POST = async ({ request }) => {
 	const { perPage, page } = await request.json();
 	try {
