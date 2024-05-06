@@ -38,7 +38,7 @@ model Bio {
   title     String  @unique
   slug      String  @unique
   image     String
-  preview   String
+  thumbnail String
   epigraph  String
   content   String
 }
@@ -71,8 +71,8 @@ model Section {
 model Project {
   id               String   @id @default(uuid())
   published        Boolean
-  sectionId        String
-  section          Section  @relation(fields: [sectionId], references: [id])
+  sectionId        String?
+  section          Section? @relation(fields: [sectionId], references: [id])
   title            String   @unique
   slug             String   @unique
   createdAt        DateTime @default(now())

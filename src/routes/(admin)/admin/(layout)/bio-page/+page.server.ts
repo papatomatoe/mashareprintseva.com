@@ -20,14 +20,14 @@ export const actions = {
 		const published = Boolean(data.get('published'));
 		const content = data.get('content');
 		const image = data.get('image');
-		const preview = data.get('preview');
+		const thumbnail = data.get('thumbnail');
 		const epigraph = data.get('epigraph');
 
 		if (
 			typeof content !== 'string' ||
 			typeof image !== 'string' ||
 			typeof epigraph !== 'string' ||
-			typeof preview !== 'string'
+			typeof thumbnail !== 'string'
 		) {
 			return fail(400, { invalid: true });
 		}
@@ -35,7 +35,7 @@ export const actions = {
 		try {
 			await db.bio.upsert({
 				where: { title: 'bio' },
-				update: { published, content, image, epigraph, preview },
+				update: { published, content, image, epigraph, thumbnail },
 				create: {
 					title: 'bio',
 					slug: 'bio',
@@ -43,7 +43,7 @@ export const actions = {
 					published,
 					image,
 					epigraph,
-					preview
+					thumbnail
 				}
 			});
 			return { success: true };

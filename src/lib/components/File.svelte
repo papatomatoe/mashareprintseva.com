@@ -12,6 +12,8 @@
 	export let required = false;
 	export let fileUrl = '';
 	export let preview = '';
+	export let name = 'image';
+	export let thumbnailName = 'thumbnail';
 
 	let loading = false;
 	let isDisabledSelectButton = true;
@@ -116,8 +118,8 @@
 			</p>
 		{/if}
 		<button type="button" class="field__wrapper" on:click={handleOpenFilemanager}>
-			<input class="field__url" type="hidden" name="image" bind:value={fileUrl} />
-			<input class="field__url" type="hidden" name="preview" bind:value={preview} />
+			<input class="field__url" type="hidden" {name} bind:value={fileUrl} />
+			<input class="field__url" type="hidden" name={thumbnailName} bind:value={preview} />
 			<div
 				tabindex="0"
 				role="button"
