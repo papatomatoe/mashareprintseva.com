@@ -33,7 +33,8 @@
 		section: string;
 		title: string;
 		slug: string;
-		created: string;
+		image: string;
+		createdAt: Date;
 	}
 
 	export type DataType = 'sections' | 'projects' | 'socials' | 'users' | 'files';

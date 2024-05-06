@@ -1,17 +1,29 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import AdminTable from '$lib/components/AdminTable.svelte';
+	import DateTime from '$lib/components/DateTime.svelte';
 	import Status from '$lib/components/Status.svelte';
 	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+
+	$: projects = data.projects;
+
+	$: tableData = {
+		type: 'projects',
+		data: projects
+	} as unknown as ITableData; // NOTE: wtf???
 
 	let config: ITableConfig[] = [
 		{
 			key: 'select'
 		},
-		{
-			key: 'id',
-			title: 'id',
-			sortable: true
-		},
+		// {
+		// 	key: 'id',
+		// 	title: 'id',
+		// 	sortable: true
+		// },
 		{
 			key: 'published',
 			title: 'state',
@@ -34,8 +46,9 @@
 			sortable: true
 		},
 		{
-			key: 'created',
+			key: 'createdAt',
 			title: 'created',
+			render: DateTime,
 			sortable: true
 		},
 		{
@@ -43,23 +56,11 @@
 		}
 	];
 
-	const tableData: ITableData = {
-		data: Array(76)
-			.fill('')
-			.map((_, idx) => ({
-				id: String(idx + 1),
-				published: true,
-				section: 'Contemporary',
-				title: 'Decay in Bloom',
-				slug: 'decay-in-bloom',
-				created: '22.10.2023 10:30'
-			})),
-		type: 'projects'
-	};
-
 	const handleAddNewItem = () => console.log('add new item');
 	const handleDeleteItems = (e: CustomEvent) => console.log('delete selected items');
-	const handleEditItem = (e: CustomEvent) => console.log('edit item ' + e.detail.id);
+	const handleEditItem = async (e: CustomEvent) => {
+		await goto(`/admin/projects/edit/${e.detail.id}}`);
+	};
 </script>
 
 <AdminTable

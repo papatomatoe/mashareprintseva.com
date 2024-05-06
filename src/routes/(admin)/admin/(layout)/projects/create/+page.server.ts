@@ -1,15 +1,13 @@
-import { createSection } from '$lib/services/sections';
+import { createSection, getSections } from '$lib/services/sections';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { getProjects } from '$lib/services/projects';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) redirect(302, '/admin/login');
 
-	const projects = await getProjects();
-
+	const sections = await getSections();
 	return {
-		projects,
+		sections,
 		pageTitle: 'Admin | Create New Section'
 	};
 }) satisfies PageServerLoad;

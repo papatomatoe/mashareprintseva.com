@@ -69,13 +69,19 @@ model Section {
 }
 
 model Project {
-  id        String   @id @default(uuid())
-  published Boolean
-  sectionId String
-  section   Section  @relation(fields: [sectionId], references: [id])
-  title     String   @unique
-  slug      String   @unique
-  createdAt DateTime @default(now())
+  id               String   @id @default(uuid())
+  published        Boolean
+  sectionId        String
+  section          Section  @relation(fields: [sectionId], references: [id])
+  title            String   @unique
+  slug             String   @unique
+  createdAt        DateTime @default(now())
+  preview          String
+  previewThumbnail String
+  image            String
+  thumbnail        String
+  subtitle         String
+  content          String
 }
 
 model Social {
