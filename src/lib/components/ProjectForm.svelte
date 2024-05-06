@@ -123,7 +123,7 @@
 			required
 			on:clearError={handleClearProjectPreviewError}
 			bind:fileUrl={projectPreviewUrl}
-			bind:preview={projectPreviewThumbnail}
+			bind:thumbnail={projectPreviewThumbnail}
 			error={projectPreviewUrlError}
 			name="projectPreview"
 			thumbnailName="projectPreviewThumbnail"
@@ -133,7 +133,7 @@
 			required
 			on:clearError={handleClearProjectImageUrlError}
 			bind:fileUrl={projectImageUrl}
-			bind:preview={projectImageThumbnail}
+			bind:thumbnail={projectImageThumbnail}
 		/>
 	</div>
 	<div class="editor row row--bottom">

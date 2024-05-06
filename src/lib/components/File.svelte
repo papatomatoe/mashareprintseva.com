@@ -11,7 +11,7 @@
 	export let placeholder = "Drag 'n' drop image here, or click to select image";
 	export let required = false;
 	export let fileUrl = '';
-	export let preview = '';
+	export let thumbnail = '';
 	export let name = 'image';
 	export let thumbnailName = 'thumbnail';
 
@@ -59,7 +59,7 @@
 			});
 
 			const [savedFile] = await response.json();
-			preview = savedFile.thumbnail;
+			thumbnail = savedFile.thumbnail;
 			fileUrl = savedFile.url;
 		} catch (e) {
 			console.error(e);
@@ -78,7 +78,7 @@
 		const [file] = filemanager.getFiles();
 
 		fileUrl = file.url;
-		preview = file.thumbnail;
+		thumbnail = file.thumbnail;
 
 		filemanager.resetSelection();
 		modal.close();
@@ -119,7 +119,7 @@
 		{/if}
 		<button type="button" class="field__wrapper" on:click={handleOpenFilemanager}>
 			<input class="field__url" type="hidden" {name} bind:value={fileUrl} />
-			<input class="field__url" type="hidden" name={thumbnailName} bind:value={preview} />
+			<input class="field__url" type="hidden" name={thumbnailName} bind:value={thumbnail} />
 			<div
 				tabindex="0"
 				role="button"
@@ -132,7 +132,7 @@
 					<div class="field__spinner"><Spinner /></div>
 				{:else if fileUrl}
 					<div class="field__preview">
-						<img class="field__image" src={preview} alt="preview" />
+						<img class="field__image" src={thumbnail} alt="thumbnail" />
 					</div>
 				{:else}
 					<p class="field__placeholder">{placeholder}</p>

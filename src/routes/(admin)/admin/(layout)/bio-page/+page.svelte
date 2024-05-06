@@ -14,7 +14,7 @@
 	let epigraph = data.bio?.epigraph || '';
 	let content = data.bio?.content || '';
 	let fileUrl = data.bio?.image || '';
-	let preview = data.bio?.preview || '';
+	let thumbnail = data.bio?.thumbnail || '';
 	let fileUrlError = '';
 	let published = data.bio?.published;
 
@@ -58,7 +58,7 @@
 		required
 		on:clearError={handleClearFileUrlError}
 		bind:fileUrl
-		bind:preview
+		bind:thumbnail
 		error={fileUrlError}
 	/>
 	<Textarea name="epigraph" label="epigraph" placeholder="enter epigraph" value={epigraph} />

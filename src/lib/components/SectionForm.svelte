@@ -31,7 +31,7 @@
 	let titleError = '';
 	let slugError = '';
 	let imageUrl = section?.image ?? '';
-	let imagePreview = section?.thumbnail ?? '';
+	let imageThumbnail = section?.thumbnail ?? '';
 	let imageUrlError = '';
 	let published = Boolean(section?.published);
 	let subtitle = section?.subtitle ?? '';
@@ -141,7 +141,7 @@
 			required
 			on:clearError={handleClearImageUrlError}
 			bind:fileUrl={imageUrl}
-			bind:preview={imagePreview}
+			bind:thumbnail={imageThumbnail}
 			error={imageUrlError}
 		/>
 		<div class="subtitle">
