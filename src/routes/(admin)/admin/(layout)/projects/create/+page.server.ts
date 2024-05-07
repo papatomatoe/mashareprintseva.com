@@ -1,4 +1,4 @@
-import { createSection, getSections } from '$lib/services/sections';
+import { getSections } from '$lib/services/sections';
 import { createProject } from '$lib/services/projects';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -51,7 +51,7 @@ export const actions = {
 			preview,
 			previewThumbnail,
 			content,
-			...(section && { sectionId: section.id })
+			section
 		});
 
 		if (!response.success) {

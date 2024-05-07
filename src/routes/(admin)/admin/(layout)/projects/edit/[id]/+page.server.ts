@@ -8,6 +8,7 @@ export const load = async ({ locals, params }) => {
 	const { id } = params;
 
 	const project = await getProject(id);
+
 	if (!project) return error(404, 'not found');
 
 	const sections = await getSections();
@@ -66,7 +67,7 @@ export const actions = {
 			preview,
 			previewThumbnail,
 			content,
-			...(section && { sectionId: section.id })
+			section
 		});
 
 		if (!response.success) {
