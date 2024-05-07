@@ -1,3 +1,10 @@
+<script context="module" lang="ts">
+	import type { Project, Section } from '@prisma/client';
+	export interface ISection extends Section {
+		projects: Project[];
+	}
+</script>
+
 <script lang="ts">
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
@@ -9,20 +16,10 @@
 	import type { ComponentEvents } from 'svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
-	import type { Section } from '@prisma/client';
-
 	export let form;
-	export let section: Section | null = null;
+	export let section: ISection | null = null;
 
-	let projects = [
-		{ id: '1', title: 'The Unseen Hues', published: true },
-		{ id: '2', title: 'Serendipity of Man', published: true },
-		{ id: '3', title: 'Intricate Proportion No.21', published: true },
-		{ id: '4', title: 'In a Former Home', published: false },
-		{ id: '5', title: 'Vortex Constellation', published: true }
-	];
-
-	let selectedProjects = projects;
+	export let projects: Project[] = [];
 
 	let id = section?.id ?? '';
 	let order = String(section?.order ?? '');
@@ -38,6 +35,7 @@
 	let altTitle = section?.altTitle ?? '';
 	let content = section?.content ?? '';
 	let slug = section?.slug ?? '';
+	let selectedProjects = section?.projects ?? [];
 
 	$: projectsValue = JSON.stringify(selectedProjects);
 
@@ -97,6 +95,7 @@
 
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Create New Section" {published} {hasErrors} on:submit={handleSubmit}>
+	<input name="id" type="hidden" readonly value={id} />
 	<div class="row row--top">
 		<Input
 			label="Order in menu"
@@ -152,31 +151,34 @@
 		<Editor name="content" label="content" value={content} />
 	</div>
 	<div class="section-form__side" slot="side">
-		<Select
-			select2
-			label="projects"
-			placeholder="select project..."
-			{options}
-			on:select={handleSelectProject}
-		/>
-		{#if selectedProjects.length}
-			<ul class="projects">
-				{#each selectedProjects as project (project.id)}
-					<li class="project">
-						<div class="project__status" class:project__status--published={project.published} />
-						<h3 class="project__title">{project.title}</h3>
-						<button
-							class="button project__button"
-							type="button"
-							on:click={() => handleDeleteProject(project.id)}
-							aria-label="remove project"
-						/>
-					</li>
-				{/each}
-			</ul>
+		{#if projects.length}
+			<Select
+				select2
+				label="projects"
+				placeholder="select project..."
+				{options}
+				on:select={handleSelectProject}
+			/>
+			{#if selectedProjects.length}
+				<ul class="projects">
+					{#each selectedProjects as project (project.id)}
+						<li class="project">
+							<div class="project__status" class:project__status--published={project.published} />
+							<h3 class="project__title">{project.title}</h3>
+							<button
+								class="button project__button"
+								type="button"
+								on:click={() => handleDeleteProject(project.id)}
+								aria-label="remove project"
+							/>
+						</li>
+					{/each}
+				</ul>
+			{/if}
+			<input name="projects" type="hidden" readonly bind:value={projectsValue} />
+		{:else}
+			<p class="projects__empty">no projects</p>
 		{/if}
-		<input name="id" type="hidden" readonly value={id} />
-		<input name="projects" type="hidden" readonly bind:value={projectsValue} />
 	</div>
 </Form>
 
@@ -208,6 +210,12 @@
 		padding: 15px 8px;
 		display: grid;
 		gap: 15px;
+	}
+
+	.projects__empty {
+		font-weight: 700;
+		text-align: center;
+		color: var(--color--gray-85);
 	}
 	.project {
 		display: grid;
