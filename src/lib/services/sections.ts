@@ -1,5 +1,6 @@
 import { PRISMA_ERROR } from '$lib/constants/prismaErrors';
 import { db } from '$lib/database/db';
+import { getPrismaError } from '$lib/services/error';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const createSection = async (data: any) => {
@@ -11,12 +12,8 @@ export const createSection = async (data: any) => {
 		return { success: true };
 	} catch (e) {
 		console.log(e);
-		const prismaError = e as PrismaClientKnownRequestError;
 
-		const errorMessage = PRISMA_ERROR[prismaError.code];
-		const errorTarget = prismaError.meta?.target;
-
-		const message = errorTarget ? `${errorMessage}: "${errorTarget}"` : prismaError.message;
+		const message = getPrismaError(e as PrismaClientKnownRequestError);
 
 		return { success: false, message };
 	}
@@ -28,12 +25,8 @@ export const updateSection = async (id: string, data: any) => {
 		return { success: true };
 	} catch (e) {
 		console.log(e);
-		const prismaError = e as PrismaClientKnownRequestError;
 
-		const errorMessage = PRISMA_ERROR[prismaError.code];
-		const errorTarget = prismaError.meta?.target;
-
-		const message = errorTarget ? `${errorMessage}: "${errorTarget}"` : prismaError.message;
+		const message = getPrismaError(e as PrismaClientKnownRequestError);
 
 		return { success: false, message };
 	}
