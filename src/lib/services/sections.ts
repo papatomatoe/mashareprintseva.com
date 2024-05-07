@@ -1,11 +1,16 @@
 import { db } from '$lib/database/db';
 import { getPrismaError } from '$lib/services/error';
+import type { Project } from '@prisma/client';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const createSection = async (data: any) => {
+	const { projects, ...sectionData } = data;
 	try {
 		await db.section.create({
-			data
+			data: sectionData,
+			...(projects?.length && {
+				projects: { connect: projects.map((project: Project) => ({ id: project.id })) }
+			})
 		});
 
 		return { success: true };
@@ -19,7 +24,32 @@ export const createSection = async (data: any) => {
 };
 export const updateSection = async (id: string, data: any) => {
 	try {
-		await db.section.update({ where: { id }, data });
+		const section = await db.section.findUnique({ where: { id }, include: { projects: true } });
+
+		const existProjects = section?.projects;
+
+		const { projects, ...sectionData } = data;
+
+		const disconnectProjects = projects?.length
+			? existProjects?.filter(
+					(existsProject) => !projects.find((project: Project) => project.id === existsProject.id)
+				)
+			: existProjects;
+
+		await db.section.update({
+			where: { id },
+			data: {
+				...sectionData,
+				projects: {
+					...(disconnectProjects?.length && {
+						disconnect: disconnectProjects?.map((project) => ({ id: project.id }))
+					}),
+					...(projects?.length && {
+						connect: projects.map((project: Project) => ({ id: project.id }))
+					})
+				}
+			}
+		});
 
 		return { success: true };
 	} catch (e) {
@@ -32,9 +62,8 @@ export const updateSection = async (id: string, data: any) => {
 };
 export const getSection = async (id: string) => {
 	try {
-		const section = await db.section.findUnique({ where: { id } });
-		const projects = await db.project.findMany({ where: { sectionId: section?.id } });
-		return { ...section, projects };
+		const section = await db.section.findUnique({ where: { id }, include: { projects: true } });
+		return section;
 	} catch (e) {
 		console.error(e);
 	}
