@@ -1,22 +1,26 @@
+<script context="module" lang="ts">
+	import type { Project, Section } from '@prisma/client';
+
+	export interface IProject extends Project {
+		section?: Section | null;
+	}
+</script>
+
 <script lang="ts">
 	import Form from '$lib/components/Form.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import File from '$lib/components/File.svelte';
 	import slugify from 'slugify';
-	import Textarea from '$lib/components/Textarea.svelte';
 	import Editor from '$lib/components/Editor.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import type { ComponentEvents } from 'svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
-	import type { Project, Section } from '@prisma/client';
-
 	export let form;
-	export let project: Project | null = null;
-
+	export let project: IProject | null = null;
 	export let sections: Section[] = [];
 
-	let selectedSection: Section | null = null;
+	let selectedSection: Section | null = project?.section ?? null;
 
 	let id = project?.id ?? '';
 	let title = project?.title ?? '';
@@ -94,6 +98,7 @@
 
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Create New Project" {published} {hasErrors} on:submit={handleSubmit}>
+	<input name="id" type="hidden" readonly value={id} />
 	<div class="row row--top">
 		<Input
 			label="title"
@@ -141,32 +146,35 @@
 		<Editor name="content" label="content" value={content} />
 	</div>
 	<div class="section-form__side" slot="side">
-		<Select
-			select2
-			label="section"
-			placeholder="select section..."
-			{options}
-			on:select={handleSelectProject}
-		/>
-		{#if selectedSection}
-			<ul class="projects">
-				<li class="project">
-					<div
-						class="project__status"
-						class:project__status--published={selectedSection.published}
-					/>
-					<h3 class="project__title">{selectedSection.title}</h3>
-					<button
-						class="button project__button"
-						type="button"
-						on:click={handleDeleteSection}
-						aria-label="remove project"
-					/>
-				</li>
-			</ul>
+		{#if sections.length}
+			<Select
+				select2
+				label="section"
+				placeholder="select section..."
+				{options}
+				on:select={handleSelectProject}
+			/>
+			{#if selectedSection}
+				<ul class="projects">
+					<li class="project">
+						<div
+							class="project__status"
+							class:project__status--published={selectedSection.published}
+						/>
+						<h3 class="project__title">{selectedSection.title}</h3>
+						<button
+							class="button project__button"
+							type="button"
+							on:click={handleDeleteSection}
+							aria-label="remove project"
+						/>
+					</li>
+				</ul>
+			{/if}
+			<input name="section" type="hidden" readonly bind:value={sectionValue} />
+		{:else}
+			<p class="section-form__empty">no sections</p>
 		{/if}
-		<input name="id" type="hidden" readonly value={id} />
-		<input name="section" type="hidden" readonly bind:value={sectionValue} />
 	</div>
 </Form>
 
@@ -190,8 +198,10 @@
 		grid-row: 3 / 4;
 	}
 
-	.subtitle {
-		grid-row: 1/ -1;
+	.section-form__empty {
+		font-weight: 700;
+		text-align: center;
+		color: var(--color--gray-85);
 	}
 
 	.projects {
