@@ -3,11 +3,15 @@
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import DateTime from '$lib/components/DateTime.svelte';
 	import Image from '$lib/components/Image.svelte';
+	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 	import SectionLink from '$lib/components/SectionLink.svelte';
 	import Status from '$lib/components/Status.svelte';
-	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
+	import type { ITableConfig, ITableData, IProject } from '$lib/components/Table.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	let loading = false;
+	let notification: { message: string; type: NotificationType } | null = null;
 
 	$: projects = data.projects;
 
@@ -64,11 +68,39 @@
 	];
 
 	const handleAddNewItem = () => console.log('add new item');
-	const handleDeleteItems = (e: CustomEvent) => console.log('delete selected items');
+	const handleDeleteItems = async (e: CustomEvent) => {
+		const ids = e.detail.map((el: IProject) => el.id);
+
+		loading = true;
+
+		try {
+			const response = await fetch('/api/v2/projects/delete', {
+				method: 'DELETE',
+				body: JSON.stringify(ids)
+			});
+
+			const deletedIds = await response.json();
+
+			projects = projects?.filter((project) => !deletedIds.includes(project.id)) ?? [];
+
+			notification = { message: 'Successfully deleted', type: 'success' };
+		} catch (e) {
+			console.error(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+		}
+	};
 	const handleEditItem = async (e: CustomEvent) => {
 		await goto(`/admin/projects/edit/${e.detail.id}`);
 	};
 </script>
+
+<Notification
+	message={notification?.message}
+	type={notification?.type}
+	show={Boolean(notification)}
+/>
 
 <AdminTable
 	title="Projects"
