@@ -2,11 +2,11 @@
 	import { goto } from '$app/navigation';
 	import AdminTable from '$lib/components/AdminTable.svelte';
 	import DateTime from '$lib/components/DateTime.svelte';
+	import Image from '$lib/components/Image.svelte';
 	import SectionLink from '$lib/components/SectionLink.svelte';
 	import Status from '$lib/components/Status.svelte';
 	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
 	import type { PageData } from './$types';
-
 	export let data: PageData;
 
 	$: projects = data.projects;
@@ -25,6 +25,11 @@
 		// 	title: 'id',
 		// 	sortable: true
 		// },
+		{
+			key: 'image',
+			title: 'Image',
+			render: Image
+		},
 		{
 			key: 'published',
 			title: 'state',
@@ -61,7 +66,7 @@
 	const handleAddNewItem = () => console.log('add new item');
 	const handleDeleteItems = (e: CustomEvent) => console.log('delete selected items');
 	const handleEditItem = async (e: CustomEvent) => {
-		await goto(`/admin/projects/edit/${e.detail.id}}`);
+		await goto(`/admin/projects/edit/${e.detail.id}`);
 	};
 </script>
 
