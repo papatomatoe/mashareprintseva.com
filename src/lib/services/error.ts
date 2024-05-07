@@ -5,5 +5,5 @@ export const getPrismaError = (e: PrismaClientKnownRequestError) => {
 	const errorMessage = PRISMA_ERROR[e.code];
 	const errorTarget = e.meta?.target;
 
-	return errorTarget ? `${errorMessage}: "${errorTarget}"` : e.message;
+	return errorTarget ? `${errorMessage}: "${errorTarget}"` : 'Server Error';
 };
