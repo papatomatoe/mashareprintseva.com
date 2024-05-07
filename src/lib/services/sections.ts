@@ -1,4 +1,3 @@
-import { PRISMA_ERROR } from '$lib/constants/prismaErrors';
 import { db } from '$lib/database/db';
 import { getPrismaError } from '$lib/services/error';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
@@ -34,7 +33,8 @@ export const updateSection = async (id: string, data: any) => {
 export const getSection = async (id: string) => {
 	try {
 		const section = await db.section.findUnique({ where: { id } });
-		return section;
+		const projects = await db.project.findMany({ where: { sectionId: section?.id } });
+		return { ...section, projects };
 	} catch (e) {
 		console.error(e);
 	}
