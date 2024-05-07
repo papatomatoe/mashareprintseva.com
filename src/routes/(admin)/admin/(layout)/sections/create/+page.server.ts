@@ -8,9 +8,13 @@ export const load = (async ({ locals }) => {
 
 	const projects = await getProjects();
 
+	const projectsWithoutSection = projects?.filter(
+		(project) => !project.section || !project.sectionId
+	);
+
 	return {
-		projects,
-		pageTitle: 'Admin | Create New Section'
+		pageTitle: 'Admin | Create New Section',
+		projects: projectsWithoutSection
 	};
 }) satisfies PageServerLoad;
 
