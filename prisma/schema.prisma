@@ -85,10 +85,8 @@ model Project {
 }
 
 model Social {
-  id        String   @id @default(uuid())
-  icon      String
-  title     String   @unique
-  link      String
-  published Boolean
-  createdAt DateTime @default(now())
+  id    String @id @default(uuid())
+  icon  String
+  title String @unique
+  link  String
 }
