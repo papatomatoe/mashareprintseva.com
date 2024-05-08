@@ -5,6 +5,7 @@
 
 	export let disabled = false;
 	export let confirmText = 'Select';
+	export let confirmType: 'button' | 'submit' = 'button';
 	export let cancelText = 'Cancel';
 
 	const handleCancel = () => {
@@ -17,7 +18,9 @@
 
 <div class="confirm-panel">
 	<button type="button" class="button button--cancel" on:click={handleCancel}>{cancelText}</button>
-	<button type="button" class="button" {disabled} on:click={handleConfirm}>{confirmText}</button>
+	<button type={confirmType} class="button" {disabled} on:click={handleConfirm}
+		>{confirmText}</button
+	>
 </div>
 
 <style>
