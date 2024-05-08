@@ -1,6 +1,13 @@
 <script lang="ts">
 	import Clear from '$lib/icons/Clear.svelte';
 	import type { Action } from 'svelte/action';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	export let width = '83%';
+	export let height = '90%';
+	export let padding = '60px';
 
 	let show = false;
 	let dialog: HTMLDialogElement;
@@ -11,6 +18,7 @@
 	};
 
 	export const close = () => {
+		dispatch('close-modal');
 		dialog.close();
 		show = false;
 	};
@@ -29,8 +37,12 @@
 
 <svelte:body use:action={show} />
 
-<dialog class="modal" bind:this={dialog}>
-	<div class="modal__container">
+<dialog
+	class="modal"
+	bind:this={dialog}
+	style="--dialog--width: {width}; --dialog--height: {height}; --dialog--padding: {padding}"
+>
+	<div class="modal__container" class:modal__container--with-bottom={$$slots.bottom}>
 		<div class="modal__content">
 			<button class="modal__button" type="button" on:click={close}><Clear /></button>
 
@@ -50,8 +62,8 @@
 	}
 	.modal {
 		position: absolute;
-		width: 83%;
-		height: 90%;
+		width: var(--dialog--width);
+		height: var(--dialog--height);
 		border: none;
 		padding: 0;
 		border-radius: 4px;
@@ -61,10 +73,13 @@
 	}
 
 	.modal__container {
-		padding: 60px;
+		padding: var(--dialog--padding);
 		padding-right: 0;
 		height: 100%;
 		width: 100%;
+	}
+	.modal__container--with-bottom {
+		padding-bottom: 100px;
 	}
 
 	.modal::backdrop {
@@ -75,7 +90,7 @@
 	.modal__content {
 		height: 100%;
 		padding: 0;
-		padding-right: 60px;
+		padding-right: var(--dialog--padding);
 		overflow-y: auto;
 	}
 
@@ -104,8 +119,8 @@
 
 	.modal__bottom {
 		position: absolute;
-		bottom: 10px;
+		bottom: 30px;
 		background-color: var(--color-bg);
-		width: calc(100% - 120px);
+		right: var(--dialog--padding);
 	}
 </style>
