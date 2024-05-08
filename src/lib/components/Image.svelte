@@ -27,8 +27,11 @@
 		<ErrorFile width={icon.width} height={icon.height} />
 	{:else if $$props.fileType === 'application/pdf'}
 		<PDF width={icon.width} height={icon.height} />
+	{:else if $$props.fileType === 'image/svg+xml'}
+		<img class="image__svg" src={$$props.url} alt={$$props.name} height="30" width="30" />
 	{:else}
 		<img
+			class="image__img"
 			style:width="{width}px"
 			style:height="{height}px"
 			src={$$props.thumbnail}
@@ -41,8 +44,10 @@
 <style>
 	.image {
 		--color--icon: var(--color--gray-15);
+		display: grid;
+		place-items: center;
 	}
-	.image img {
+	.image__img {
 		display: block;
 		object-fit: contain;
 	}
