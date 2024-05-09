@@ -5,7 +5,7 @@ import fs from 'fs/promises';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import type { RequestHandler } from './$types';
-import { IMAGE_TYPES, FILE_TYPES } from '$lib/constants/files';
+import { IMAGE_TYPES, FILE_TYPES, FILE } from '$lib/constants/files';
 
 const STATIC_FOLDER_PATH = `${STATIC_PATH}/${UPLOAD_PATH}`;
 
@@ -47,7 +47,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						.toFile(`./${STATIC_FOLDER_PATH}/${fullSize}`)
 						.then(() => {
 							fileInfo.url = `/${UPLOAD_PATH}/${fullSize}`;
-							fileInfo.fileType = 'image/webp';
+							fileInfo.fileType = FILE.webp;
 							fileInfo.name = name;
 						});
 
@@ -70,6 +70,7 @@ export const POST: RequestHandler = async ({ request }) => {
 							fileInfo.fileType = file.type;
 							fileInfo.name = name;
 							fileInfo.uniqueName = uniqueFileName;
+							if (file.type === FILE.svg) fileInfo.thumbnail = `/${UPLOAD_PATH}/${uniqueFileName}`;
 						})
 						.catch((err) => {
 							console.error(err);

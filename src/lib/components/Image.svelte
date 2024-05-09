@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PDF from '$lib/icons/PDF.svelte';
 	import ErrorFile from '$lib/icons/ErrorFile.svelte';
+	import { FILE } from '$lib/constants/files';
 
 	export let size = 1;
 	export let height = 50;
@@ -25,9 +26,9 @@
 <div class="image">
 	{#if hasError}
 		<ErrorFile width={icon.width} height={icon.height} />
-	{:else if $$props.fileType === 'application/pdf'}
+	{:else if $$props.fileType === FILE.pdf}
 		<PDF width={icon.width} height={icon.height} />
-	{:else if $$props.fileType === 'image/svg+xml'}
+	{:else if $$props.fileType === FILE.svg}
 		<img class="image__svg" src={$$props.url} alt={$$props.name} height="30" width="30" />
 	{:else}
 		<img

@@ -5,12 +5,14 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import Filemanager from '$lib/components/Filemanager.svelte';
 	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
+	import { FILE } from '$lib/constants/files';
 
 	export let label = '';
 	export let error = '';
 	export let placeholder = "Drag 'n' drop image here, or click to select image";
 	export let required = false;
 	export let fileUrl = '';
+	export let fileType = '';
 	export let thumbnail = '';
 	export let name = 'image';
 	export let thumbnailName = 'thumbnail';
@@ -20,6 +22,7 @@
 
 	let modal: SvelteComponent;
 	let filemanager: SvelteComponent;
+	let alt = 'thumbnail';
 
 	const dispatch = createEventDispatcher();
 
@@ -79,6 +82,8 @@
 
 		fileUrl = file.url;
 		thumbnail = file.thumbnail;
+		fileType = file.fileType;
+		alt = file.name;
 
 		filemanager.resetSelection();
 		modal.close();
@@ -131,8 +136,8 @@
 				{#if loading}
 					<div class="field__spinner"><Spinner /></div>
 				{:else if fileUrl}
-					<div class="field__preview">
-						<img class="field__image" src={thumbnail} alt="thumbnail" />
+					<div class="field__preview" class:field__preview--svg={fileType === FILE.svg}>
+						<img class="field__image" src={thumbnail} {alt} />
 					</div>
 				{:else}
 					<p class="field__placeholder">{placeholder}</p>
@@ -265,9 +270,14 @@
 		grid-template-rows: 100px;
 		place-items: center;
 		position: relative;
-		left: 15px;
 		height: 100px;
 		width: 100px;
+	}
+	.field__preview--svg {
+		grid-template-columns: 30px;
+		grid-template-rows: 30px;
+		width: 30px;
+		height: 30px;
 	}
 	.field__image {
 		height: 100%;
