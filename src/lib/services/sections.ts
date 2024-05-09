@@ -17,9 +17,9 @@ export const createSection = async (data: any) => {
 	} catch (e) {
 		console.log(e);
 
-		const message = getPrismaError(e as PrismaClientKnownRequestError);
+		const error = getPrismaError(e as PrismaClientKnownRequestError);
 
-		return { success: false, message };
+		return { success: false, ...error };
 	}
 };
 export const updateSection = async (id: string, data: any) => {

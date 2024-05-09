@@ -3,7 +3,9 @@ import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/libra
 
 export const getPrismaError = (e: PrismaClientKnownRequestError) => {
 	const errorMessage = PRISMA_ERROR[e.code];
-	const errorTarget = e.meta?.target;
+	const errorTarget = e.meta?.target ?? '';
 
-	return errorTarget ? `${errorMessage}: "${errorTarget}"` : 'Server Error';
+	const message = errorTarget ? `${errorMessage}` : 'Server Error';
+
+	return { message, ...(errorTarget && { target: `${errorTarget}` }) };
 };

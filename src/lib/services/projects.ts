@@ -30,9 +30,9 @@ export const createProject = async (data: any) => {
 		return { success: true };
 	} catch (e) {
 		console.error(e);
-		const message = getPrismaError(e as PrismaClientKnownRequestError);
+		const error = getPrismaError(e as PrismaClientKnownRequestError);
 
-		return { success: false, message };
+		return { success: false, ...error };
 	}
 };
 export const updateProject = async (id: string, data: any) => {
@@ -51,8 +51,8 @@ export const updateProject = async (id: string, data: any) => {
 	} catch (e) {
 		console.error(e);
 
-		const message = getPrismaError(e as PrismaClientKnownRequestError);
+		const error = getPrismaError(e as PrismaClientKnownRequestError);
 
-		return { success: false, message };
+		return { success: false, ...error };
 	}
 };
