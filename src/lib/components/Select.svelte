@@ -132,8 +132,8 @@
 		{/if}
 	{:else}
 		<button class="select__button select__button--selected" type="button" on:click={handleVisible}>
-			{#if selectedOption}
-				{selectedOption.title}
+			{#if selected}
+				{selected.title}
 			{:else}
 				<span class="select__placeholder">{placeholder}</span>
 			{/if}
