@@ -1,3 +1,12 @@
+<script context="module" lang="ts">
+	export interface IPagination {
+		total: number;
+		page: number;
+		perPage: number;
+		pages: number;
+	}
+</script>
+
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Select from '$lib/components/Select.svelte';

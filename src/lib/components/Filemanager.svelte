@@ -1,10 +1,4 @@
 <script context="module" lang="ts">
-	export interface IPagination {
-		total: number;
-		page: number;
-		perPage: number;
-		pages: number;
-	}
 	export interface IFile {
 		id: string;
 		name: string | null;
@@ -28,7 +22,7 @@
 	import Input from '$lib/components/Input.svelte';
 	import type { NotificationType } from '$lib/components/Notification.svelte';
 	import Notification from '$lib/components/Notification.svelte';
-	import Pagination from '$lib/components/Pagination.svelte';
+	import Pagination, { type IPagination } from '$lib/components/Pagination.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import GridViewFiles from '$lib/components/GridViewFiles.svelte';
 	import Table from '$lib/components/Table.svelte';

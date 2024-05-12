@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
 	import type IFile from '$lib/components/Filemanager.svelte';
 
+	import type { IPagination } from '$lib/components/Pagination.svelte';
 	export interface IUser {
 		id: string;
 		role: string;
@@ -43,6 +44,7 @@
 
 	export interface ITableData {
 		data: TableData[];
+		pagination?: IPagination;
 		type: DataType;
 	}
 

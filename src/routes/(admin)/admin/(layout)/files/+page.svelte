@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Filemanager, { type IFile, type IPagination } from '$lib/components/Filemanager.svelte';
+	import Filemanager, { type IFile } from '$lib/components/Filemanager.svelte';
+	import type { IPagination } from '$lib/components/Pagination.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
