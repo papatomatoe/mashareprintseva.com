@@ -38,7 +38,10 @@
 			? selectedRowIds.filter((el) => el !== id)
 			: [...selectedRowIds, id];
 	};
-	const handleDelete = () => dispatch('delete', selectedRowIds);
+	const handleDelete = () => {
+		dispatch('delete', selectedRowIds);
+		selectedRowIds = [];
+	};
 
 	// const handleSelectPerPage = (e: CustomEvent) => {
 	// 	perPage = e.detail;
