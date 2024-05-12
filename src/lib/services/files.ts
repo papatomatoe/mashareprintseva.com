@@ -8,7 +8,7 @@ export const getFileList = async (page = 0, perPage = 50) => {
 	const files = await db.file.findMany({
 		take: perPage,
 		skip: page * perPage,
-		orderBy: { createdAt: 'desc' }
+		orderBy: { createdAt: 'asc' }
 	});
 
 	const pages = Math.ceil(total / perPage);
