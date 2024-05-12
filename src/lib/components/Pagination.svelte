@@ -21,12 +21,12 @@
 	export let disablePrevious = false;
 	export let withoutPages = false;
 	export let pages = 0;
-	export let perPage = 0;
+	export let perPage = 10;
 	export let currentPage = 0;
 	export let perPageOptions = [
 		{ title: '10', value: 10 },
-		{ title: '50', value: 50 },
-		{ title: '100', value: 100 }
+		{ title: '25', value: 25 },
+		{ title: '50', value: 50 }
 	];
 
 	$: groups = Math.ceil(pages / PER_GROUP);

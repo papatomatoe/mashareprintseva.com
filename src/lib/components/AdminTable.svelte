@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { createEventDispatcher, type ComponentEvents } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { page } from '$app/stores';
 	import Table, { type ITableData, type ITableConfig } from '$lib/components/Table.svelte';
-	// import Pagination from '$lib/components/Pagination.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Add from '$lib/icons/Add.svelte';
 	import Delete from '$lib/icons/Delete.svelte';
@@ -15,17 +15,9 @@
 
 	let selectedRowIds: string[] = [];
 	let searchResultData = tableData.data;
-	// // let perPage = 10;
-	// let currentPage = 1;
 
 	$: data = tableData.data;
 	$: currentPath = $page.url.pathname;
-	// $: pages = Math.ceil(searchResultData.length / perPage);
-
-	// $: tableDataPerPage = searchResultData.slice(
-	// 	currentPage * perPage - perPage,
-	// 	currentPage * perPage
-	// );
 
 	const handleSelectAll = () => {
 		selectedRowIds = selectedRowIds.length ? [] : data.map((el) => el.id);
@@ -42,15 +34,6 @@
 		dispatch('delete', selectedRowIds);
 		selectedRowIds = [];
 	};
-
-	// const handleSelectPerPage = (e: CustomEvent) => {
-	// 	perPage = e.detail;
-	// };
-
-	// const handleSelectCurrentPage = (e: CustomEvent) => {
-	// 	console.log(e.detail);
-	// 	currentPage = e.detail;
-	// };
 </script>
 
 <div class="container">
@@ -84,13 +67,13 @@
 			on:select={handleSelect}
 			on:edit
 		/>
-		<!-- <Pagination
-			{pages}
-			{perPage}
-			{currentPage}
-			on:select-per-page={handleSelectPerPage}
-			on:select-page={handleSelectCurrentPage}
-		/> -->
+		<Pagination
+			currentPage={tableData?.pagination?.page}
+			pages={tableData?.pagination?.pages}
+			perPage={tableData?.pagination?.perPage}
+			on:select-per-page
+			on:select-page
+		/>
 	</div>
 </div>
 
