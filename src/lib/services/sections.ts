@@ -68,10 +68,24 @@ export const getSection = async (id: string) => {
 		console.error(e);
 	}
 };
-export const getSections = async () => {
+export const getAllSections = async () => {
 	try {
 		const sections = await db.section.findMany();
 		return sections;
+	} catch (e) {
+		console.error(e);
+	}
+};
+export const getSections = async (page = 0, perPage = 10) => {
+	try {
+		const total = await db.section.count();
+		const sections = await db.section.findMany({
+			take: perPage,
+			skip: page * perPage,
+			orderBy: { createdAt: 'asc' }
+		});
+		const pages = Math.ceil(total / perPage);
+		return { sections, pagination: { page, perPage, pages, total } };
 	} catch (e) {
 		console.error(e);
 	}
