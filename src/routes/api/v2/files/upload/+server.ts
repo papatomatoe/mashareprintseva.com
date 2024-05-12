@@ -38,22 +38,22 @@ export const POST: RequestHandler = async ({ request }) => {
 
 				if (IMAGE_TYPES.includes(file.type)) {
 					const uniqueName = `${name}__${nanoid()}`;
-					const fullSize = `${uniqueName}.webp`;
-					const thumbnail = `${uniqueName}__thumbnail.webp`;
+					const fullSize = `${uniqueName}.avif`;
+					const thumbnail = `${uniqueName}__thumbnail.avif`;
 
 					await sharp(fileBuffer)
 						.resize({ width: 800, fit: 'inside' })
-						.webp({ quality: 80 })
+						.avif({ quality: 60 })
 						.toFile(`./${STATIC_FOLDER_PATH}/${fullSize}`)
 						.then(() => {
 							fileInfo.url = `/${UPLOAD_PATH}/${fullSize}`;
-							fileInfo.fileType = FILE.webp;
+							fileInfo.fileType = FILE.avif;
 							fileInfo.name = name;
 						});
 
 					await sharp(fileBuffer)
 						.resize({ width: 100, fit: 'inside' })
-						.webp({ quality: 80 })
+						.avif()
 						.toFile(`./${STATIC_FOLDER_PATH}/${thumbnail}`)
 						.then(() => {
 							fileInfo.thumbnail = `/${UPLOAD_PATH}/${thumbnail}`;
