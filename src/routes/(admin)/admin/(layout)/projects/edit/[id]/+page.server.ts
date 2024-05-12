@@ -1,5 +1,5 @@
 import { updateProject, getProject } from '$lib/services/projects';
-import { getSections } from '$lib/services/sections';
+import { getAllSections } from '$lib/services/sections';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
@@ -11,7 +11,7 @@ export const load = async ({ locals, params }) => {
 
 	if (!project) return error(404, 'not found');
 
-	const sections = await getSections();
+	const sections = await getAllSections();
 
 	const breadcrumbs = [
 		{ title: 'dashboard', path: '/admin/dashboard' },
