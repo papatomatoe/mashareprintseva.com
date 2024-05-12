@@ -82,7 +82,7 @@
 		}
 	};
 	const handleDeleteItems = async (e: CustomEvent) => {
-		const ids = e.detail.map((el: ISection) => el.id);
+		const ids = e.detail;
 
 		loading = true;
 

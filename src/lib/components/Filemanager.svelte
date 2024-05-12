@@ -335,9 +335,9 @@
 		/>
 	{/if}
 {:else if hasError}
-	<p>error...</p>
+	<p class="files__message file__message-error">error...</p>
 {:else}
-	<p>no data</p>
+	<p class="files__message files__message-no-data">no data</p>
 {/if}
 
 <Pagination
@@ -432,5 +432,13 @@
 	}
 	.files__info-value {
 		font-weight: 700;
+	}
+	.files__message {
+		width: 100%;
+		padding: 40px;
+		font-weight: 700;
+		text-transform: uppercase;
+		text-align: center;
+		color: var(--color--gray-50);
 	}
 </style>

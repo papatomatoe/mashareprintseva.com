@@ -67,9 +67,8 @@
 		}
 	];
 
-	const handleAddNewItem = () => console.log('add new item');
 	const handleDeleteItems = async (e: CustomEvent) => {
-		const ids = e.detail.map((el: IProject) => el.id);
+		const ids = e.detail;
 
 		loading = true;
 
@@ -106,7 +105,6 @@
 	title="Projects"
 	{tableData}
 	{config}
-	on:crate={handleAddNewItem}
 	on:delete={handleDeleteItems}
 	on:edit={handleEditItem}
 />
