@@ -1,18 +1,11 @@
 <script lang="ts">
 	import { createEventDispatcher, type ComponentEvents } from 'svelte';
 	import { page } from '$app/stores';
-	import Table, {
-		type TableData,
-		type ITableData,
-		type ITableConfig
-	} from '$lib/components/Table.svelte';
+	import Table, { type ITableData, type ITableConfig } from '$lib/components/Table.svelte';
 	// import Pagination from '$lib/components/Pagination.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Add from '$lib/icons/Add.svelte';
-	// import Search from '$lib/icons/Search.svelte';
 	import Delete from '$lib/icons/Delete.svelte';
-	// import { debounce } from '$lib/utils/debounce';
-	// import { searchByData } from '$lib/utils/table';
 
 	const dispatch = createEventDispatcher();
 
@@ -20,11 +13,12 @@
 	export let tableData: ITableData = { data: [], type: 'sections' };
 	export let config: ITableConfig[];
 
-	let selectedRows: TableData[] = [];
+	let selectedRowIds: string[] = [];
 	let searchResultData = tableData.data;
 	// // let perPage = 10;
 	// let currentPage = 1;
 
+	$: data = tableData.data;
 	$: currentPath = $page.url.pathname;
 	// $: pages = Math.ceil(searchResultData.length / perPage);
 
@@ -34,32 +28,17 @@
 	// );
 
 	const handleSelectAll = () => {
-		selectedRows = selectedRows.length ? [] : [...tableData.data];
+		selectedRowIds = selectedRowIds.length ? [] : data.map((el) => el.id);
 	};
 
 	const handleSelect = (e: CustomEvent) => {
-		const item = e.detail;
+		const { id } = e.detail;
 
-		const selectedItem = selectedRows.find((row) => row.id === item.id);
-
-		selectedRows = selectedItem
-			? [...selectedRows.filter((e) => e.id !== item.id)]
-			: [...selectedRows, item];
+		selectedRowIds = selectedRowIds.some((el) => el === id)
+			? selectedRowIds.filter((el) => el !== id)
+			: [...selectedRowIds, id];
 	};
-	const handleDelete = () => dispatch('delete', selectedRows);
-	// const handleAddNewItem = () => dispatch('crate');
-
-	// const search = (val: string) => {
-	// 	const value = val.toLocaleLowerCase();
-	// 	if (!tableData.data) return;
-
-	// 	searchResultData = searchByData(value, tableData);
-	// 	selectedRows = [];
-	// };
-
-	// const handleSearch = debounce((e: ComponentEvents<Input>['input']) => {
-	// 	search(e.detail);
-	// }, 500);
+	const handleDelete = () => dispatch('delete', selectedRowIds);
 
 	// const handleSelectPerPage = (e: CustomEvent) => {
 	// 	perPage = e.detail;
@@ -81,7 +60,7 @@
 		<button
 			type="button"
 			class="button container__button"
-			disabled={Boolean(!selectedRows.length || !searchResultData.length)}
+			disabled={Boolean(!selectedRowIds.length || !searchResultData.length)}
 			on:click={handleDelete}
 		>
 			<Delete />
@@ -94,8 +73,10 @@
 	</div>
 	<div class="container__bottom">
 		<Table
-			data={tableData.data}
+			{data}
 			{config}
+			{selectedRowIds}
+			isAllRowsSelected={selectedRowIds.length !== data.length}
 			on:select-all={handleSelectAll}
 			on:select={handleSelect}
 			on:edit
