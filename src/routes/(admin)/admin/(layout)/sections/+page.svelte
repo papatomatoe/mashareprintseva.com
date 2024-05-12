@@ -16,10 +16,12 @@
 	let notification: { message: string; type: NotificationType } | null = null;
 
 	$: sections = data.sections;
+	$: pagination = data.pagination;
 
 	$: tableData = {
 		type: 'sections',
-		data: sections
+		data: sections,
+		pagination: pagination
 	} as ITableData;
 
 	let config: ITableConfig[] = [
@@ -107,6 +109,41 @@
 	const handleEditItem = async (e: CustomEvent) => {
 		await goto(`/admin/sections/edit/${e.detail.id}`);
 	};
+
+	export const fetchSectionsData = async (
+		params = {
+			page: 0,
+			perPage: 50
+		}
+	) => {
+		loading = true;
+		try {
+			const response = await fetch('/api/v2/sections/list', {
+				method: 'POST',
+				body: JSON.stringify(params)
+			});
+			const data = await response.json();
+
+			sections = data.sections;
+			pagination = data.pagination;
+		} catch (e) {
+			console.error(e);
+			notification = { message: 'Something went wrong...', type: 'error' };
+		} finally {
+			loading = false;
+		}
+	};
+
+	const handleSelectPerPage = async (e: CustomEvent) => {
+		const { perPage } = e.detail;
+
+		await fetchSectionsData({ page: 0, perPage });
+	};
+
+	const handleSelectPage = async (e: CustomEvent) => {
+		const { page, perPage } = e.detail;
+		await fetchSectionsData({ page, perPage });
+	};
 </script>
 
 <Notification
@@ -122,4 +159,6 @@
 	on:delete={handleDeleteItems}
 	on:edit={handleEditItem}
 	on:search={handleSearch}
+	on:select-per-page={handleSelectPerPage}
+	on:select-page={handleSelectPage}
 />

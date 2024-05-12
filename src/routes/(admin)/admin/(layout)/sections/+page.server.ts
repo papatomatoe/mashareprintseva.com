@@ -5,10 +5,11 @@ import { getSections } from '$lib/services/sections';
 export const load = (async ({ locals }) => {
 	if (!locals.user) redirect(302, '/admin/login');
 
-	const sections = await getSections();
+	const data = await getSections();
 
 	return {
 		pageTitle: 'Admin | Sections',
-		sections
+		sections: data?.sections,
+		pagination: data?.pagination
 	};
 }) satisfies PageServerLoad;
