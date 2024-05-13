@@ -43,7 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 					await sharp(fileBuffer)
 						.resize({ width: 800, fit: 'inside' })
-						.avif({ quality: 60 })
+						.avif({ quality: 65, chromaSubsampling: '4:2:0' })
 						.toFile(`./${STATIC_FOLDER_PATH}/${fullSize}`)
 						.then(() => {
 							fileInfo.url = `/${UPLOAD_PATH}/${fullSize}`;
