@@ -3,17 +3,22 @@
 	import DateTime from '$lib/components/DateTime.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import Status from '$lib/components/Status.svelte';
-	import type { ISection, ITableConfig, ITableData } from '$lib/components/Table.svelte';
-	import type { ComponentEvents } from 'svelte';
+	import type { ITableConfig, ITableData } from '$lib/components/Table.svelte';
+	import type { ComponentEvents, SvelteComponent } from 'svelte';
 	import type { PageData } from './$types';
 	import Input from '$lib/components/Input.svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 	import { goto } from '$app/navigation';
+	import Modal from '$lib/components/Modal.svelte';
+	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
 
 	export let data: PageData;
 
+	let deleteModal: SvelteComponent;
+
 	let loading = false;
 	let notification: { message: string; type: NotificationType } | null = null;
+	let selectedItemIds: string[] = [];
 
 	$: sections = data.sections;
 	$: pagination = data.pagination;
@@ -83,20 +88,22 @@
 			loading = false;
 		}
 	};
+	const handleClearSelectedItemIds = () => {
+		selectedItemIds = [];
+	};
 	const handleDeleteItems = async (e: CustomEvent) => {
-		const ids = e.detail;
-
 		loading = true;
 
 		try {
 			const response = await fetch('/api/v2/sections/delete', {
 				method: 'DELETE',
-				body: JSON.stringify(ids)
+				body: JSON.stringify(selectedItemIds)
 			});
 
 			const deletedIds = await response.json();
 
 			sections = sections?.filter((section) => !deletedIds.includes(section.id)) ?? [];
+			handleClearSelectedItemIds();
 
 			notification = { message: 'Successfully deleted', type: 'success' };
 		} catch (e) {
@@ -144,6 +151,16 @@
 		const { page, perPage } = e.detail;
 		await fetchSectionsData({ page, perPage });
 	};
+
+	const handleOpenDeleteItemsDialog = (e: CustomEvent) => {
+		const ids = e.detail;
+		selectedItemIds = ids;
+		deleteModal.open();
+	};
+
+	const handleCloseDeleteModal = () => {
+		deleteModal.close();
+	};
 </script>
 
 <Notification
@@ -152,13 +169,41 @@
 	show={Boolean(notification)}
 />
 
+<Modal
+	bind:this={deleteModal}
+	on:close-modal={handleClearSelectedItemIds}
+	width="350px"
+	height="fit-content"
+	padding="30px"
+>
+	<h2 class="delete-modal__title">Delete sections</h2>
+	<p>Do you want to delete selected sections?</p>
+	<div class="delete-modal__panel">
+		<ConfirmPanel
+			confirmText="Delete"
+			on:confirm={handleDeleteItems}
+			on:cancel={handleCloseDeleteModal}
+		/>
+	</div>
+</Modal>
+
 <AdminTable
 	title="Sections"
 	{config}
 	{tableData}
-	on:delete={handleDeleteItems}
+	on:delete={handleOpenDeleteItemsDialog}
 	on:edit={handleEditItem}
 	on:search={handleSearch}
 	on:select-per-page={handleSelectPerPage}
 	on:select-page={handleSelectPage}
 />
+
+<style>
+	.delete-modal__title {
+		color: var(--color--gray-30);
+		margin-bottom: 30px;
+	}
+	.delete-modal__panel {
+		padding-top: 40px;
+	}
+</style>
