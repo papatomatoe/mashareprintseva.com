@@ -17,7 +17,7 @@ export const load = (async ({ locals }) => {
 
 		return { bio, pageTitle: 'Bio' };
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		return { bio: null, pageTitle: 'Bio' };
 	}
 }) satisfies PageServerLoad;

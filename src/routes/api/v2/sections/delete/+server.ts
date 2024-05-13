@@ -38,7 +38,7 @@ export const DELETE: RequestHandler = async ({ request }) => {
 
 		return json(deletedIds);
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		throw error(500, 'Something went wrong...');
 	}
 };

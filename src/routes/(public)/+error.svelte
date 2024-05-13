@@ -4,8 +4,6 @@
 	const handleGoBack = () => {
 		history.back();
 	};
-
-	// $: console.log($page);
 </script>
 
 <section class="error">

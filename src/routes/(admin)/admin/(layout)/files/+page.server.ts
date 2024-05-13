@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			filesData: files
 		};
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		throw error(400, 'Something went wrong');
 	}
 };

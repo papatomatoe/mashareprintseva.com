@@ -12,8 +12,7 @@ export const DELETE: RequestHandler = async ({ request }) => {
 	try {
 		await Promise.allSettled(
 			files.map(async (file) => {
-				const f = await fs.unlink(`./${STATIC_PATH}${file.url}`);
-				console.log(f);
+				await fs.unlink(`./${STATIC_PATH}${file.url}`);
 				file.thumbnail && (await fs.unlink(`./${STATIC_PATH}${file.thumbnail}`));
 			})
 		);
@@ -48,7 +47,7 @@ export const DELETE: RequestHandler = async ({ request }) => {
 
 		return json(deletedIds);
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		throw error(500, 'Something went wrong...');
 	}
 };

@@ -18,7 +18,7 @@ export const createSocial = async (data: any) => {
 
 		return { success: true };
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		const error = getPrismaError(e as PrismaClientKnownRequestError);
 
 		return { success: false, ...error };
