@@ -1,10 +1,25 @@
 import { db } from '$lib/database/db';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { getPrismaError } from '$lib/services/error';
-export const getProjects = async () => {
+export const getAllProjects = async () => {
 	try {
-		const projects = await db.project.findMany({ include: { section: true } });
+		const projects = await db.project.findMany();
 		return projects;
+	} catch (e) {
+		console.error(e);
+	}
+};
+export const getProjects = async (page = 0, perPage = 10) => {
+	try {
+		const total = await db.project.count();
+		const projects = await db.project.findMany({
+			take: perPage,
+			skip: page * perPage,
+			orderBy: { createdAt: 'asc' },
+			include: { section: true }
+		});
+		const pages = Math.ceil(total / perPage);
+		return { projects, pagination: { page, perPage, pages, total } };
 	} catch (e) {
 		console.error(e);
 	}
