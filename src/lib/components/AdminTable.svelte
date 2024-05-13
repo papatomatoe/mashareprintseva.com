@@ -32,7 +32,6 @@
 	};
 	const handleDelete = () => {
 		dispatch('delete', selectedRowIds);
-		selectedRowIds = [];
 	};
 </script>
 
