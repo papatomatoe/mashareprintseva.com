@@ -1,6 +1,6 @@
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { getSection, updateSection } from '$lib/services/sections';
-import { getProjects } from '$lib/services/projects';
+import { getAllProjects } from '$lib/services/projects';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
@@ -11,11 +11,9 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	const section = await getSection(id);
 	if (!section) return error(404, 'not found');
 
-	const projects = await getProjects();
+	const projects = await getAllProjects();
 
-	const projectsWithoutSection = projects?.filter(
-		(project) => !project.section || !project.sectionId
-	);
+	const projectsWithoutSection = projects?.filter((project) => !project.sectionId);
 
 	const breadcrumbs = [
 		{ title: 'dashboard', path: '/admin/dashboard' },

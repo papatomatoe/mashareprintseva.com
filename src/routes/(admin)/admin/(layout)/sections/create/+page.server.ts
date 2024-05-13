@@ -1,16 +1,14 @@
 import { createSection } from '$lib/services/sections';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { getProjects } from '$lib/services/projects';
+import { getAllProjects } from '$lib/services/projects';
 
 export const load = (async ({ locals }) => {
 	if (!locals.user) redirect(302, '/admin/login');
 
-	const projects = await getProjects();
+	const projects = await getAllProjects();
 
-	const projectsWithoutSection = projects?.filter(
-		(project) => !project.section || !project.sectionId
-	);
+	const projectsWithoutSection = projects?.filter((project) => !project.sectionId);
 
 	return {
 		pageTitle: 'Admin | Create New Section',
