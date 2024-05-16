@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
 	const section = await getSection(id);
 	if (!section) return error(404, 'not found');
-
 	const projects = await getProjects();
 
 	const projectsWithoutSection = projects?.filter(
@@ -71,7 +70,7 @@ export const actions = {
 			thumbnail,
 			altTitle,
 			content,
-			...(projects.length && { projects })
+			...(projects?.length && { projects })
 		});
 
 		if (!response.success) {
