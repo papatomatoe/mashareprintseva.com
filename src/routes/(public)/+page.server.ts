@@ -1,20 +1,13 @@
-import { BASE_URL } from '$env/static/private';
+import { getMainPageData } from '$lib/services/main';
 
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ locals }) => {
-	try {
-		const data = await locals.pb
-			.collection('main')
-			.getFirstListItem('title="Main"', { filter: 'published=true' });
+export const load = (async () => {
+	const data = await getMainPageData();
 
-		const main = {
-			id: data.id,
-			title: data.title,
-			image: `${BASE_URL}/api/files/${data.collectionId}/${data.id}/${data.image}`
-		};
-		return { main, pageTitle: 'Main' };
-	} catch (e) {
+	if (!data?.published) {
 		return { main: null, pageTitle: 'Main' };
 	}
+
+	return { main: data, pageTitle: 'Main' };
 }) satisfies PageServerLoad;

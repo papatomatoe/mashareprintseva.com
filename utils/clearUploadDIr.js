@@ -8,7 +8,7 @@ try {
 	const files = await fs.readdir(IMAGES_PATH, { withFileTypes: true });
 
 	files.forEach(async (file) => {
-		const fp = file.path;
+		const fp = file.parentPath;
 
 		const filePath = `${fp}/${file.name}`;
 		fs.unlink(filePath);

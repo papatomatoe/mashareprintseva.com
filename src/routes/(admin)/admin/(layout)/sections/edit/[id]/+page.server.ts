@@ -69,7 +69,7 @@ export const actions = {
 			thumbnail,
 			altTitle,
 			content,
-			...(projects.length && { projects })
+			...(projects?.length && { projects })
 		});
 
 		if (!response.success) {
