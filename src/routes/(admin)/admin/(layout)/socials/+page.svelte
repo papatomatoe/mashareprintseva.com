@@ -313,6 +313,9 @@
 
 	.social__icon {
 		flex-grow: 1;
+		height: 40px;
+		width: 40px;
+		object-fit: contain;
 	}
 
 	.social__item--add {
