@@ -53,7 +53,7 @@ export const CUSTOM_EXTENSIONS = [
 	}),
 	Heading.extend({
 		addAttributes() {
-			return attributesConfig;
+			return { ...attributesConfig, level: { default: this.options.levels[0] } };
 		}
 	}),
 	Blockquote.extend({
