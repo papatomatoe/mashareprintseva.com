@@ -215,6 +215,8 @@
 		display: grid;
 		position: absolute;
 		width: 100%;
+		max-height: 250px;
+		overflow-y: auto;
 		top: calc(100% + 2px);
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
