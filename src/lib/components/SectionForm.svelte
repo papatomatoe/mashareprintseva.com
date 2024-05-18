@@ -37,12 +37,16 @@
 	let slug = section?.slug ?? '';
 	let selectedProjects = section?.projects ?? [];
 
+	$: projectsWithoutSelected = projects.filter(
+		(project) => !selectedProjects.find((el) => el.id === project.id) && !project.sectionId
+	);
+
 	$: projectsValue = JSON.stringify(selectedProjects);
 
 	$: hasErrors =
 		Boolean(imageUrlError) || Boolean(titleError) || Boolean(slugError) || Boolean(orderError);
 
-	$: options = projects.map((el) => ({ title: el.title, value: el.id }));
+	$: options = projectsWithoutSelected.map((el) => ({ title: el.title, value: el.id }));
 
 	const handleRegenerateSlug = () => {
 		slug = slugify(title, { lower: true });
@@ -151,7 +155,7 @@
 		<Editor name="content" label="content" value={content} />
 	</div>
 	<div class="section-form__side" slot="side">
-		{#if projects.length}
+		{#if projectsWithoutSelected.length}
 			<Select
 				select2
 				label="projects"
@@ -159,24 +163,25 @@
 				{options}
 				on:select={handleSelectProject}
 			/>
-			{#if selectedProjects.length}
-				<ul class="projects">
-					{#each selectedProjects as project (project.id)}
-						<li class="project">
-							<div class="project__status" class:project__status--published={project.published} />
-							<h3 class="project__title">{project.title}</h3>
-							<button
-								class="button project__button"
-								type="button"
-								on:click={() => handleDeleteProject(project.id)}
-								aria-label="remove project"
-							/>
-						</li>
-					{/each}
-				</ul>
-			{/if}
+		{/if}
+		{#if selectedProjects.length}
+			<ul class="projects">
+				{#each selectedProjects as project (project.id)}
+					<li class="project">
+						<div class="project__status" class:project__status--published={project.published} />
+						<h3 class="project__title">{project.title}</h3>
+						<button
+							class="button project__button"
+							type="button"
+							on:click={() => handleDeleteProject(project.id)}
+							aria-label="remove project"
+						/>
+					</li>
+				{/each}
+			</ul>
 			<input name="projects" type="hidden" readonly bind:value={projectsValue} />
-		{:else}
+		{/if}
+		{#if !projectsWithoutSelected.length && !selectedProjects.length}
 			<p class="projects__empty">no projects</p>
 		{/if}
 	</div>

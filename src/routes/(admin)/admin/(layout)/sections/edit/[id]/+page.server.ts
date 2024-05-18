@@ -13,8 +13,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
 	const projects = await getAllProjects();
 
-	const projectsWithoutSection = projects?.filter((project) => !project.sectionId);
-
 	const breadcrumbs = [
 		{ title: 'dashboard', path: '/admin/dashboard' },
 		{ title: 'sections', path: '/admin/sections' },
@@ -24,7 +22,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	return {
 		pageTitle: `Admin | ${section.title ?? 'Section'} Edit`,
 		section,
-		projects: projectsWithoutSection,
+		projects,
 		breadcrumbs
 	};
 };
