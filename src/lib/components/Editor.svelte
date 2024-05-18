@@ -33,6 +33,7 @@
 	let filemanager: SvelteComponent;
 	let linkPopover: SvelteComponent;
 	let imagePopover: SvelteComponent;
+	let textPopover: SvelteComponent;
 
 	let url = '';
 
@@ -138,6 +139,9 @@
 	const handleFullscreenMode = () => {
 		isFullscreenMode = !isFullscreenMode;
 	};
+	const handleOpenTextPopover = () => {
+		textPopover.open();
+	};
 </script>
 
 <Modal bind:this={modalFileManager}>
@@ -189,99 +193,106 @@
 					</button>
 				</div>
 				<div class="editor__buttons">
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-						class:active={editor.isActive('heading', { level: 1 })}
-					>
-						h1
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-						class:active={editor.isActive('heading', { level: 2 })}
-					>
-						h2
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-						class:active={editor.isActive('heading', { level: 3 })}
-					>
-						h3
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-						class:active={editor.isActive('heading', { level: 4 })}
-					>
-						h4
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-						class:active={editor.isActive('heading', { level: 5 })}
-					>
-						h5
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-						class:active={editor.isActive('heading', { level: 6 })}
-					>
-						h6
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().setParagraph().run()}
-						class:active={editor.isActive('paragraph')}
-					>
-						p
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().toggleBlockquote().run()}
-						class:active={editor.isActive('blockquote')}
-					>
-						"
-					</button>
-					<button
-						class="button editor__button"
-						type="button"
-						on:click={() => editor.chain().focus().setHardBreak().run()}
-					>
-						br
-					</button>
-				</div>
-				<div class="editor__buttons">
-					<button
-						class="button editor__button editor__button--bold"
-						type="button"
-						on:click={() => editor.chain().focus().toggleBold().run()}
-						disabled={!editor.can().chain().focus().toggleBold().run()}
-						class:active={editor.isActive('bold')}
-						aria-label="set bold text"
-					>
-						B
-					</button>
-					<button
-						class="button editor__button editor__button--italic"
-						type="button"
-						on:click={() => editor.chain().focus().toggleItalic().run()}
-						disabled={!editor.can().chain().focus().toggleItalic().run()}
-						class:active={editor.isActive('italic')}
-						aria-label="set italic text"
-					>
-						I
-					</button>
+					<div class="editor__wrapper">
+						<button class="button editor__button" type="button" on:click={handleOpenTextPopover}
+							>text</button
+						>
+						<Popover bind:this={textPopover} disableControls={true}>
+							<div class="editor__buttons">
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+									class:active={editor.isActive('heading', { level: 1 })}
+								>
+									h1
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+									class:active={editor.isActive('heading', { level: 2 })}
+								>
+									h2
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+									class:active={editor.isActive('heading', { level: 3 })}
+								>
+									h3
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+									class:active={editor.isActive('heading', { level: 4 })}
+								>
+									h4
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
+									class:active={editor.isActive('heading', { level: 5 })}
+								>
+									h5
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
+									class:active={editor.isActive('heading', { level: 6 })}
+								>
+									h6
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().setParagraph().run()}
+									class:active={editor.isActive('paragraph')}
+								>
+									p
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().toggleBlockquote().run()}
+									class:active={editor.isActive('blockquote')}
+								>
+									"
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									on:click={() => editor.chain().focus().setHardBreak().run()}
+								>
+									br
+								</button>
+								<button
+									class="button editor__button editor__button--bold"
+									type="button"
+									on:click={() => editor.chain().focus().toggleBold().run()}
+									disabled={!editor.can().chain().focus().toggleBold().run()}
+									class:active={editor.isActive('bold')}
+									aria-label="set bold text"
+								>
+									B
+								</button>
+								<button
+									class="button editor__button editor__button--italic"
+									type="button"
+									on:click={() => editor.chain().focus().toggleItalic().run()}
+									disabled={!editor.can().chain().focus().toggleItalic().run()}
+									class:active={editor.isActive('italic')}
+									aria-label="set italic text"
+								>
+									I
+								</button>
+							</div>
+						</Popover>
+					</div>
 				</div>
 				<div class="editor__buttons">
 					<button
@@ -407,7 +418,6 @@
 
 <style>
 	.editor {
-		min-width: 803px;
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 	}
