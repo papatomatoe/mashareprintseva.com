@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { clickOutside } from '$lib/utils/clickOutside';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
+
+	export let disableControls = false;
 
 	let show = false;
 
@@ -22,12 +25,21 @@
 	};
 </script>
 
-<div class="popover" class:popover-show={show}>
+<div
+	use:clickOutside
+	on:click-outside={() => {
+		show = false;
+	}}
+	class="popover"
+	class:popover-show={show}
+>
 	<slot />
-	<div class="popover__buttons">
-		<button class="button button--cancel" type="button" on:click={handleCancel}>Cancel</button>
-		<button class="button" type="button" on:click={handleConfirm}>Add</button>
-	</div>
+	{#if !disableControls}
+		<div class="popover__buttons">
+			<button class="button button--cancel" type="button" on:click={handleCancel}>Cancel</button>
+			<button class="button" type="button" on:click={handleConfirm}>Add</button>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -42,7 +54,7 @@
 		border-radius: 4px;
 		width: 400px;
 		top: 100%;
-		right: 0;
+		left: -40px;
 		z-index: 1;
 		box-shadow: 0 3px 10px -7px var(--color--black);
 	}
