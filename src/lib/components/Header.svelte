@@ -51,7 +51,7 @@
 
 		padding: 20px 0 15px;
 
-		background-color: var(--color-bg);
+		background-color: var(--color--white);
 
 		margin: 0 auto;
 
