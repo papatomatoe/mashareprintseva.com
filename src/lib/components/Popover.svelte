@@ -5,6 +5,7 @@
 	const dispatch = createEventDispatcher();
 
 	export let disableControls = false;
+	export let disableAutoHide = false;
 
 	let show = false;
 
@@ -23,13 +24,14 @@
 	const handleConfirm = () => {
 		dispatch('confirm');
 	};
+	const handleClickOutside = () => {
+		!disableAutoHide && close();
+	};
 </script>
 
 <div
 	use:clickOutside
-	on:click-outside={() => {
-		show = false;
-	}}
+	on:click-outside={handleClickOutside}
 	class="popover"
 	class:popover-show={show}
 >
