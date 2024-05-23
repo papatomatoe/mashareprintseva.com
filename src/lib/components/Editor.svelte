@@ -35,7 +35,11 @@
 	let imagePopover: SvelteComponent;
 	let textPopover: SvelteComponent;
 
-	let url = '';
+	type URLType = 'link' | 'image';
+
+	let popoverUrlType: URLType | null = null;
+
+	let linkUrl = '';
 
 	let imageUrl = '';
 	let imageAlt = '';
@@ -64,17 +68,17 @@
 	});
 
 	const handleSetLink = () => {
-		if (url === '') {
+		if (linkUrl === '') {
 			editor.chain().focus().extendMarkRange('link').unsetLink().run();
 			return;
 		}
 
-		editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+		editor.chain().focus().extendMarkRange('link').setLink({ href: linkUrl }).run();
 	};
 
 	const handleCloseLinkPopover = () => {
 		linkPopover.close();
-		url = '';
+		linkUrl = '';
 	};
 
 	const handleConfirmAddLink = () => {
@@ -99,10 +103,14 @@
 		handleCloseImagePopover();
 	};
 
-	const handleConfirmSelectImage = () => {
+	const handleConfirmSelectFile = () => {
 		const [image] = filemanager.getFiles();
 
-		imageUrl = image.url;
+		if (popoverUrlType === 'image') {
+			imageUrl = image.url;
+		} else if (popoverUrlType === 'link') {
+			linkUrl = image.url;
+		}
 
 		filemanager.resetSelection();
 		modalFileManager.close();
@@ -112,12 +120,14 @@
 		isDisabledSelectButton = e.detail.ids.length !== 1;
 	};
 
-	const handleOpenFilemanager = async () => {
+	const handleOpenFilemanager = async (type: URLType) => {
+		popoverUrlType = type;
 		await filemanager.fetchFilesData();
 		modalFileManager.open();
 	};
 
-	const handleCancelSelectImage = () => {
+	const handleCancelSelectFile = () => {
+		popoverUrlType = null;
 		filemanager.resetSelection();
 		modalFileManager.close();
 	};
@@ -149,8 +159,8 @@
 	<div slot="bottom">
 		<ConfirmPanel
 			disabled={isDisabledSelectButton}
-			on:cancel={handleCancelSelectImage}
-			on:confirm={handleConfirmSelectImage}
+			on:cancel={handleCancelSelectFile}
+			on:confirm={handleConfirmSelectFile}
 		/>
 	</div>
 </Modal>
@@ -167,6 +177,7 @@
 		/>
 	</div>
 </Modal>
+
 <div>
 	<p>{label}</p>
 	<div class="editor" class:editor--fullscreen={isFullscreenMode}>
@@ -343,7 +354,7 @@
 							type="button"
 							on:click={() => {
 								linkPopover.open();
-								url = editor.getAttributes('link').href ?? '';
+								linkUrl = editor.getAttributes('link').href ?? '';
 							}}
 							class:active={editor.isActive('link')}
 							aria-label="add link"
@@ -351,11 +362,24 @@
 							<LinkIcon />
 						</button>
 						<Popover
+							disableAutoHide
 							bind:this={linkPopover}
 							on:cancel={handleCloseLinkPopover}
 							on:confirm={handleConfirmAddLink}
 						>
-							<Input label="URL:" placeholder="https://example.net" bind:value={url} />
+							<div class="editor__popover-container editor__popover-container--url">
+								<Input label="URL:" placeholder="https://example.net" bind:value={linkUrl} />
+								<button
+									class="button editor__button editor__button--upload"
+									type="button"
+									aria-label="open filemanager"
+									on:click={() => {
+										handleOpenFilemanager('link');
+									}}
+								>
+									<Upload />
+								</button>
+							</div>
 						</Popover>
 					</div>
 					<div class="editor__wrapper">
@@ -368,6 +392,7 @@
 							}}><ImageIcon /></button
 						>
 						<Popover
+							disableAutoHide
 							bind:this={imagePopover}
 							on:cancel={handleCloseImagePopover}
 							on:confirm={handleConfirmAddImage}
@@ -378,7 +403,9 @@
 									class="button editor__button editor__button--upload"
 									type="button"
 									aria-label="open filemanager"
-									on:click={handleOpenFilemanager}
+									on:click={() => {
+										handleOpenFilemanager('image');
+									}}
 								>
 									<Upload />
 								</button>
@@ -420,16 +447,6 @@
 	.editor {
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
-	}
-
-	.editor--fullscreen {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background-color: var(--color--white);
-		z-index: 1;
 	}
 
 	.editor__controls {
@@ -591,5 +608,19 @@
 
 	:global(.editor__element a) {
 		color: var(--color--primary);
+	}
+
+	.editor--fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: var(--color--white);
+		z-index: 1;
+	}
+
+	.editor--fullscreen .editor__element {
+		max-height: calc(100% - 39px);
 	}
 </style>
