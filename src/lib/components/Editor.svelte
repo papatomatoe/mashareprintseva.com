@@ -4,8 +4,8 @@
 
 	import UndoLink from '$lib/icons/Undo.svelte';
 	import RedoLink from '$lib/icons/Redo.svelte';
-	import BulletListLink from '$lib/icons/BulletList.svelte';
-	import OrderedListLink from '$lib/icons/OrderedList.svelte';
+	import BulletList from '$lib/icons/BulletList.svelte';
+	import OrderedList from '$lib/icons/OrderedList.svelte';
 	import LinkIcon from '$lib/icons/Link.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import ImageIcon from '$lib/icons/Image.svelte';
@@ -20,6 +20,8 @@
 	import AlignLeft from '$lib/icons/AlignLeft.svelte';
 	import AlignCenter from '$lib/icons/AlignCenter.svelte';
 	import AlignRight from '$lib/icons/AlignRight.svelte';
+	import MakeNestedList from '$lib/icons/MakeNestedList.svelte';
+	import UndoNestedList from '$lib/icons/UndoNestedList.svelte';
 	import { CUSTOM_EXTENSIONS } from '$lib/configs/tiptap';
 
 	export let label = '';
@@ -334,17 +336,38 @@
 						type="button"
 						on:click={() => editor.chain().focus().toggleBulletList().run()}
 						class:active={editor.isActive('bulletList')}
-						aria-label="bullet list"
+						aria-label="unordered list"
 					>
-						<BulletListLink />
+						<BulletList />
 					</button>
 					<button
 						class="button editor__button"
 						type="button"
 						on:click={() => editor.chain().focus().toggleOrderedList().run()}
 						class:active={editor.isActive('orderedList')}
+						aria-label="ordered list"
 					>
-						<OrderedListLink />
+						<OrderedList />
+					</button>
+				</div>
+				<div class="editor__buttons">
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().sinkListItem('listItem').run()}
+						disabled={!editor.can().sinkListItem('listItem')}
+						aria-label="make nested list item"
+					>
+						<MakeNestedList />
+					</button>
+					<button
+						class="button editor__button"
+						type="button"
+						on:click={() => editor.chain().focus().liftListItem('listItem').run()}
+						disabled={!editor.can().liftListItem('listItem')}
+						aria-label="undo nested list item"
+					>
+						<UndoNestedList />
 					</button>
 				</div>
 				<div class="editor__buttons">
@@ -483,7 +506,7 @@
 	}
 
 	.editor__button:disabled {
-		--color--icon: var(--color--gray-50);
+		--color--icon: var(--color--gray-85);
 	}
 	.editor__button:disabled:hover {
 		background-color: var(--color--white);
@@ -548,10 +571,13 @@
 	}
 
 	:global(.html__field .field) {
-		height: 100%;
+		height: 99%;
 	}
 	:global(.html__field .field .field__wrapper) {
 		height: 99%;
+	}
+	:global(.html__field .field__input) {
+		resize: none;
 	}
 
 	.html__controls {
