@@ -88,6 +88,8 @@
 						//@ts-ignore
 						const itemB = b[sortKey];
 
+						// NOTE: type may be 'string', 'number', 'boolean', 'Date object'
+
 						if (typeof itemA === 'string' && typeof itemB === 'string')
 							return sortDirection === 'direct'
 								? itemA.toLowerCase().localeCompare(itemB.toLowerCase())
@@ -165,7 +167,7 @@
 								{/if}
 							</button>
 						{:else}
-							{cell.title}
+							<p class="table__cell-title">{cell.title}</p>
 						{/if}
 					{/if}
 				</th>
@@ -268,10 +270,20 @@
 		background-color: var(--color--gray-95);
 	}
 
+	.table__cell-title {
+		padding-left: 6px;
+		padding-right: 12px;
+		font-size: 13px;
+		font-weight: 700;
+	}
+
 	.table__button {
+		font-size: 13px;
+		font-weight: 700;
 		position: relative;
 		padding-right: 12px;
 		border: none;
+		color: var(--color--gray-30);
 		background-color: transparent;
 		cursor: pointer;
 	}
