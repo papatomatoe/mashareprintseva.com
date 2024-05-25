@@ -35,7 +35,7 @@
 		},
 		{
 			key: 'image',
-			title: 'Image',
+			title: 'image',
 			render: Image
 		},
 		{
