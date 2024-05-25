@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
 	import { enhance, applyAction } from '$app/forms';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import Modal from '$lib/components/Modal.svelte';
 	import File from '$lib/components/File.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
+	import SocialItem from '$lib/components/SocialItem.svelte';
 	import type { PageData } from './$types';
-	import Edit from '$lib/icons/Edit.svelte';
-	import Delete from '$lib/icons/Delete.svelte';
 	import type { ActionResult } from '@sveltejs/kit';
 	import type { Social } from '@prisma/client';
 
@@ -18,6 +17,92 @@
 
 	let createModal: SvelteComponent;
 	let deleteModal: SvelteComponent;
+
+	let mouseYCoordinate: number | null = null;
+	let mouseXCoordinate: number | null = null;
+
+	let distanceTopGrabbedVsPointer: number | null = null;
+	let distanceLeftGrabbedVsPointer: number | null = null;
+
+	let draggingItem: Social | null = null;
+	let draggingItemId: string | null = null;
+	let draggingItemIndex: number | null = null;
+
+	let hoveredItemIndex: number | null = null;
+
+	$: {
+		if (
+			mouseYCoordinate == null ||
+			mouseYCoordinate == 0 ||
+			mouseXCoordinate == null ||
+			mouseXCoordinate == 0
+		) {
+			// showGhost = false;
+		}
+	}
+
+	$: {
+		if (
+			draggingItemIndex != null &&
+			hoveredItemIndex != null &&
+			draggingItemIndex != hoveredItemIndex &&
+			socials
+		) {
+			// swap items
+			[socials[draggingItemIndex], socials[hoveredItemIndex]] = [
+				socials[hoveredItemIndex],
+				socials[draggingItemIndex]
+			];
+
+			// balance
+			draggingItemIndex = hoveredItemIndex;
+		}
+	}
+
+	const layoutOffsetX = 250;
+	const layoutOffsetY = 90;
+
+	$: socialItemGhostStyle = `left: ${
+		(mouseXCoordinate ?? 0) + (distanceLeftGrabbedVsPointer ?? 0) - layoutOffsetX
+	}px; top: ${(mouseYCoordinate ?? 0) + (distanceTopGrabbedVsPointer ?? 0) - layoutOffsetY}px;`;
+
+	const handleDragStart = (
+		e: DragEvent & {
+			currentTarget: EventTarget & HTMLLIElement;
+		},
+		social: Social,
+		index: number
+	) => {
+		const clientX = e.clientX;
+		const clientY = e.clientY;
+		const { x, y } = e.currentTarget.getBoundingClientRect();
+
+		mouseXCoordinate = clientX;
+		mouseYCoordinate = clientY;
+
+		draggingItem = social;
+		draggingItemIndex = index;
+		draggingItemId = social.id;
+
+		distanceLeftGrabbedVsPointer = x - clientX;
+
+		distanceTopGrabbedVsPointer = y - clientY;
+	};
+	const handleDrag = (
+		e: DragEvent & {
+			currentTarget: EventTarget & HTMLLIElement;
+		}
+	) => {
+		mouseXCoordinate = e.clientX;
+		mouseYCoordinate = e.clientY;
+	};
+	const handleDragOver = (index: number) => {
+		hoveredItemIndex = index;
+	};
+	const handleDragEnd = () => {
+		draggingItemId = null;
+		hoveredItemIndex = null;
+	};
 
 	const MODAL_TYPE = {
 		create: {
@@ -91,18 +176,21 @@
 		createModal.open();
 	};
 
-	const handleOpenDeleteModal = (social: Social) => {
+	const handleOpenDeleteModal = (e: CustomEvent) => {
+		const social = e.detail;
+
 		title = social.title;
 		id = social.id;
 		deleteModal.open();
 	};
 
-	const handleOpenEditModal = (socials: Social) => {
-		title = socials.title;
-		oldTitle = socials.title;
-		id = socials.id;
-		icon = socials.icon;
-		link = socials.link;
+	const handleOpenEditModal = (e: CustomEvent) => {
+		const social = e.detail;
+		title = social.title;
+		oldTitle = social.title;
+		id = social.id;
+		icon = social.icon;
+		link = social.link;
 		modal = MODAL_TYPE.edit;
 		createModal.open();
 	};
@@ -197,36 +285,25 @@
 		<h2 class="v-h">List</h2>
 		<ul class="social__list">
 			{#if socials?.length}
-				{#each socials as social (social.id)}
-					<li class="social__item">
-						<div class="social__item-buttons">
-							<button
-								class="button social__item-button"
-								type="button"
-								aria-label="delete {social.title} item"
-								on:click={() => handleOpenDeleteModal(social)}><Delete /></button
-							>
-							<button
-								class="button social__item-button"
-								type="button"
-								aria-label="edit {social.title} item"
-								on:click={() => handleOpenEditModal(social)}><Edit /></button
-							>
-						</div>
-						<a
-							class="social__link"
-							href={social.link}
-							target="_blank"
-							rel="noopener noreferrer nofollow"
-						>
-							<h3 class="social__title">{social.title}</h3>
-						</a>
-						<img
-							class="social__icon"
-							src={social.icon}
-							alt="{social.title} icon"
-							width="40"
-							height="40"
+				{#if mouseXCoordinate && mouseYCoordinate && draggingItem}
+					<li class="social__item social__item--ghost" style={socialItemGhostStyle}>
+						<SocialItem item={draggingItem} />
+					</li>
+				{/if}
+				{#each socials as social, index (social.id)}
+					<li
+						class="social__item"
+						class:social__item--invisible={draggingItemId === social.id}
+						draggable="true"
+						on:dragstart={(e) => handleDragStart(e, social, index)}
+						on:drag={handleDrag}
+						on:dragover={() => handleDragOver(index)}
+						on:dragend={handleDragEnd}
+					>
+						<SocialItem
+							item={social}
+							on:delete={handleOpenDeleteModal}
+							on:edit={handleOpenEditModal}
 						/>
 					</li>
 				{/each}
@@ -267,55 +344,12 @@
 		padding: 10px;
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
-	}
-
-	.social__item:hover .social__item-buttons {
-		opacity: 1;
-	}
-
-	.social__item-buttons {
-		opacity: 0;
-		top: 0;
-		right: 0;
-		padding: 5px;
-		position: absolute;
-		display: grid;
-		/* gap: 5px; */
-	}
-
-	.social__item-button {
-		width: 30px;
-		height: 30px;
-		padding: 0;
-		display: grid;
-		place-items: center;
 		background-color: var(--color--white);
-		--color--icon: var(--color--gray-15);
+		cursor: grab;
 	}
 
-	.social__item-button:hover,
-	.social__item-button:focus-visible {
-		background-color: var(--color--gray-85);
-	}
-	.social__item-button:active {
-		background-color: var(--color--gray-50);
-		--color--icon: var(--color--white);
-	}
-
-	.social__item-buttons:has(.social__item-button:focus) {
+	:global(.social__item:hover .social__item-buttons) {
 		opacity: 1;
-	}
-
-	:global(.social__item-button svg) {
-		width: 17px;
-		height: 17px;
-	}
-
-	.social__icon {
-		flex-grow: 1;
-		height: 40px;
-		width: 40px;
-		object-fit: contain;
 	}
 
 	.social__item--add {
@@ -387,5 +421,18 @@
 
 	.social-modal__panel {
 		padding-top: 40px;
+	}
+
+	.social__item--ghost {
+		margin-bottom: 10px;
+		pointer-events: none;
+		z-index: 99;
+		position: absolute;
+		top: 0;
+		left: 10;
+		cursor: grab;
+	}
+	.social__item--invisible {
+		opacity: 0;
 	}
 </style>
