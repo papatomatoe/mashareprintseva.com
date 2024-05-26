@@ -4,6 +4,8 @@
 	import Editor from '$lib/components/Editor.svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
+	import Page from '$routes/(public)/+page.svelte';
+
 	export let data;
 	export let form;
 
@@ -22,6 +24,16 @@
 
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Main Page" {published}>
+	<div slot="preview">
+		<Page
+			data={{
+				social: [],
+				menu: [],
+				pageTitle: 'Main Page',
+				main: { id: 'main-page-preview', published: true, title, slug, content }
+			}}
+		/>
+	</div>
 	<Input
 		label="title"
 		name="title"

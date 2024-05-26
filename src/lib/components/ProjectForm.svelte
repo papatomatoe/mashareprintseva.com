@@ -16,6 +16,8 @@
 	import type { ComponentEvents } from 'svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
+	import Page from '$routes/(public)/[section]/[project]/+page.svelte';
+
 	export let form;
 	export let project: IProject | null = null;
 	export let sections: Section[] = [];
@@ -98,6 +100,25 @@
 
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Create New Project" {published} {hasErrors} on:submit={handleSubmit}>
+	<div slot="preview">
+		<Page
+			data={{
+				menu: [],
+				social: [],
+				pageTitle: 'Project Page',
+				project: {
+					id,
+					title,
+					slug,
+					subtitle,
+					image: projectImageUrl,
+					content,
+					section: '',
+					restProjects: []
+				}
+			}}
+		/>
+	</div>
 	<input name="id" type="hidden" readonly value={id} />
 	<div class="row row--top">
 		<Input

@@ -16,6 +16,8 @@
 	import type { ComponentEvents } from 'svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 
+	import Page from '$routes/(public)/[section]/+page.svelte';
+
 	export let form;
 	export let section: ISection | null = null;
 
@@ -99,6 +101,25 @@
 
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Create New Section" {published} {hasErrors} on:submit={handleSubmit}>
+	<div slot="preview">
+		<Page
+			data={{
+				menu: [],
+				social: [],
+				pageTitle: 'Section Page',
+				section: {
+					id,
+					title,
+					slug,
+					subtitle,
+					alternativeTitle: altTitle,
+					description: content,
+					image: imageUrl,
+					projects: selectedProjects.filter((el) => el.published)
+				}
+			}}
+		/>
+	</div>
 	<input name="id" type="hidden" readonly value={id} />
 	<div class="row row--top">
 		<Input
