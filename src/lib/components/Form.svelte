@@ -1,11 +1,24 @@
 <script lang="ts">
+	import { SvelteComponent } from 'svelte';
 	import { enhance, applyAction } from '$app/forms';
 	import { goto, invalidateAll } from '$app/navigation';
 	import Switch from '$lib/components/Switch.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+
 	export let title = '';
 	export let published = false;
 	export let hasErrors = false;
+
+	let modal: SvelteComponent;
+
+	const handlePreview = () => {
+		modal.open();
+	};
 </script>
+
+{#if $$slots.preview}
+	<Modal bind:this={modal}><slot name="preview" /></Modal>
+{/if}
 
 <form
 	class="form"
@@ -26,7 +39,10 @@
 	<div class="form__top">
 		<h1 class="form__title">{title}</h1>
 		<Switch name="published" label="published" bind:checked={published} />
-		<button class="button form__submit" type="submit">save</button>
+		{#if $$slots.preview}
+			<button class="button" type="button" on:click={handlePreview}>Preview content</button>
+		{/if}
+		<button class="button form__submit" type="submit">Save</button>
 	</div>
 	<div class="form__bottom" class:form__bottom--has-side={$$slots.side}>
 		<div class="form__left"><slot /></div>
@@ -45,7 +61,7 @@
 		align-items: center;
 		padding: 0 0 21px;
 		margin-bottom: 43px;
-		gap: 43px;
+		gap: 20px;
 		border-bottom: 1px solid var(--color--gray-85);
 	}
 	.form__title {
