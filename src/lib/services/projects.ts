@@ -71,3 +71,31 @@ export const updateProject = async (id: string, data: any) => {
 		return { success: false, ...error };
 	}
 };
+
+export const getProjectBySlug = async (slug: string) => {
+	try {
+		const project = await db.project.findUnique({
+			where: { slug, published: true },
+			include: {
+				section: {
+					include: {
+						projects: true
+					}
+				}
+			}
+		});
+
+		if (project) {
+			const { section, ...restData } = project;
+
+			return {
+				...restData,
+				restProjects: section?.projects.filter((proj) => proj.published && proj.id !== restData.id)
+			};
+		}
+
+		return null;
+	} catch (e) {
+		console.error(e);
+	}
+};
