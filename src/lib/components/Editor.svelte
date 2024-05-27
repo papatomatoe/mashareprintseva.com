@@ -628,6 +628,7 @@
 	}
 
 	:global(.editor__element img) {
+		display: block;
 		width: 500px;
 		padding: 20px 0;
 	}
