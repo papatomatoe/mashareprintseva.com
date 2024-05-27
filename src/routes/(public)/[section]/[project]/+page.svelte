@@ -27,7 +27,7 @@
 	{#if project.restProjects && project.restProjects.length}
 		<section class="projects">
 			<h2 class="projects__title">Projects</h2>
-			<Projects projects={project.restProjects} section={project.section} />
+			<Projects projects={project.restProjects} section={project.section ?? ''} />
 		</section>
 	{/if}
 </section>
