@@ -90,3 +90,18 @@ export const getSections = async (page = 0, perPage = 10) => {
 		console.error(e);
 	}
 };
+export const getSectionBySlug = async (slug: string) => {
+	try {
+		const section = await db.section.findUnique({
+			where: { slug, published: true },
+			include: {
+				projects: true
+			}
+		});
+
+		console.log(section);
+		return { ...section, projects: section?.projects.filter((project) => project.published) };
+	} catch (e) {
+		console.error(e);
+	}
+};
