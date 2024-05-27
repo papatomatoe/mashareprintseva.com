@@ -10,7 +10,7 @@
 
 {#if section}
 	<div class="section">
-		<h1 class="section__title">{section.alternativeTitle || section.title}</h1>
+		<h1 class="section__title">{section.altTitle || section.title}</h1>
 		{#if section.subtitle}
 			<p class="section__subtitle">{section.subtitle}</p>
 		{/if}
@@ -21,14 +21,14 @@
 				<img src={section.image} alt={section.title} />
 			</div>
 			<div class="section__content">
-				{@html section.description}
+				{@html section.content}
 			</div>
 		</section>
 		<section class="section__projects">
 			<h2 class="section__title">Projects</h2>
 
-			{#if section.projects.length}
-				<Projects projects={section.projects} section={section.slug} />
+			{#if section && section.projects?.length}
+				<Projects projects={section.projects} section={section?.slug ?? ''} />
 			{:else}
 				<p class="section__no-projects">The category contains no projects yet. Checkout soon...</p>
 			{/if}
