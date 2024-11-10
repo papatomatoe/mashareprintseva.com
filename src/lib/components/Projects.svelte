@@ -1,10 +1,10 @@
 <script lang="ts">
-	export let projects: any;
-	export let section: string;
+	import type { Project } from '$lib/types/project';
+	let { projects, section }: { projects: Project[]; section: string } = $props();
 </script>
 
 <ul class="projects">
-	{#each projects as project (project.id)}
+	{#each projects as project (project.slug)}
 		<li class="projects__item">
 			<a class="projects__link" href={`/${section}/${project.slug}`}>
 				<h3 class="projects__title">{project.title}</h3>
