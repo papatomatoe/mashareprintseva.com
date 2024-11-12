@@ -2,7 +2,6 @@ import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
 export const load = (async ({ params }) => {
-	console.log(params);
 	try {
 		const section = await import(`../../content/sections/${params.section}.md`);
 
