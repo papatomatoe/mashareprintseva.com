@@ -16,8 +16,6 @@ export const load = (async ({ params }) => {
 			)
 		);
 
-		console.log(restProjects);
-
 		const mappedRestProject = restProjects.map((project) => ({ ...project.metadata }));
 
 		return {

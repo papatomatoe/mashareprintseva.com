@@ -5,8 +5,6 @@
 
 	let { data }: { data: PageData } = $props();
 
-	$inspect(data);
-
 	const project = $derived(data.project);
 	const Content = $derived(data.project.content);
 </script>
