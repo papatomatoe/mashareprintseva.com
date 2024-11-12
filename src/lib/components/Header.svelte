@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import type { Menu } from '$lib/types/menu';
+	import type { Social } from '$lib/types/socials';
 	import Logo from './Logo.svelte';
 	import Nav from './Nav.svelte';
 
-	export let menu: any;
-	export let social: any;
+	let { menu, social }: { menu: Menu[]; social: Social[] } = $props();
 
 	const HOME_PATH = '/';
-	let isMenuOpened = false;
+	let isMenuOpened = $state(false);
 
 	const handleOpenMenu = () => {
 		isMenuOpened = true;
@@ -16,7 +17,7 @@
 		isMenuOpened = false;
 	};
 
-	$: currentPath = $page.url.pathname;
+	const currentPath = $derived($page.url.pathname);
 </script>
 
 <header class="header" class:inactive={isMenuOpened}>
@@ -29,18 +30,13 @@
 			<Logo />
 		</a>
 	{/if}
-	<button
-		class="header__button"
-		type="button"
-		aria-label="open main menu"
-		on:click={handleOpenMenu}
-	>
+	<button class="header__button" type="button" aria-label="open main menu" onclick={handleOpenMenu}>
 		<svg width="25" height="21" viewBox="0 0 25 21" xmlns="http://www.w3.org/2000/svg">
 			<path d="M0 1.50015H25M0 10.5002H25M0 19.5002H25" stroke-width="3" />
 		</svg>
 	</button>
 
-	<Nav {menu} {social} {isMenuOpened} on:close={handleCloseMenu} />
+	<Nav {menu} {social} {isMenuOpened} onClose={handleCloseMenu} />
 </header>
 
 <style>

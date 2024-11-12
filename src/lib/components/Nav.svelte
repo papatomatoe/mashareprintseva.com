@@ -1,26 +1,24 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import Menu from './Menu.svelte';
-	import Social from './Social.svelte';
+	import MainMenu from './Menu.svelte';
+	import SocialItem from './Social.svelte';
+	import type { Social } from '$lib/types/socials';
+	import type { Menu } from '$lib/types/menu';
 
-	export let menu: any;
-	export let social: any;
-	export let isMenuOpened = false;
-
-	const dispatch = createEventDispatcher();
-
-	const handleClose = () => {
-		dispatch('close');
-	};
+	let {
+		menu,
+		social,
+		isMenuOpened,
+		onClose
+	}: { menu: Menu[]; social: Social[]; isMenuOpened: boolean; onClose: () => void } = $props();
 </script>
 
 <nav class="nav" class:nav--show={isMenuOpened}>
 	<div class="nav__container">
 		<p class="nav__title">Menu</p>
-		<Menu items={menu} on:close={handleClose} />
-		<Social place="header" items={social} on:close={handleClose} />
+		<MainMenu items={menu} {onClose} />
+		<SocialItem place="header" items={social} {onClose} />
 
-		<button class="nav__button" type="button" aria-label="close main menu" on:click={handleClose}>
+		<button class="nav__button" type="button" aria-label="close main menu" onclick={onClose}>
 			<svg width="24" height="23" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg">
 				<path d="M22 21.799L2.20102 2.00003M2 21.7991L21.7989 2" stroke-width="3" />
 			</svg>

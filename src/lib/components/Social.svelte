@@ -1,17 +1,14 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import type { Social } from '$lib/types/socials';
 
-	const dispatch = createEventDispatcher();
-	export let items: any = [];
-	export let place: 'header' | 'footer';
+	type PlaceType = 'header' | 'footer';
 
-	const handleClose = () => {
-		dispatch('close');
-	};
+	let { items, place, onClose }: { items: Social[]; place: PlaceType; onClose?: () => void } =
+		$props();
 </script>
 
 <ul class="social social--{place}">
-	{#each items as item (item.id)}
+	{#each items as item (item.title)}
 		<li class="social__item">
 			<a
 				class="social__link"
@@ -19,12 +16,12 @@
 				aria-label={item.title}
 				target="_blank"
 				rel="noopener noreferrer"
-				on:click={handleClose}
+				onclick={onClose}
 			>
 				<div class="social__wrapper" class:social__wrapper--first={item.title === 'Etsy'}>
 					<img
 						class="social__icon"
-						src={item.icon}
+						src={`/images/${item.icon}`}
 						alt={item.title}
 						width={item.title === 'Etsy' ? 52 : 25}
 						height="25"

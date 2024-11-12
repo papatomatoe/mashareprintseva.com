@@ -1,26 +1,21 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
+	import type { Menu } from '$lib/types/menu';
 
-	export let items: any = [];
+	let { items, onClose }: { items: Menu[]; onClose: () => void } = $props();
 
-	const handleCloseMenu = () => {
-		dispatch('close');
-	};
-
-	$: currentPath = $page.url.pathname;
-	$: menu = [...items, { id: 'bio', title: 'Bio', slug: 'bio' }];
+	const currentPath = $derived($page.url.pathname);
+	const menu = $derived([...items, { title: 'Bio', slug: 'bio' }]);
 </script>
 
 {#if items.length}
 	<ul class="menu">
-		{#each menu as item (item.id)}
+		{#each menu as item (item.title)}
 			<li class="menu__item">
 				{#if currentPath === `/${item.slug}`}
 					<a class="link link--current">{item.title}</a>
 				{:else}
-					<a class="link" href="/{item.slug}" on:click={handleCloseMenu}>
+					<a class="link" href="/{item.slug}" onclick={onClose}>
 						{item.title}
 					</a>
 				{/if}

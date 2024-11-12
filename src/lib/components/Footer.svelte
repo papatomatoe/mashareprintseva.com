@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Social from './Social.svelte';
-	export let social: any;
+	import SocialItem from './Social.svelte';
+	import type { Social } from '$lib/types/socials';
+	let { social }: { social: Social[] } = $props();
 </script>
 
 <footer class="footer">
 	<div class="footer__wrapper">
-		<Social items={social} place="footer" />
+		<SocialItem items={social} place="footer" />
 	</div>
 	<p class="footer__copy">&copy; {new Date().getFullYear()} by Masha Reprintseva</p>
 </footer>
