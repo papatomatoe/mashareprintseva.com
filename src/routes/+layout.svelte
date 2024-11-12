@@ -6,12 +6,13 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 	import type { PageData } from './$types';
+	import type { Snippet } from 'svelte';
 
-	export let data: PageData;
+	let { children, data }: { children: Snippet; data: PageData } = $props();
 
-	$: pageTitle = $page.data.pageTitle;
-	$: menu = data.menu;
-	$: social = data.social;
+	const pageTitle = $derived($page.data.pageTitle);
+	const menu = $derived(data.menu);
+	const social = $derived(data.social);
 </script>
 
 <svelte:head>
@@ -25,7 +26,7 @@
 			{#if pageTitle}
 				<h1 class="v-h">{pageTitle}</h1>
 			{/if}
-			<slot />
+			{@render children()}
 		</main>
 		<Footer {social} />
 	</div>
