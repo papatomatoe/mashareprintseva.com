@@ -1,17 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
-	$: main = data.main;
-	$: pageTitle = data.pageTitle;
+	const main = $derived(data.main);
+	const pageTitle = $derived(data.pageTitle);
+	const Content = $derived(data.main.content);
 </script>
 
 {#if main}
 	<section class="main-page">
 		<h2 class="v-h">{pageTitle}</h2>
 		<div class="main-page__content">
-			<!-- {@html main.content} -->
+			<Content />
 		</div>
 	</section>
 {/if}
