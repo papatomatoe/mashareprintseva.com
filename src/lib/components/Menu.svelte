@@ -5,20 +5,21 @@
 	let { items, onClose }: { items: Menu[]; onClose: () => void } = $props();
 
 	const currentPath = $derived($page.url.pathname);
-	const menu = $derived([...items, { title: 'Bio', slug: 'bio' }]);
+	const menu = $derived([{ title: 'main', slug: '' }, ...items, { title: 'bio', slug: 'bio' }]);
 </script>
 
 {#if items.length}
 	<ul class="menu">
 		{#each menu as item (item.title)}
 			<li class="menu__item">
-				{#if currentPath === `/${item.slug}`}
-					<a class="link link--current">{item.title}</a>
-				{:else}
-					<a class="link" href="/{item.slug}" onclick={onClose}>
-						{item.title}
-					</a>
-				{/if}
+				<a
+					class="link"
+					class:link--current={currentPath === `/${item.slug}`}
+					href="/{item.slug}"
+					onclick={onClose}
+				>
+					{item.title}
+				</a>
 			</li>
 		{/each}
 	</ul>
