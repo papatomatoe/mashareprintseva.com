@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import type { Menu } from '$lib/types/menu';
 	import type { Social } from '$lib/types/socials';
 	import Logo from './Logo.svelte';
@@ -16,20 +15,12 @@
 	const handleCloseMenu = () => {
 		isMenuOpened = false;
 	};
-
-	const currentPath = $derived($page.url.pathname);
 </script>
 
 <header class="header" class:inactive={isMenuOpened}>
-	{#if currentPath === HOME_PATH}
-		<a class="header__logo" aria-label="Logo Masha Reprintseva">
-			<Logo />
-		</a>
-	{:else}
-		<a class="header__logo" href={HOME_PATH} aria-label="Logo Masha Reprintseva">
-			<Logo />
-		</a>
-	{/if}
+	<a class="header__logo" href={HOME_PATH} aria-label="Logo Masha Reprintseva">
+		<Logo />
+	</a>
 	<button class="header__button" type="button" aria-label="open main menu" onclick={handleOpenMenu}>
 		<svg width="25" height="21" viewBox="0 0 25 21" xmlns="http://www.w3.org/2000/svg">
 			<path d="M0 1.50015H25M0 10.5002H25M0 19.5002H25" stroke-width="3" />
