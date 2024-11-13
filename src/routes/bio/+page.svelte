@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
-	$: bio = data.bio;
+	const bio = $derived(data.bio);
+	const Content = $derived(data.bio.content);
 </script>
 
 {#if bio}
@@ -17,7 +18,7 @@
 			<p class="bio__epigraph">{bio.epigraph}</p>
 
 			<div class="bio__content">
-				{@html bio.content}
+				<Content />
 			</div>
 		</section>
 	</div>
