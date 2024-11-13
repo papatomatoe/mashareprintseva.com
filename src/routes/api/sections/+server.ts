@@ -17,9 +17,7 @@ async function getSections() {
 		}
 	}
 
-	return sections.sort(
-		(first, second) => new Date(second.createdAt).getTime() - new Date(first.createdAt).getTime()
-	);
+	return sections.sort((first, second) => first.order - second.order);
 }
 
 export async function GET() {
