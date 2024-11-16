@@ -1,6 +1,6 @@
 ---
 order: 2
-title: interior
+title: Interior
 slug: interior
 subtitle:
 published: true

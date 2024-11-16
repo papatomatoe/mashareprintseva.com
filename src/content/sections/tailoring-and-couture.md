@@ -1,6 +1,6 @@
 ---
 order: 1
-title: tailoring & couture
+title: Tailoring & Couture
 slug: tailoring-and-couture
 subtitle:
 published: true

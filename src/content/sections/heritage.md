@@ -1,6 +1,6 @@
 ---
 order: 3
-title: heritage
+title: Heritage
 slug: heritage
 subtitle:
 published: true

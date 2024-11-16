@@ -1,6 +1,6 @@
 ---
 order: 5
-title: contemporary
+title: Contemporary
 slug: contemporary
 subtitle:
 published: true

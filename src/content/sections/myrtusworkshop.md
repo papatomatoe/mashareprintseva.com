@@ -1,6 +1,6 @@
 ---
 order: 4
-title: myrtusworkshop
+title: Myrtusworkshop
 slug: myrtusworkshop
 subtitle:
 published: true
