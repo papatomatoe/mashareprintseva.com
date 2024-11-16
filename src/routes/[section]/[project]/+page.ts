@@ -16,7 +16,9 @@ export const load = (async ({ params }) => {
 			)
 		);
 
-		const mappedRestProject = restProjects.map((project) => ({ ...project.metadata }));
+		const mappedRestProject = restProjects
+			.map((project) => ({ ...project.metadata }))
+			.filter((proj) => proj.slug !== params.project);
 
 		return {
 			pageTitle: project.metadata.title,

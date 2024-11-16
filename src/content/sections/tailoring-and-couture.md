@@ -1,13 +1,15 @@
 ---
 order: 1
-title: tailoring & touture
+title: tailoring & couture
 slug: tailoring-and-couture
 subtitle:
 published: true
 altTitle:
 image: /images/tailoring-and-couture.avif
 projects:
-  - test-project
+  - ophelias-gown
+  - the-song-of-a-thistle
+  - floras-gown
 ---
 
 Tailoring has always been very special to me.

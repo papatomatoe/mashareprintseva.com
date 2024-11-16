@@ -12,6 +12,7 @@ export const load = (async ({ params }) => {
 		);
 
 		const sectionProjects = projects.map((project) => ({ ...project.metadata }));
+
 		return {
 			section: { ...section.metadata, content: section.default, projects: sectionProjects },
 			pageTitle: section.metadata.title
