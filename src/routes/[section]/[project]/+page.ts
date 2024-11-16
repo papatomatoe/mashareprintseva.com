@@ -4,16 +4,14 @@ import type { Project } from '$lib/types/project';
 
 export const load = (async ({ params }) => {
 	try {
-		const section = await import(`../../../content/sections/${params.section}.md`);
+		const section = await import(`$content/sections/${params.section}.md`);
 
-		const project = await import(`../../../content/projects/${params.project}.md`);
+		const project = await import(`$content/projects/${params.project}.md`);
 
 		const projects = section.metadata.projects;
 
 		const restProjects = await Promise.all(
-			projects.map(
-				async (project: Project) => await import(`../../../content/projects/${project}.md`)
-			)
+			projects.map(async (project: Project) => await import(`$content/projects/${project}.md`))
 		);
 
 		const mappedRestProject = restProjects

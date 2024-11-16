@@ -11,10 +11,11 @@
 {#if items.length}
 	<ul class="menu">
 		{#each menu as item (item.title)}
+			{@const path = `/${item.slug}`}
 			<li class="menu__item">
 				<a
 					class="link"
-					class:link--current={currentPath === `/${item.slug}`}
+					class:link--current={currentPath === path}
 					href="/{item.slug}"
 					onclick={onClose}
 				>
@@ -93,15 +94,19 @@
 			transition: color 0.3s linear;
 		}
 
-		.link[href]:hover,
-		.link[href]:focus {
+		.link:not(.link--current):hover,
+		.link:not(.link--current):focus-visible {
 			color: var(--color--primary);
 
 			transition: color 0.3s linear;
 		}
 
-		.link[href]:active {
+		.link:not(.link--current):active {
 			opacity: 0.5;
+		}
+
+		.link--current {
+			cursor: auto;
 		}
 	}
 </style>

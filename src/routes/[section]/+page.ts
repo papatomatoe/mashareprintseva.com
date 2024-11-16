@@ -3,19 +3,24 @@ import { error } from '@sveltejs/kit';
 
 export const load = (async ({ params }) => {
 	try {
-		const section = await import(`../../content/sections/${params.section}.md`);
+		const sectionData = await import(`$content/sections/${params.section}.md`);
 
-		const projects = await Promise.all(
-			section.metadata.projects.map(
-				async (project: string) => await import(`../../content/projects/${project}.md`)
-			)
-		);
+		let projects = [];
 
-		const sectionProjects = projects.map((project) => ({ ...project.metadata }));
+		const sectionProjects = sectionData.metadata.projects;
+
+		if (sectionProjects?.length) {
+			const projectsData = await Promise.all(
+				sectionData.metadata.projects.map(
+					async (project: string) => await import(`$content/projects/${project}.md`)
+				)
+			);
+			projects = projectsData.map((project) => ({ ...project.metadata }));
+		}
 
 		return {
-			section: { ...section.metadata, content: section.default, projects: sectionProjects },
-			pageTitle: section.metadata.title
+			section: { ...sectionData.metadata, content: sectionData.default, projects },
+			pageTitle: sectionData.metadata.title
 		};
 	} catch (e) {
 		console.log(e);

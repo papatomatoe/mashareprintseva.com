@@ -35,18 +35,12 @@
 		position: sticky;
 		top: 0;
 		z-index: 10;
-
 		padding: 20px 0 15px;
-
 		background-color: var(--color--white);
-
 		margin: 0 auto;
-
 		display: grid;
 		width: 87%;
-
 		border-top: none;
-
 		grid-template-columns: 2fr auto;
 	}
 	.header__logo {
