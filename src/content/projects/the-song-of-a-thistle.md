@@ -8,24 +8,30 @@ preview: /images/the-song-of-a-thistle_prw.avif
 subtitle: <a href="https://handembroidery.com/the-prize/prize-2020-categories/open-fashion-category/masha-reprintseva/" target="_blank" rel="noopener noreferrer">Aworded with Hand &amp; Lock Prize for Embroidery 2020</a><a href="https://coinstreet.org/whats-on/hand-lock-prize-embroidery-presents-embroidered-arts" target="_blank" rel="noopener noreferrer">Embroidered Arts Exhibition</a>
 ---
 
-What if Shakespeare would have given Ophelia a chance to stay alive? What if the love story could have been developed? What if the main heroes would have let their relation some intensity?
+Nature, as represented by a variety of species, types and structures, unveils its world in a dreamy dance where colours and textures play their solo parts. It inspires humans to make marvellous designs, to capture the look of nature's wild blossoming on a textile surface.
 
-![a part of embroidery on going](/images/ophelias-gown_1.avif)
+![handwork stitching on a frame](/images/the-song-of-a-thistle_1.avif)
 
-![the bodice of an embroidered dress](/images/ophelias-gown_2.avif)
+![sloper fitting](/images/the-song-of-a-thistle_2.avif)
 
-The image of Ophelia is outstandingly lyric and full of symbolism and metaphors. She, being one of the principal heroes in the narration represents marvellous femininity being innocent. Her madness is her treasure and her curse— her own way to display wisdom and faithfulness.
+![flare skirt](/images/the-song-of-a-thistle_3.avif)
 
-![close up of an embroidered dress with violets](/images/ophelias-gown_3.avif)
+The mind transforms this picture into the sensual sensation of Nature. Organic resources serve to realise the work, becoming threads, fabrics and dyes – referencing the natural "roots".
 
-![a fragment of an embroidery with violets](/images/ophelias-gown_4.avif)
+![the back side of a dress](/images/the-song-of-a-thistle_4.avif)
 
-![name tag in a dress](/images/ophelias-gown_5.avif)
+![the inside elements of the dress](/images/the-song-of-a-thistle_5.avif)
 
-This gown is inspired by the story of Ophelia‘s love and tragedy.
+Watching the blooming meadow, I associate flowers herbs with some traits of human character, keeping the story told in the background by floral poetics and symbols, colour meaning – the allegories found in works of Pre-Raphaelite.
 
-![full size embroidered dress](/images/ophelias-gown_6.avif)
+![embroidered flare skirt](/images/the-song-of-a-thistle_6.avif)
 
-![full size embroidered dress](/images/ophelias-gown_7.avif)
+![the bodice embroidered with herbal design](/images/the-song-of-a-thistle_7.avif)
 
-The image of violet is a metaphor that keeps her sadness, dreams, and hopes, deep shades of purple reveal her sorrow and pain.
+The iconic and recognisable New Look silhouette by Dior is influential in the construction, emphasising femininity and the natural beauty of the body. The delicacy of fabrics blending with the complexity of texture, materials and techniques, create an effect whereby the floral corset wraps the waist, presenting the female as the gem of the bouquet.
+
+![the inside elements of the dress](/images/the-song-of-a-thistle_8.avif)
+
+It reflects an imaginative colour subsistence as seen through my eyes, this feeling of the connection between Nature and human, and the freedom, consciousness, beauty and deep care for the natural resources granted to us.
+
+![full size embroidered dress](/images/the-song-of-a-thistle_9.avif)
