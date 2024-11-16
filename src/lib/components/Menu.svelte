@@ -43,6 +43,7 @@
 		font-family: var(--font--secondary);
 		color: var(--color--gray-95);
 		font-style: normal;
+		text-transform: lowercase;
 	}
 
 	.link--current {
