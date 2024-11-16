@@ -27,3 +27,5 @@ export const load = (async ({ params }) => {
 		error(404, 'Project not found');
 	}
 }) satisfies PageLoad;
+
+export const prerender = true;

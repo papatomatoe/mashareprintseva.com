@@ -24,3 +24,5 @@ export async function GET() {
 	const sections = await getSections();
 	return json(sections);
 }
+
+export const prerender = true;

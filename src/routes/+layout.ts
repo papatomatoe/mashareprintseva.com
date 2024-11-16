@@ -14,3 +14,5 @@ export const load = (async ({ fetch }) => {
 
 	return { menu, social: data?.items ?? [] };
 }) satisfies LayoutLoad;
+
+export const prerender = true;

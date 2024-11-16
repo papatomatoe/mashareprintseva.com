@@ -10,3 +10,5 @@ export const load = (async () => {
 		error(404, `page not found`);
 	}
 }) satisfies PageLoad;
+
+export const prerender = true;

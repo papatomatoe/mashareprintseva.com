@@ -23,3 +23,5 @@ export async function GET() {
 	const socials = await getSocials();
 	return json(socials);
 }
+
+export const prerender = true;

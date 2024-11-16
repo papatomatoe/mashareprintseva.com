@@ -27,3 +27,5 @@ export const load = (async ({ params }) => {
 		error(404, `Could not find ${params.section}`);
 	}
 }) satisfies PageLoad;
+
+export const prerender = true;
