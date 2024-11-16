@@ -10,6 +10,7 @@ projects:
   - ophelias-gown
   - the-song-of-a-thistle
   - floras-gown
+  - the-nymphaea
 ---
 
 Tailoring has always been very special to me.
