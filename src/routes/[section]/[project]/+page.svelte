@@ -19,7 +19,7 @@
 		{/if}
 
 		<div class="project__image">
-			<img src={project.image} alt={project.title} />
+			<img src={project.image} alt={project.title} width="470" height="705" />
 		</div>
 	</div>
 	<div class="project__content">

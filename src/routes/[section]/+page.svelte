@@ -18,7 +18,7 @@
 			<h2 class="v-h">Section description</h2>
 
 			<div class="section__image">
-				<img src={section.image} alt={section.title} />
+				<img src={section.image} alt={section.title} loading="lazy" width="237" height="316" />
 			</div>
 			<div class="section__content">
 				<Content />

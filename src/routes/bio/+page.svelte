@@ -10,7 +10,14 @@
 {#if bio}
 	<div class="bio">
 		<div class="bio__section">
-			<img class="bio__image" src={bio.image} alt="Masha Reprintseva" />
+			<img
+				class="bio__image"
+				src={bio.image}
+				alt="Masha Reprintseva"
+				width="665"
+				height="445"
+				loading="lazy"
+			/>
 		</div>
 
 		<section class="bio__section">
