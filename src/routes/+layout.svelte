@@ -5,6 +5,8 @@
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
+	import PageTransition from './transition.svelte';
+
 	import type { PageData } from './$types';
 	import type { Snippet } from 'svelte';
 
@@ -23,10 +25,12 @@
 	<Header {menu} {social} />
 	<div class="container">
 		<main class="content">
-			{#if pageTitle}
-				<h1 class="v-h">{pageTitle}</h1>
-			{/if}
-			{@render children()}
+			<PageTransition url={data.url}>
+				{#if pageTitle}
+					<h1 class="v-h">{pageTitle}</h1>
+				{/if}
+				{@render children()}
+			</PageTransition>
 		</main>
 		<Footer {social} />
 	</div>
