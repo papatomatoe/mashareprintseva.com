@@ -69,11 +69,11 @@
 
 		.link {
 			font-size: 14px;
-			color: var(--color--gray-50);
+			color: var(--color--gray-30);
 		}
 
 		.link--current {
-			border-color: var(--color--gray-50);
+			border-color: var(--color--gray-30);
 		}
 	}
 

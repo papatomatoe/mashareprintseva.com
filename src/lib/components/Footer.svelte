@@ -33,7 +33,7 @@
 		line-height: 1.5;
 		font-family: var(--font--secondary);
 		text-align: center;
-		color: var(--color--gray-50);
+		color: var(--color--gray-30);
 		font-style: normal;
 	}
 	@media (min-width: 768px) {
