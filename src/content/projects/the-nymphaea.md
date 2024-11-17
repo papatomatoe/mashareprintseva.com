@@ -2,7 +2,7 @@
 title: The Nymphaea
 slug: the-nymphaea
 published: true
-section: tailoring-and-couture
+section: tailoring
 image: /images/the-nymphaea.avif
 preview: /images/the-nymphaea_prw.avif
 subtitle: <blockquote><p>The eyelids glowing, some chill morning. O world half-known through the opening, twilit lids. O universal waters like a cloud.</p><cite>W. D. Snodgrass “Les Nymphéas”</cite></blockquote>

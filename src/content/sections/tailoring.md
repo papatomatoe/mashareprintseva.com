@@ -1,7 +1,7 @@
 ---
 order: 1
-title: Tailoring & Couture
-slug: tailoring-and-couture
+title: Tailoring
+slug: tailoring
 subtitle:
 published: true
 altTitle:

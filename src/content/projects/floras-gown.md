@@ -2,7 +2,7 @@
 title: Flora's Gown
 slug: floras-gown
 published: true
-section: tailoring-and-couture
+section: tailoring
 image: /images/floras-gown.avif
 preview: /images/floras-gown_prw.avif
 subtitle:
