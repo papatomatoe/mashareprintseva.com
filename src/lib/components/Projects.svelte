@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Picture from '$lib/components/Picture.svelte';
 	import type { Project } from '$lib/types/project';
 	let { projects, section }: { projects: Project[]; section: string } = $props();
 </script>
@@ -9,7 +10,7 @@
 			<a class="projects__link" href={`/${section}/${project.slug}`}>
 				<h3 class="projects__title">{project.title}</h3>
 				<div class="projects__image">
-					<img src={project.preview} alt="" width="267" height="400" loading="lazy" />
+					<Picture src={project.preview} alt={project.title} width="326" height="489" />
 				</div>
 			</a>
 		</li>
@@ -67,19 +68,19 @@
 			transition: color 0.3s linear;
 		}
 
-		.projects__link img {
+		.projects__link :global(picture) {
 			transform: scale(1);
 			transition: transform 0.2s linear;
 		}
 
-		.projects__link:hover img,
-		.projects__link:focus-visible img {
+		.projects__link:hover :global(picture),
+		.projects__link:focus-visible :global(picture) {
 			transform: scale(1.04);
 		}
 		.projects__link:hover .projects__title {
 			color: var(--color--primary);
 		}
-		.projects__link:active img {
+		.projects__link:active :global(picture) {
 			opacity: 0.8;
 		}
 		.projects__link:active {
