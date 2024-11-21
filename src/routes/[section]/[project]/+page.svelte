@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Picture from '$lib/components/Picture.svelte';
 	import Projects from '$lib/components/Projects.svelte';
 
 	import type { PageData } from './$types';
@@ -19,11 +20,11 @@
 		{/if}
 
 		<div class="project__image">
-			<img src={project.image} alt={project.title} width="470" height="705" />
+			<Picture src={project.image} alt={project.title} width="326" height="489" />
 		</div>
 	</div>
 	<div class="project__content">
-		<Content />
+		<!-- <Content /> -->
 	</div>
 	{#if project.restProjects && project.restProjects.length}
 		<section class="projects">
@@ -93,7 +94,7 @@
 			margin-bottom: 0;
 		}
 
-		.project__image img {
+		.project__image :global(picture) {
 			margin: 0 auto;
 		}
 
