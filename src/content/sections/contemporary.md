@@ -5,7 +5,7 @@ slug: contemporary
 subtitle:
 published: true
 altTitle:
-image: /images/contemporary.avif
+image: /images/contemporary
 projects:
 ---
 

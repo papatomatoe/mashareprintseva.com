@@ -5,7 +5,7 @@ slug: tailoring
 subtitle:
 published: true
 altTitle:
-image: /images/tailoring-and-couture.avif
+image: /images/tailoring
 projects:
   - ophelias-gown
   - the-song-of-a-thistle

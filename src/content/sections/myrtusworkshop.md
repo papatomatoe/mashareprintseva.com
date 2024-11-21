@@ -5,7 +5,7 @@ slug: myrtusworkshop
 subtitle:
 published: true
 altTitle:
-image: /images/myrtusworkshop.avif
+image: /images/myrtusworkshop
 projects:
 ---
 

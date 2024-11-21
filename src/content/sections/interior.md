@@ -5,7 +5,7 @@ slug: interior
 subtitle:
 published: true
 altTitle: Embroidery in Interior Design
-image: /images/interior.avif
+image: /images/interior
 projects:
 ---
 

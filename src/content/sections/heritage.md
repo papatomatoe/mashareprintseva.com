@@ -5,7 +5,7 @@ slug: heritage
 subtitle:
 published: true
 altTitle:
-image: /images/heritage.avif
+image: /images/heritage
 projects:
 ---
 

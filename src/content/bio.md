@@ -1,7 +1,7 @@
 ---
 title: Bio
 slug: bio
-image: /images/bio.avif
+image: /images/bio
 epigraph: One of the most exciting things concerning embroidery work is that any embroidered piece, even being made in an awkward corner of a workshop, paradoxically, has a chance to live a long and noble life. It may live far longer than any human does.
 published: true
 ---
