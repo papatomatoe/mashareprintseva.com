@@ -3,8 +3,8 @@ title: The Song of a Thistle
 slug: the-song-of-a-thistle
 published: true
 section: tailoring
-image: /images/the-song-of-a-thistle.avif
-preview: /images/the-song-of-a-thistle_prw.avif
+image: /images/the-song-of-a-thistle
+preview: /images/the-song-of-a-thistle_prw
 subtitle: <a href="https://handembroidery.com/the-prize/prize-2020-categories/open-fashion-category/masha-reprintseva/" target="_blank" rel="noopener noreferrer">Aworded with Hand &amp; Lock Prize for Embroidery 2020</a><a href="https://coinstreet.org/whats-on/hand-lock-prize-embroidery-presents-embroidered-arts" target="_blank" rel="noopener noreferrer">Embroidered Arts Exhibition</a>
 ---
 

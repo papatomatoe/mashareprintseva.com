@@ -3,8 +3,8 @@ title: Ophelia's Gown
 slug: ophelias-gown
 published: true
 section: tailoring
-image: /images/ophelias-gown.avif
-preview: /images/ophelias-gown_prw.avif
+image: /images/ophelias-gown
+preview: /images/ophelias-gown_prw
 subtitle: <blockquote><p>“I'd give you some violets, flowers of faithfulness...“</p><cite>Ophelia. (Hamlet. Act4, scene 5, page 9)</cite></blockquote>
 ---
 
