@@ -54,7 +54,6 @@
 		width: 87%;
 		margin: 0 auto;
 		padding-top: 0px;
-		padding-bottom: 20px;
 		align-items: center;
 		flex-grow: 1;
 		border-top: 1px solid var(--color--gray-85);
@@ -65,7 +64,6 @@
 		}
 		.content {
 			padding-top: 0;
-			padding-bottom: 80px;
 		}
 	}
 	@media (min-width: 1200px) {

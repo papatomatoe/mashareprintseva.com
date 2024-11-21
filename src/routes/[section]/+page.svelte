@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import Projects from '$lib/components/Projects.svelte';
+	import Picture from '$lib/components/Picture.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -18,7 +19,7 @@
 			<h2 class="v-h">Section description</h2>
 
 			<div class="section__image">
-				<img src={section.image} alt={section.title} loading="lazy" width="237" height="316" />
+				<Picture src={section.image} alt={section.title} width="326" height="436" />
 			</div>
 			<div class="section__content">
 				<Content />
@@ -78,6 +79,9 @@
 	.section__no-projects {
 		margin: 40px 0;
 	}
+	.section__projects {
+		padding-bottom: 20px;
+	}
 
 	@media (min-width: 768px) {
 		.section__title {
@@ -109,6 +113,10 @@
 
 		.section__no-projects {
 			margin: 40px 0 0;
+		}
+
+		.section__projects {
+			padding-bottom: 80px;
 		}
 	}
 	@media (min-width: 1200px) {

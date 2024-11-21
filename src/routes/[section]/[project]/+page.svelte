@@ -65,6 +65,7 @@
 	.projects {
 		padding-top: 50px;
 		margin-top: 100px;
+		padding-bottom: 20px;
 		border-top: 1px solid var(--color--gray-85);
 	}
 	@media (min-width: 768px) {
@@ -98,6 +99,7 @@
 
 		.projects {
 			grid-column: 1 / -1;
+			padding-bottom: 80px;
 		}
 	}
 	@media (min-width: 1200px) {

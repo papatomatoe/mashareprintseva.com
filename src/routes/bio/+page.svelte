@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import Picture from '$lib/components/Picture.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -10,14 +11,15 @@
 {#if bio}
 	<div class="bio">
 		<div class="bio__section">
-			<img
-				class="bio__image"
-				src={bio.image}
-				alt="Masha Reprintseva"
-				width="665"
-				height="445"
-				loading="lazy"
-			/>
+			<div class="bio__image">
+				<Picture
+					class="bio__image"
+					src={bio.image}
+					alt="Masha Reprintseva"
+					width="326"
+					height="218"
+				/>
+			</div>
 		</div>
 
 		<section class="bio__section">
