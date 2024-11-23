@@ -10,7 +10,7 @@
 			<a class="projects__link" href={`/${section}/${project.slug}`}>
 				<h3 class="projects__title">{project.title}</h3>
 				<div class="projects__image">
-					<Picture src={project.preview} alt={project.title} width="326" height="489" />
+					<Picture src={project.preview} alt="" width="326" height="489" />
 				</div>
 			</a>
 		</li>
