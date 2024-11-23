@@ -1,8 +1,8 @@
 bun run images:convert
 if git diff --exit-code ./images; then
-  echo 'New Images'
-  # git add ./static/images/*
-  # git commit -m "change: static/images"
-else
   echo 'No new images'
+else
+  echo "New images"
+  git add ./static/images/*
+  git commit -m "change: static/images"
 fi
