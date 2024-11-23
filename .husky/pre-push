@@ -1,3 +1,0 @@
-bun run images:convert
-git add .
-git commit -m "--->"
