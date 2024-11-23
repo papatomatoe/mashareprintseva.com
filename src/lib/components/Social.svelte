@@ -21,7 +21,7 @@
 				<div class="social__wrapper" class:social__wrapper--first={item.title === 'Etsy'}>
 					<img
 						class="social__icon"
-						src={`/images/${item.icon}`}
+						src={`/icons/${item.icon}`}
 						alt={item.title}
 						width={item.title === 'Etsy' ? 52 : 25}
 						height="25"
