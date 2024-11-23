@@ -1,3 +1,0 @@
-bun run images:convert
-git add ./static/images
-git commit -m "add: converted images"
