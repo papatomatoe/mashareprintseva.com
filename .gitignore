@@ -14,3 +14,6 @@ vite.config.ts.timestamp-*
 /static/upload
 /prisma/dev.db
 /prisma/migrations/*
+
+
+/.husky/*
