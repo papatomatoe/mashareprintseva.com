@@ -1,5 +1,5 @@
 bun run images:convert
-if git diff --exit-code ./images/; then
+if git diff --exit-code ./images; then
   git add ./static/images/*
   git commit -m "change: static/images"
 else
