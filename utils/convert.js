@@ -57,6 +57,8 @@ async function convertToAvif() {
 				await Promise.all(promises);
 				console.log('✓ DONE');
 			}
+		} else {
+			console.log('CONVERT PASS: No new images');
 		}
 	} catch (err) {
 		console.error(err);
