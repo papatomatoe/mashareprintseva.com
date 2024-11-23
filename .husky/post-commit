@@ -1,5 +1,5 @@
 bun run images:convert
-if git diff --exit-code ./images; then
+if git diff --exit-code ./images/static; then
   echo '*** post-commit pass ***'
 else
   echo "*** new images ***"
