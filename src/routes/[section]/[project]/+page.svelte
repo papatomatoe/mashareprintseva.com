@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="project__content">
-		<!-- <Content /> -->
+		<Content />
 	</div>
 	{#if project.restProjects && project.restProjects.length}
 		<section class="projects">

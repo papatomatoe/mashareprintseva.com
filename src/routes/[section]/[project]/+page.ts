@@ -4,11 +4,15 @@ import type { Project } from '$lib/types/project';
 
 export const load = (async ({ params }) => {
 	try {
-		const section = await import(`$content/sections/${params.section}.md`);
+		const sectionData = await import(`$content/sections/${params.section}.md`);
 
-		const project = await import(`$content/projects/${params.project}.md`);
+		if (!sectionData || !sectionData.metadata.published) error(404, 'Project not found');
 
-		const projects = section.metadata.projects;
+		const projectData = await import(`$content/projects/${params.project}.md`);
+
+		if (!projectData || !projectData.metadata.published) error(404, 'Project not found');
+
+		const projects = sectionData.metadata.projects;
 
 		const restProjects = await Promise.all(
 			projects.map(async (project: Project) => await import(`$content/projects/${project}.md`))
@@ -16,11 +20,15 @@ export const load = (async ({ params }) => {
 
 		const mappedRestProject = restProjects
 			.map((project) => ({ ...project.metadata }))
-			.filter((proj) => proj.slug !== params.project);
+			.filter((proj) => proj.slug !== params.project && proj.published);
+
+		const project = projectData.metadata.published
+			? { ...projectData.metadata, content: projectData.default, restProjects: mappedRestProject }
+			: null;
 
 		return {
-			pageTitle: project.metadata.title,
-			project: { ...project.metadata, content: project.default, restProjects: mappedRestProject }
+			pageTitle: project.title,
+			project
 		};
 	} catch (e) {
 		console.error(e);

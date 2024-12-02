@@ -5,6 +5,8 @@ export const load = (async ({ params }) => {
 	try {
 		const sectionData = await import(`$content/sections/${params.section}.md`);
 
+		if (!sectionData.metadata.published) error(404, `Could not find ${params.section}`);
+
 		let projects = [];
 
 		const sectionProjects = sectionData.metadata.projects;
@@ -15,7 +17,9 @@ export const load = (async ({ params }) => {
 					async (project: string) => await import(`$content/projects/${project}.md`)
 				)
 			);
-			projects = projectsData.map((project) => ({ ...project.metadata }));
+			projects = projectsData
+				.map((project) => ({ ...project.metadata }))
+				.filter((proj) => proj.published);
 		}
 
 		return {
