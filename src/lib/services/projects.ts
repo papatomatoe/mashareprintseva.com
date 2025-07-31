@@ -1,4 +1,4 @@
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { getPrismaError } from '$lib/services/error';
 export const getAllProjects = async () => {
@@ -36,10 +36,7 @@ export const createProject = async (data: any) => {
 	const { section, ...projectData } = data;
 	try {
 		await db.project.create({
-			data: {
-				...projectData,
-				...(section?.id && { section: { connect: { id: section.id } } })
-			}
+			data: { ...projectData, ...(section?.id && { section: { connect: { id: section.id } } }) }
 		});
 
 		return { success: true };
@@ -74,27 +71,29 @@ export const updateProject = async (id: string, data: any) => {
 
 export const getProjectBySlug = async (slug: string) => {
 	try {
-		const project = await db.project.findUnique({
+		return await db.project.findUnique({
 			where: { slug, published: true },
-			include: {
+			select: {
+				title: true,
+				subtitle: true,
+				image: true,
+				content: true,
 				section: {
-					include: {
-						projects: true
+					select: {
+						slug: true,
+						projects: {
+							where: { published: true },
+							select: {
+								id: true,
+								slug: true,
+								image: true,
+								title: true
+							}
+						}
 					}
 				}
 			}
 		});
-
-		if (project) {
-			const { section, ...restData } = project;
-
-			return {
-				...restData,
-				restProjects: section?.projects.filter((proj) => proj.published && proj.id !== restData.id)
-			};
-		}
-
-		return null;
 	} catch (e) {
 		console.error(e);
 	}

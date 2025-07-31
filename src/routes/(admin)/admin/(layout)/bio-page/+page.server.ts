@@ -1,4 +1,4 @@
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -7,10 +7,7 @@ export const load = (async ({ locals }) => {
 
 	const bio = await db.bio.findFirst();
 
-	return {
-		bio,
-		pageTitle: 'Admin | Bio Page'
-	};
+	return { bio, pageTitle: 'Admin | Bio Page' };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -36,15 +33,7 @@ export const actions = {
 			await db.bio.upsert({
 				where: { title: 'bio' },
 				update: { published, content, image, epigraph, thumbnail },
-				create: {
-					title: 'bio',
-					slug: 'bio',
-					content,
-					published,
-					image,
-					epigraph,
-					thumbnail
-				}
+				create: { title: 'bio', slug: 'bio', content, published, image, epigraph, thumbnail }
 			});
 			return { success: true };
 		} catch (e) {

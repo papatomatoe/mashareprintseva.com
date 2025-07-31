@@ -1,17 +1,17 @@
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 import { getPrismaError } from '$lib/services/error';
 import type { Project } from '@prisma/client';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const createSection = async (data: any) => {
-	const { projects, ...sectionData } = data;
+	// const { projects, ...sectionData } = data;
 	try {
-		await db.section.create({
-			data: sectionData,
-			...(projects?.length && {
-				projects: { connect: projects.map((project: Project) => ({ id: project.id })) }
-			})
-		});
+		// await db.section.create({
+		// 	data: sectionData,
+		// 	...(projects?.length && {
+		// 		projects: { connect: projects.map((project: Project) => ({ id: project.id })) }
+		// 	})
+		// });
 
 		return { success: true };
 	} catch (e) {
@@ -22,6 +22,7 @@ export const createSection = async (data: any) => {
 		return { success: false, ...error };
 	}
 };
+
 export const updateSection = async (id: string, data: any) => {
 	try {
 		const section = await db.section.findUnique({ where: { id }, include: { projects: true } });
@@ -90,17 +91,29 @@ export const getSections = async (page = 0, perPage = 10) => {
 		console.error(e);
 	}
 };
+
 export const getSectionBySlug = async (slug: string) => {
 	try {
-		const section = await db.section.findUnique({
+		return await db.section.findFirst({
 			where: { slug, published: true },
-			include: {
-				projects: true
+			select: {
+				title: true,
+				altTitle: true,
+				subtitle: true,
+				image: true,
+				content: true,
+				slug: true,
+				projects: {
+					where: { published: true },
+					select: {
+						id: true,
+						title: true,
+						slug: true,
+						image: true
+					}
+				}
 			}
 		});
-
-		console.log(section);
-		return { ...section, projects: section?.projects.filter((project) => project.published) };
 	} catch (e) {
 		console.error(e);
 	}

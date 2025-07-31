@@ -11,33 +11,31 @@
 	const section = $derived(data.section);
 </script>
 
-{#if section}
-	<div class="section">
-		<h1 class="section__title">{section.altTitle || section.title}</h1>
-		{#if section.subtitle}
-			<p class="section__subtitle">{section.subtitle}</p>
+<div class="section">
+	<h1 class="section__title">{section.altTitle || section.title}</h1>
+	{#if section.subtitle}
+		<p class="section__subtitle">{section.subtitle}</p>
+	{/if}
+	<section class="section__description">
+		<h2 class="v-h">Section description</h2>
+
+		<div class="section__image">
+			<img src={section.image} alt={section.title} />
+		</div>
+		<div class="section__content">
+			{@html section.content}
+		</div>
+	</section>
+	<section class="section__projects">
+		<h2 class="section__title">Projects</h2>
+
+		{#if section && section.projects?.length}
+			<Projects items={section.projects} sectionSlug={section?.slug ?? ''} />
+		{:else}
+			<p class="section__no-projects">The category contains no projects yet. Checkout soon...</p>
 		{/if}
-		<section class="section__description">
-			<h2 class="v-h">Section description</h2>
-
-			<div class="section__image">
-				<img src={section.image} alt={section.title} />
-			</div>
-			<div class="section__content">
-				{@html section.content}
-			</div>
-		</section>
-		<section class="section__projects">
-			<h2 class="section__title">Projects</h2>
-
-			{#if section && section.projects?.length}
-				<Projects projects={section.projects} section={section?.slug ?? ''} />
-			{:else}
-				<p class="section__no-projects">The category contains no projects yet. Checkout soon...</p>
-			{/if}
-		</section>
-	</div>
-{/if}
+	</section>
+</div>
 
 <style>
 	.section {

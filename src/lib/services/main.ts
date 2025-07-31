@@ -1,4 +1,4 @@
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 
 export const getMainPageData = async () => {
 	try {

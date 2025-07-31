@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const search = await request.json();

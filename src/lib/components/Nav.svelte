@@ -1,26 +1,28 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import Menu from './Menu.svelte';
-	import Social from './Social.svelte';
+	import type { MenuType, SocialMenuType } from '$/lib/types';
+	import Menu from '$lib/components/Menu.svelte';
+	import Social from '$lib/components/Social.svelte';
 
-	export let menu: any;
-	export let social: any;
-	export let isMenuOpened = false;
+	type Props = {
+		menu: MenuType[];
+		social: SocialMenuType[];
+		open: boolean;
+	};
 
-	const dispatch = createEventDispatcher();
+	let { menu, social, open = $bindable(false) }: Props = $props();
 
 	const handleClose = () => {
-		dispatch('close');
+		open = false;
 	};
 </script>
 
-<nav class="nav" class:nav--show={isMenuOpened}>
+<nav class="nav" class:nav--show={open}>
 	<div class="nav__container">
 		<p class="nav__title">Menu</p>
-		<Menu items={menu} on:close={handleClose} />
-		<Social place="header" items={social} on:close={handleClose} />
+		<Menu items={menu} onclose={handleClose} />
+		<Social place="header" items={social} onclose={handleClose} />
 
-		<button class="nav__button" type="button" aria-label="close main menu" on:click={handleClose}>
+		<button class="nav__button" type="button" aria-label="close main menu" onclick={handleClose}>
 			<svg width="24" height="23" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg">
 				<path d="M22 21.799L2.20102 2.00003M2 21.7991L21.7989 2" stroke-width="3" />
 			</svg>
@@ -30,61 +32,58 @@
 
 <style>
 	.nav {
+		display: flex;
 		position: fixed;
 		top: 0;
 		left: 0;
-
-		display: flex;
-		width: 100%;
-		height: 100%;
-		overflow-y: auto;
-
-		background-color: var(--color--gray-15);
 		transform: translateY(-110%);
 
 		transition: transform 0.2s linear;
+
+		background-color: var(--color--gray-15);
+		width: 100%;
+		height: 100%;
+		overflow-y: auto;
 	}
 	.nav__container {
-		width: 87%;
-		margin: 0 auto;
-
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		height: 100%;
-		padding-top: 20px;
-		padding-bottom: 20px;
+		margin: 0 auto;
 
 		border-top: none;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		width: 87%;
+		height: 100%;
 	}
 	.nav__title {
 		margin: 0;
 		margin-bottom: auto;
+		color: var(--color--gray-95);
+		font-style: normal;
 
 		font-weight: 400;
 		font-size: 22px;
 		line-height: 1.5;
 		font-family: var(--font--secondary);
-		color: var(--color--gray-95);
-		font-style: normal;
 	}
 
 	.nav__button {
 		display: block;
 		margin: 0 auto;
 		margin-top: 25px;
-		padding: 10px;
-		background-color: transparent;
 		border: none;
+		background-color: transparent;
+		padding: 10px;
 	}
 	.nav__button svg {
 		stroke: var(--color--white);
 		stroke-width: 3;
 	}
 	.nav--show {
-		z-index: 100;
-
 		transform: translateY(0);
+		z-index: 100;
 
 		transition: transform 0.2s linear;
 	}
@@ -95,22 +94,21 @@
 	}
 	@media (min-width: 768px) {
 		.nav {
-			position: relative;
-
 			display: block;
-
-			background-color: transparent;
+			position: relative;
 			transform: translateX(0);
 
 			transition: none;
+
+			background-color: transparent;
 		}
 		.nav__container {
 			flex-direction: row;
-			width: 100%;
-			height: inherit;
 			margin: 0;
 			margin-left: auto;
 			padding: 0;
+			width: 100%;
+			height: inherit;
 		}
 		.nav__title {
 			display: none;
@@ -128,10 +126,10 @@
 		}
 		.nav__container {
 			align-items: center;
-			width: 770px;
-			height: 100%;
 			margin-right: 0;
 			margin-left: 60px;
+			width: 770px;
+			height: 100%;
 		}
 	}
 </style>

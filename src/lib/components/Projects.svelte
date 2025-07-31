@@ -1,15 +1,21 @@
 <script lang="ts">
-	export let projects: any;
-	export let section: string;
+	import type { ProjectType } from '$/lib/types';
+
+	type Props = {
+		items: ProjectType[];
+		sectionSlug: string;
+	};
+
+	let { sectionSlug, items }: Props = $props();
 </script>
 
 <ul class="projects">
-	{#each projects as project (project.id)}
+	{#each items as item (item.id)}
 		<li class="projects__item">
-			<a class="projects__link" href={`/${section}/${project.slug}`}>
-				<h3 class="projects__title">{project.title}</h3>
+			<a class="projects__link" href={`/${sectionSlug}/${item.slug}`}>
+				<h3 class="projects__title">{item.title}</h3>
 				<div class="projects__image">
-					<img src={project.image} alt={project.title} />
+					<img src={item.image} alt={item.title} />
 				</div>
 			</a>
 		</li>
@@ -30,25 +36,25 @@
 		height: 100%;
 	}
 	.projects__title {
+		color: var(--color--gray-30);
+		font-style: normal;
 		font-weight: bold;
 		font-size: 17px;
 		line-height: 24px;
 		font-family: var(--font--secondary);
-		color: var(--color--gray-30);
-		font-style: normal;
 	}
 	.projects__image {
+		position: relative;
 		width: 100%;
 		overflow: hidden;
-		position: relative;
 	}
 
 	@media (min-width: 768px) {
 		.projects {
 			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
 
 			gap: 25px;
-			grid-template-columns: 1fr 1fr 1fr;
 		}
 		.projects__item {
 			margin-bottom: 0;

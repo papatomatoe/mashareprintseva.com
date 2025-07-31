@@ -9,6 +9,8 @@
 	let { data }: Props = $props();
 
 	const project = $derived(data.project);
+	const section = $derived(data.project.section.slug);
+	const restProjects = $derived(data.project.section.projects);
 </script>
 
 <section class="project">
@@ -27,10 +29,10 @@
 	<div class="project__content">
 		{@html project.content}
 	</div>
-	{#if project.restProjects && project.restProjects.length}
+	{#if restProjects && restProjects.length}
 		<section class="projects">
 			<h2 class="projects__title">Projects</h2>
-			<Projects projects={project.restProjects} section={project.section ?? ''} />
+			<Projects items={restProjects} sectionSlug={section ?? ''} />
 		</section>
 	{/if}
 </section>

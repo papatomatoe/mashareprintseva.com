@@ -15,7 +15,7 @@
 	let { data, children }: Props = $props();
 
 	const pageTitle = $derived(page.data.pageTitle);
-	const menu = $derived(data);
+	const menu = $derived(data.menu);
 	const social = $derived(data.social);
 </script>
 

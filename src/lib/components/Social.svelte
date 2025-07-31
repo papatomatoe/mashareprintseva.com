@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import type { SocialMenuType } from '$/lib/types';
 
-	const dispatch = createEventDispatcher();
-	export let items: any = [];
-	export let place: 'header' | 'footer';
-
-	const handleClose = () => {
-		dispatch('close');
+	type Props = {
+		items: SocialMenuType[];
+		onclose: () => void;
+		place: 'header' | 'footer';
 	};
+
+	let { items, onclose, place }: Props = $props();
 </script>
 
 <ul class="social social--{place}">
@@ -19,7 +19,7 @@
 				aria-label={item.title}
 				target="_blank"
 				rel="noopener noreferrer"
-				on:click={handleClose}
+				onclick={onclose}
 			>
 				<div class="social__wrapper" class:social__wrapper--first={item.title === 'Etsy'}>
 					<img
@@ -37,9 +37,9 @@
 
 <style>
 	.social__wrapper {
+		position: relative;
 		width: 25px;
 		height: 25px;
-		position: relative;
 		overflow: hidden;
 	}
 

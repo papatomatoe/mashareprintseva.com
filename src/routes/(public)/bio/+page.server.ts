@@ -1,11 +1,11 @@
-import type { PageServerLoad } from '../$types';
+import type { PageServerLoad } from './$types';
 import { getBioPageData } from '$lib/services/bio';
+import { error } from '@sveltejs/kit';
 
-export const load = (async () => {
-	const data = await getBioPageData();
-	if (!data?.published) {
-		return { bio: null, pageTitle: 'Bio' };
-	}
+export const load: PageServerLoad = async () => {
+	const bio = await getBioPageData();
 
-	return { bio: data, pageTitle: 'Bio' };
-}) satisfies PageServerLoad;
+	if (!bio) error(404, 'page not found');
+
+	return { bio, pageTitle: bio?.title };
+};

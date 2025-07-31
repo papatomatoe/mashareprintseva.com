@@ -1,5 +1,5 @@
 import { STATIC_PATH, UPLOAD_PATH } from '$env/static/private';
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 import { getTotalSize } from '$lib/utils/getDirSize';
 
 export const getFileList = async (page = 0, perPage = 50) => {

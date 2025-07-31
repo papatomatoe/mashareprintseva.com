@@ -1,26 +1,22 @@
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
+import type { MenuType } from '$/lib/types';
 
-export const getMainMenuData = async () => {
+export const getMainMenuData = async (): Promise<MenuType[] | undefined> => {
 	try {
-		const sections = await db.section.findMany({ where: { published: true } });
-		const menu = sections?.map((section) => ({
-			id: section.id,
-			title: section.title,
-			order: section.order,
-			slug: section.slug
-		}));
-		return menu;
+		await db.section.findMany({
+			where: { published: true },
+			select: { id: true, title: true, order: true, slug: true }
+		});
 	} catch (e) {
-		console.error(e);
+		console.log(e);
+		return;
 	}
 };
 
 export const getSocialMenuData = async () => {
 	try {
-		const social = await db.social.findMany();
-
-		return social;
+		return await db.social.findMany();
 	} catch (e) {
-		console.error(e);
+		console.log(e);
 	}
 };

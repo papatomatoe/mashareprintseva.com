@@ -1,9 +1,16 @@
 <script lang="ts">
-	import '../../styles/globals.css';
+	import '$lib/styles/globals.css';
+	import type { Snippet } from 'svelte';
+
+	type Props = {
+		children: Snippet;
+	};
+
+	let { children }: Props = $props();
 </script>
 
 <div class="admin-container">
-	<slot />
+	{@render children()}
 </div>
 
 <style>

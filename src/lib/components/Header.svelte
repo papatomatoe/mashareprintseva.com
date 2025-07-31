@@ -1,75 +1,65 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Logo from './Logo.svelte';
-	import Nav from './Nav.svelte';
+	import type { MenuType, SocialMenuType } from '$/lib/types';
+	import Logo from '$lib/components/Logo.svelte';
+	import Nav from '$lib/components/Nav.svelte';
 
-	export let menu: any;
-	export let social: any;
-
-	const HOME_PATH = '/';
-	let isMenuOpened = false;
-
-	const handleOpenMenu = () => {
-		isMenuOpened = true;
-	};
-	const handleCloseMenu = () => {
-		isMenuOpened = false;
+	type Props = {
+		menu: MenuType[];
+		social: SocialMenuType[];
 	};
 
-	$: currentPath = $page.url.pathname;
+	let { menu, social }: Props = $props();
+
+	let open = $state(false);
 </script>
 
-<header class="header" class:inactive={isMenuOpened}>
-	{#if currentPath === HOME_PATH}
-		<a class="header__logo" aria-label="Logo Masha Reprintseva">
-			<Logo />
-		</a>
-	{:else}
-		<a class="header__logo" href={HOME_PATH} aria-label="Logo Masha Reprintseva">
-			<Logo />
-		</a>
-	{/if}
+<header class="header" class:inactive={open}>
+	<a class="header__logo" href="/" aria-label="Logo Masha Reprintseva">
+		<Logo />
+	</a>
+
 	<button
 		class="header__button"
 		type="button"
 		aria-label="open main menu"
-		on:click={handleOpenMenu}
+		onclick={() => {
+			open = true;
+		}}
 	>
 		<svg width="25" height="21" viewBox="0 0 25 21" xmlns="http://www.w3.org/2000/svg">
 			<path d="M0 1.50015H25M0 10.5002H25M0 19.5002H25" stroke-width="3" />
 		</svg>
 	</button>
 
-	<Nav {menu} {social} {isMenuOpened} on:close={handleCloseMenu} />
+	<Nav {menu} {social} bind:open />
 </header>
 
 <style>
 	.header {
+		display: grid;
 		position: sticky;
 		top: 0;
+
+		grid-template-columns: 2fr auto;
 		z-index: 10;
-
-		padding: 20px 0 15px;
-
-		background-color: var(--color--white);
 
 		margin: 0 auto;
 
-		display: grid;
-		width: 87%;
-
 		border-top: none;
 
-		grid-template-columns: 2fr auto;
+		background-color: var(--color--white);
+
+		padding: 20px 0 15px;
+		width: 87%;
 	}
 	.header__logo {
 		display: block;
 		height: auto;
 	}
 	.header__button {
-		padding: 0 10px;
-		background-color: transparent;
 		border: none;
+		background-color: transparent;
+		padding: 0 10px;
 	}
 	.header__button svg {
 		stroke-width: 3;
@@ -83,12 +73,12 @@
 
 	@media (min-width: 768px) {
 		.header {
-			padding-top: 30px;
-			padding-bottom: 20px;
+			grid-template-rows: 1fr 1fr;
+			grid-template-columns: none;
 
 			gap: 10px;
-			grid-template-columns: none;
-			grid-template-rows: 1fr 1fr;
+			padding-top: 30px;
+			padding-bottom: 20px;
 		}
 
 		.header__button {
@@ -98,18 +88,18 @@
 
 	@media (min-width: 1200px) {
 		.header {
-			padding-top: 50px;
-			padding-bottom: 30px;
-			padding-left: 10px;
-			padding-right: 10px;
-
-			border: none;
-
-			width: 1140px;
+			grid-template-rows: none;
+			grid-template-columns: 210px auto;
 
 			gap: 0;
-			grid-template-columns: 210px auto;
-			grid-template-rows: none;
+
+			border: none;
+			padding-top: 50px;
+			padding-right: 10px;
+			padding-bottom: 30px;
+			padding-left: 10px;
+
+			width: 1140px;
 		}
 		.header__logo {
 			transition: opacity 0.3s linear;

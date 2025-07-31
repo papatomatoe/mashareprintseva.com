@@ -9,22 +9,20 @@
 	const bio = $derived(data.bio);
 </script>
 
-{#if bio}
-	<div class="bio">
-		<div class="bio__section">
-			<img class="bio__image" src={bio.image} alt="Masha Reprintseva" />
-		</div>
-
-		<section class="bio__section">
-			<h2 class="v-h">Bio Description</h2>
-			<p class="bio__epigraph">{bio.epigraph}</p>
-
-			<div class="bio__content">
-				{@html bio.content}
-			</div>
-		</section>
+<div class="bio">
+	<div class="bio__section">
+		<img class="bio__image" src={bio.image} alt="Masha Reprintseva" />
 	</div>
-{/if}
+
+	<section class="bio__section">
+		<h2 class="v-h">Bio Description</h2>
+		<p class="bio__epigraph">{bio.epigraph}</p>
+
+		<div class="bio__content">
+			{@html bio.content}
+		</div>
+	</section>
+</div>
 
 <style>
 	.bio {

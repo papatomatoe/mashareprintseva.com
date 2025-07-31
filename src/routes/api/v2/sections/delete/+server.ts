@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 
 export const DELETE: RequestHandler = async ({ request }) => {
 	const ids: string[] = await request.json();
@@ -8,26 +8,14 @@ export const DELETE: RequestHandler = async ({ request }) => {
 	if (!ids || ids.length === 0) throw error(400, 'Invalid Request Data');
 
 	try {
-		const { count } = await db.section.deleteMany({
-			where: {
-				id: {
-					in: ids
-				}
-			}
-		});
+		const { count } = await db.section.deleteMany({ where: { id: { in: ids } } });
 
 		let deletedIds = [];
 
 		if (count === ids.length) {
 			deletedIds = [...ids];
 		} else {
-			const notDeletedSections = await db.section.findMany({
-				where: {
-					id: {
-						in: ids
-					}
-				}
-			});
+			const notDeletedSections = await db.section.findMany({ where: { id: { in: ids } } });
 
 			deletedIds = [
 				...notDeletedSections

@@ -1,4 +1,4 @@
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 import { getPrismaError } from '$lib/services/error';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 

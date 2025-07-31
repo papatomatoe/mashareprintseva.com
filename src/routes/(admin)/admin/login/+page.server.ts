@@ -1,14 +1,12 @@
 import type { Action, Actions, PageServerLoad } from './$types';
 import bcrypt from 'bcrypt';
 import { fail, redirect } from '@sveltejs/kit';
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) redirect(302, '/admin/dashboard');
 
-	return {
-		pageTitle: 'Admin | Login'
-	};
+	return { pageTitle: 'Admin | Login' };
 };
 
 const login: Action = async ({ cookies, request }) => {

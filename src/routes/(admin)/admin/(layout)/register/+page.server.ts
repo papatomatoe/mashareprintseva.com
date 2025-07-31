@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import bcrypt from 'bcrypt';
-import { db } from '$lib/database/db';
+import { db } from '$/lib/database';
 
 enum Roles {
 	ADMIN = 'ADMIN',
@@ -22,9 +22,7 @@ export const actions: Actions = {
 			return fail(400, { invalid: true });
 		}
 
-		const user = await db.user.findUnique({
-			where: { username }
-		});
+		const user = await db.user.findUnique({ where: { username } });
 
 		if (user) {
 			return fail(400, { user: true });
