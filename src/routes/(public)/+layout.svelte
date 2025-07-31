@@ -1,17 +1,22 @@
 <script lang="ts">
-	import '../../styles/globals.css';
-	import { page } from '$app/stores';
-
+	import '$lib/styles/globals.css';
+	import { page } from '$app/state';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
 	import type { PageData } from './$types';
+	import type { Snippet } from 'svelte';
 
-	export let data: PageData;
+	type Props = {
+		data: PageData;
+		children: Snippet;
+	};
 
-	$: pageTitle = $page.data.pageTitle;
-	$: menu = data.menu;
-	$: social = data.social;
+	let { data, children }: Props = $props();
+
+	const pageTitle = $derived(page.data.pageTitle);
+	const menu = $derived(data);
+	const social = $derived(data.social);
 </script>
 
 <svelte:head>
@@ -25,7 +30,7 @@
 			{#if pageTitle}
 				<h1 class="v-h">{pageTitle}</h1>
 			{/if}
-			<slot />
+			{@render children()}
 		</main>
 		<Footer {social} />
 	</div>
@@ -33,26 +38,25 @@
 
 <style>
 	.container {
+		display: flex;
 		position: relative;
 		top: 0;
-		z-index: 0;
-
-		display: flex;
 		flex-grow: 1;
 		flex-direction: column;
 		justify-content: space-between;
+		z-index: 0;
 
 		transition: top 0.2s linear;
 	}
 
 	.content {
-		width: 87%;
+		flex-grow: 1;
+		align-items: center;
 		margin: 0 auto;
+		border-top: 1px solid var(--color--gray-85);
 		padding-top: 0px;
 		padding-bottom: 20px;
-		align-items: center;
-		flex-grow: 1;
-		border-top: 1px solid var(--color--gray-85);
+		width: 87%;
 	}
 	@media (min-width: 768px) {
 		.container {
@@ -65,14 +69,14 @@
 	}
 	@media (min-width: 1200px) {
 		.container {
-			width: 960px;
 			margin: 0 auto;
 
 			border-top: 1px solid var(--color--gray-85);
+			width: 960px;
 		}
 		.content {
-			width: 100%;
 			border: none;
+			width: 100%;
 		}
 	}
 </style>

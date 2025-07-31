@@ -1,9 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	type Props = {
+		data: PageData;
+	};
 
-	$: bio = data.bio;
+	let { data }: Props = $props();
+	const bio = $derived(data.bio);
 </script>
 
 {#if bio}
@@ -34,27 +37,27 @@
 
 	.bio__epigraph {
 		margin-bottom: 30px;
+
+		border-top: 1px solid var(--color--gray-85);
+		border-bottom: 1px solid var(--color--gray-85);
 		padding: 20px 0;
+		color: var(--color--black);
+		font-style: normal;
 
 		font-weight: bold;
 		font-size: 17px;
 		line-height: 1.5;
 		font-family: var(--font--secondary);
-		color: var(--color--black);
-		font-style: normal;
 		letter-spacing: -0.4px;
-
-		border-top: 1px solid var(--color--gray-85);
-		border-bottom: 1px solid var(--color--gray-85);
 	}
 
 	@media (min-width: 768px) {
 		.bio__image {
 			display: block;
-			width: 540px;
-			height: 340px;
 			margin: 30px auto 50px;
 			padding-bottom: 0;
+			width: 540px;
+			height: 340px;
 		}
 
 		.bio__epigraph {
@@ -63,8 +66,8 @@
 	}
 	@media (min-width: 1200px) {
 		.bio {
-			width: 100%;
 			border: none;
+			width: 100%;
 		}
 		.bio__image {
 			margin: 40px auto 60px;
@@ -72,10 +75,10 @@
 			height: 445px;
 		}
 		.bio__epigraph {
-			width: 100%;
 			margin-top: 40px;
 			margin-bottom: 40px;
 			padding: 40px 0;
+			width: 100%;
 		}
 	}
 </style>

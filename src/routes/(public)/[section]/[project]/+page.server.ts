@@ -6,7 +6,6 @@ export const load = (async ({ params }) => {
 	const { section, project } = params;
 
 	const projectData = await getProjectBySlug(project);
-	console.log(projectData);
 	if (!projectData) {
 		throw error(404, 'not found');
 	}

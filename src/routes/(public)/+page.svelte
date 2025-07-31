@@ -1,26 +1,27 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	type Props = {
+		data: PageData;
+	};
 
-	$: main = data.main;
-	$: pageTitle = data.pageTitle;
+	let { data }: Props = $props();
 </script>
 
-{#if main}
-	<section class="main-page">
-		<h2 class="v-h">{pageTitle}</h2>
-		<div class="main-page__content">
-			{@html main.content}
-		</div>
-	</section>
-{/if}
+<section class="main-page">
+	<h2 class="v-h">{data.pageTitle}</h2>
+	<div class="main-page__content">
+		{#if data.main}
+			{@html data.main.content}
+		{/if}
+	</div>
+</section>
 
 <style>
 	.main-page {
+		margin: 0 auto;
 		padding-top: 20px;
 		height: 100%;
-		margin: 0 auto;
 	}
 
 	.main-page__content {
@@ -30,16 +31,16 @@
 	}
 
 	:global(.main-page__content img) {
-		object-position: 40% 0;
-		object-fit: cover;
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
+		object-position: 40% 0;
 	}
 
 	@media (min-width: 1200px) {
 		:global(.main-page__content img) {
-			object-position: 0 -55px;
 			height: 576px;
+			object-position: 0 -55px;
 		}
 	}
 </style>
