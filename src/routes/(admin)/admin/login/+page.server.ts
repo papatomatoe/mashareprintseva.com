@@ -1,54 +1,47 @@
-import type { Action, Actions, PageServerLoad } from './$types';
-import bcrypt from 'bcrypt';
-import { fail, redirect } from '@sveltejs/kit';
-import { db } from '$/lib/database';
+import type { Actions, PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
+import { auth } from '$/lib/auth';
 
-export const load: PageServerLoad = async ({ locals }) => {
-	if (locals.user) redirect(302, '/admin/dashboard');
+import { fail, message, superValidate } from 'sveltekit-superforms';
+import { zod4 } from 'sveltekit-superforms/adapters';
+import { loginSchema, type LoginSchemaType } from '$/lib/validators';
+import { APIError } from 'better-auth/api';
+import type { FormMessageType } from '$/lib/types';
 
-	return { pageTitle: 'Admin | Login' };
-};
-
-const login: Action = async ({ cookies, request }) => {
-	const data = await request.formData();
-	const username = data.get('username');
-	const password = data.get('password');
-
-	if (!password || !username || typeof password !== 'string' || typeof username !== 'string') {
-		return fail(400, { invalid: true });
-	}
-
-	const user = await db.user.findUnique({ where: { username } });
-	if (!user) {
-		return fail(400, { credentials: true });
-	}
-
-	const userPassword = await bcrypt.compare(password, user.passwordHash);
-
-	if (!userPassword) {
-		return fail(400, { credentials: true });
-	}
-
-	const authenticatedUser = await db.user.update({
-		where: { username: user.username },
-		data: { userAuthToken: crypto.randomUUID() }
+export const load: PageServerLoad = async ({ request }) => {
+	const session = await auth.api.getSession({
+		headers: request.headers
 	});
 
-	cookies.set('session', authenticatedUser.userAuthToken, {
-		// send cookie for every page
-		path: '/',
-		// server side only cookie so you can't use `document.cookie`
-		httpOnly: true,
-		// only requests from same site can send cookies
-		// https://developer.mozilla.org/en-US/docs/Glossary/CSRF
-		sameSite: 'strict',
-		// only sent over HTTPS in production
-		secure: process.env.NODE_ENV === 'production',
-		// set cookie to expire after a month
-		maxAge: 60 * 60 * 24 * 30
-	});
+	if (session) throw redirect(302, '/admin/dashboard');
 
-	redirect(302, '/admin/dashboard');
+	const form = await superValidate(zod4(loginSchema));
+
+	return { form, pageTitle: 'Admin | Login' };
 };
 
-export const actions: Actions = { login };
+export const actions: Actions = {
+	default: async ({ request }) => {
+		const form = await superValidate<LoginSchemaType, FormMessageType>(request, zod4(loginSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		try {
+			await auth.api.signInEmail({
+				body: {
+					email: form.data.email as string,
+					password: form.data.password as string
+				}
+			});
+		} catch (error) {
+			if (error instanceof APIError) {
+				return message(form, { status: 'error', message: error.message });
+			}
+			return message(form, { status: 'error', message: 'Login Error' });
+		}
+
+		return redirect(302, '/admin/dashboard');
+	}
+};

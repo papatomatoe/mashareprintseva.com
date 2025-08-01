@@ -1,3 +1,9 @@
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+@import '@fontsource/volkhov/400.css';
+@import '@fontsource/volkhov/700.css';
 @import './vars.css';
 
 * {
@@ -10,42 +16,42 @@
 }
 
 *::-webkit-scrollbar-track {
-	background-color: var(--color-bg);
 	border-radius: 4px;
+	background-color: var(--color-bg);
 }
 
 *::-webkit-scrollbar-thumb {
-	background-color: var(--color--primary);
-	border-radius: 10px;
 	border: 1px solid var(--color-bg);
+	border-radius: 10px;
+	background-color: var(--color--primary);
 }
 
 html,
 body,
 #app {
 	position: relative;
-	height: 100%;
-	width: 100%;
 	margin: 0;
 	padding: 0;
+	width: 100%;
+	height: 100%;
 }
 
 body {
 	position: relative;
 
+	background-color: var(--color-bg);
+
 	min-width: 320px;
-	min-height: 100%;
 	height: 100%;
+	min-height: 100%;
+	color: var(--color--gray-30);
+	font-style: normal;
 
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.5;
 	font-family: var(--font--primary);
-	color: var(--color--gray-30);
-	font-style: normal;
 	letter-spacing: -0.2px;
-
-	background-color: var(--color-bg);
 }
 
 img {
@@ -54,8 +60,8 @@ img {
 }
 
 a {
-	text-decoration: none;
 	color: var(--color--primary);
+	text-decoration: none;
 }
 
 a:hover,
@@ -87,21 +93,21 @@ p {
 }
 
 .app-container {
-	min-height: 100%;
 	display: grid;
 	grid-template-rows: min-content 1fr min-content;
+	min-height: 100%;
 }
 
 .v-h {
 	position: absolute;
+	margin: -1px;
+
+	border: 0;
+	padding: 0;
 
 	width: 1px;
 	height: 1px;
-	margin: -1px;
-	padding: 0;
 	overflow: hidden;
-
-	border: 0;
 
 	clip: rect(0 0 0 0);
 }
@@ -115,24 +121,24 @@ p {
 }
 
 .button {
-	padding: 7px;
 	display: block;
+
+	transition: background-color 0.2s linear;
 	cursor: pointer;
-	background-color: var(--color--gray-15);
+	cursor: pointer;
+	outline: none;
 	border: none;
 	border-radius: 4px;
+	background-color: var(--color--gray-15);
+	padding: 7px;
 
-	font-family: var(--font--primary);
+	color: var(--color--gray-95);
 	font-style: normal;
 	font-weight: 300;
 	font-size: 14px;
 	line-height: 21px;
 
-	color: var(--color--gray-95);
-	cursor: pointer;
-	outline: none;
-
-	transition: background-color 0.2s linear;
+	font-family: var(--font--primary);
 	--color--icon: var(--color--gray-95);
 }
 
@@ -148,9 +154,9 @@ p {
 .button--disabled,
 .button:disabled,
 .button:hover:disabled {
+	cursor: auto;
 	background-color: var(--color--gray-95);
 	color: var(--color--gray-85);
-	cursor: auto;
 	--color--icon: var(--color--gray-85);
 }
 
@@ -168,10 +174,10 @@ p {
 	margin-bottom: 10px;
 }
 .bio__content a {
-	text-decoration: underline;
 	display: inline-block;
-	color: var(--color--primary);
 	margin: 5px 0;
+	color: var(--color--primary);
+	text-decoration: underline;
 }
 .bio__content a:hover,
 .bio__content a:focus-visible {
@@ -187,9 +193,9 @@ p {
 .bio__content h3 {
 	margin-top: 50px;
 	margin-bottom: 30px;
+	font-weight: 700;
 	font-size: 24px;
 	line-height: 1.5;
-	font-weight: 700;
 }
 
 .section__content p {
@@ -197,36 +203,36 @@ p {
 }
 .project__subtitle a {
 	display: block;
-	margin: 0 auto;
 	grid-area: link;
+	margin: 0 auto;
+	margin-bottom: 100px;
+	color: var(--color--primary);
 	font-weight: 400;
 	text-decoration: underline;
-	color: var(--color--primary);
-	margin-bottom: 100px;
 }
 .project__subtitle blockquote {
 	display: block;
 	box-sizing: border-box;
-	width: 100%;
 	margin: 0 auto;
 	margin-bottom: 100px;
+	width: 100%;
 }
 .project__subtitle blockquote p {
+	color: var(--color--gray-50);
+	font-style: normal;
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.5;
 	font-family: var(--font--primary);
-	color: var(--color--gray-50);
-	font-style: normal;
 }
 
 .project__subtitle blockquote cite {
+	color: var(--color--gray-50);
+	font-style: normal;
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.5;
 	font-family: var(--font--primary);
-	color: var(--color--gray-50);
-	font-style: normal;
 }
 
 .project__content p {
@@ -234,9 +240,9 @@ p {
 }
 .project__content a {
 	display: block;
+	color: var(--color--primary);
 	text-align: center;
 	text-decoration: underline;
-	color: var(--color--primary);
 }
 
 .project__content a:hover,
@@ -249,12 +255,12 @@ p {
 }
 
 .project__content h3 {
-	font-size: 24px;
-	line-height: 1.5;
-	font-weight: 700;
-	width: 80%;
 	margin: 0 auto;
 	margin-top: 180px;
+	width: 80%;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 1.5;
 }
 
 .project__content img {
@@ -265,27 +271,27 @@ p {
 .project__content blockquote {
 	display: block;
 	box-sizing: border-box;
-	width: 80%;
 	margin: 30px auto 100px;
+	width: 80%;
 }
 .project__content blockquote p {
 	margin: 0;
+	color: var(--color--gray-50);
+	font-style: normal;
 	font-weight: 700;
 	font-size: 18px;
 	line-height: 1.5;
 	font-family: var(--font--primary);
-	color: var(--color--gray-50);
-	font-style: normal;
 }
 .project__content blockquote cite {
 	display: block;
 	margin-top: 30px;
+	color: var(--color--gray-50);
+	font-style: normal;
 	font-weight: 300;
 	font-size: 12px;
 	line-height: 1.5;
 	font-family: var(--font--primary);
-	color: var(--color--gray-50);
-	font-style: normal;
 }
 
 @media (min-width: 768px) {
@@ -300,8 +306,8 @@ p {
 	}
 
 	.project__subtitle {
-		width: 80%;
 		margin-bottom: 120px;
+		width: 80%;
 	}
 
 	.project__subtitle a,
@@ -319,13 +325,13 @@ p {
 	}
 
 	.project__content p {
-		width: 80%;
 		margin: 150px auto;
+		width: 80%;
 	}
 
 	.project__content a {
-		width: 80%;
 		margin: 20px auto;
+		width: 80%;
 	}
 }
 
@@ -335,7 +341,7 @@ p {
 		width: 100%;
 	}
 	.projects__subtitle {
-		width: auto;
 		margin-bottom: 0;
+		width: auto;
 	}
 }

@@ -9,3 +9,8 @@ export type SectionPageType = Pick<
 	projects: ProjectType[];
 };
 export type ProjectType = Pick<Project, 'id' | 'slug' | 'title' | 'image'>;
+
+export type FormMessageType = {
+	status: 'error' | 'success';
+	message: string;
+};

@@ -3,7 +3,7 @@
 	"singleQuote": true,
 	"trailingComma": "none",
 	"printWidth": 100,
-	"plugins": ["prettier-plugin-svelte", "prettier-plugin-css-order"],
+	"plugins": ["prettier-plugin-svelte", "prettier-plugin-css-order", "prettier-plugin-tailwindcss"],
 	"svelteSortOrder": "scripts-markup-styles-options",
 	"overrides": [
 		{
@@ -12,5 +12,6 @@
 				"parser": "svelte"
 			}
 		}
-	]
+	],
+	"tailwindStylesheet": "./src/app.css"
 }
