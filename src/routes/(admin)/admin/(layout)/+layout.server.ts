@@ -7,8 +7,6 @@ export const load: LayoutServerLoad = async ({ request }) => {
 		headers: request.headers
 	});
 
-	console.log('==============>', session);
-
 	if (!session) {
 		throw redirect(302, '/admin/login');
 	}

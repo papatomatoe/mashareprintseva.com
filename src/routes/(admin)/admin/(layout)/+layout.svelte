@@ -1,113 +1,64 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
-	import Logo from '$lib/components/Logo.svelte';
-	import { ADMIN_MENU } from '$lib/constants/adminMenu';
+	import { page } from '$app/state';
+	import type { Snippet } from 'svelte';
+	import type { LayoutData } from './$types.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import AppSidebar from '$/lib/components/admin/AppSidebar.svelte';
+	import Separator from '$/lib/components/ui/separator/separator.svelte';
+	import Breadcrumbs from '$/lib/components/admin/Breadcrumbs.svelte';
 
-	export let data;
+	type Props = {
+		data: LayoutData;
+		children: Snippet;
+	};
 
-	let collapseMenu = false;
+	let { data, children }: Props = $props();
+
+	let collapseMenu = $state(false);
 
 	const handleCollapseMenu = () => {
 		collapseMenu = !collapseMenu;
 	};
 
-	$: user = data.user;
-	$: pathname = $page.url.pathname;
-	$: pageTitle = $page.data.pageTitle;
-	$: isDashboardPage = $page.url.pathname === '/admin/dashboard';
+	const user = $derived(data.user);
+	const pageTitle = $derived(page.data.pageTitle);
 </script>
 
 <svelte:head>
 	<title>{pageTitle}</title>
 </svelte:head>
 
-<div class="admin-layout">
-	<header class="header">
-		<a class="header__logo" href="/admin/dashboard"><Logo /></a>
-		{#if user}
-			<div class="header__wrapper">
-				<p class="header__user">{user.username} ({user.role})</p>
-				<form action="/admin/logout" method="POST">
-					<button class="button header__logout" type="submit">logout</button>
-				</form>
-			</div>
-		{/if}
-	</header>
-	<main class="main" class:main--dashboard={isDashboardPage} class:main--collapsed={collapseMenu}>
-		{#if !isDashboardPage}
-			<div class="main__menu menu">
-				<button
-					class="menu__collapse"
-					class:menu__collapse--collapsed={collapseMenu}
-					type="button"
-					aria-label="collapse menu"
-					on:click={handleCollapseMenu}
-				>
-					<svg
-						width="21"
-						height="17"
-						viewBox="0 0 21 17"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M8 1L1 8.5L8 16M14 1L7 8.5L14 16M20 1L13 8.5L20 16"
-							stroke="var(--color--gray-85)"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</button>
-				<div class="menu__container">
-					<div class="menu__wrapper" class:menu__wrapper--collapsed={collapseMenu}>
-						{#if !collapseMenu}
-							<p class="menu__title">Sections</p>
-						{/if}
-						<ul class="menu__list">
-							{#each ADMIN_MENU as item (item.id)}
-								<li class="menu__item">
-									<a
-										class="menu__link"
-										class:menu__link--current={pathname === item.href}
-										href={item.href}
-									>
-										<svelte:component this={item.icon} />
-										{#if !collapseMenu}
-											<span>{item.title}</span>
-										{/if}
-									</a>
-								</li>
-							{/each}
-						</ul>
-					</div>
-				</div>
-			</div>
-		{/if}
-
-		<div class="main__wrapper">
-			{#if !isDashboardPage}
+<Sidebar.Provider>
+	<AppSidebar {user} />
+	<Sidebar.Inset>
+		<header
+			class="group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height) flex h-[60px] shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear"
+		>
+			<div class="flex h-full w-full items-center gap-1 px-4 lg:gap-2">
+				<Sidebar.Trigger class="size-[44px]" />
+				<Separator orientation="vertical" class="mx-2 data-[orientation=vertical]:h-full" />
 				<Breadcrumbs />
-			{/if}
-			<slot />
-		</div>
-	</main>
-</div>
+			</div>
+		</header>
+		<main>
+			{@render children()}
+		</main>
+	</Sidebar.Inset>
+</Sidebar.Provider>
 
 <style>
 	.admin-layout {
-		height: 100%;
 		display: grid;
 		grid-template-rows: min-content 1fr;
+		height: 100%;
 	}
 
 	.header {
 		display: flex;
-		padding: 12px 40px;
 		align-items: center;
 		gap: 22px;
 		border-bottom: 2px solid var(--color--gray-85);
+		padding: 12px 40px;
 	}
 
 	.header__logo {
@@ -115,17 +66,17 @@
 	}
 
 	.header__wrapper {
-		margin-left: auto;
 		display: flex;
 		align-items: center;
 		gap: 22px;
+		margin-left: auto;
 	}
 
 	.header__user {
+		color: var(--color--gray-30);
 		font-weight: 600;
 		font-size: 14px;
 		line-height: 21px;
-		color: var(--color--gray-30);
 	}
 
 	.header__logout {
@@ -152,23 +103,23 @@
 	}
 
 	.menu__collapse {
-		position: absolute;
 		display: grid;
-		place-items: center;
-		width: 40px;
-		height: 40px;
+		position: absolute;
 		top: 40px;
 		left: calc(100% - 18px);
-		border-radius: 50%;
-
-		background-color: var(--color--gray-15);
-		border: 2px solid var(--color--gray-85);
-		cursor: pointer;
-		outline: none;
+		place-items: center;
 
 		z-index: 1;
 
 		transition: background-color 0.2s linear;
+		cursor: pointer;
+		outline: none;
+		border: 2px solid var(--color--gray-85);
+		border-radius: 50%;
+
+		background-color: var(--color--gray-15);
+		width: 40px;
+		height: 40px;
 	}
 	.menu__collapse:hover,
 	.menu__collapse:focus-visible {
@@ -195,15 +146,15 @@
 		width: 50px;
 	}
 	.menu__title {
-		padding: 0 7px;
 		margin-bottom: 26px;
+		padding: 0 7px;
+
+		color: var(--color--primary);
 		font-weight: 400;
 		font-size: 16px;
 		line-height: 24px;
 
 		text-transform: uppercase;
-
-		color: var(--color--primary);
 	}
 	.menu__list {
 		display: grid;
@@ -211,22 +162,21 @@
 	}
 
 	.menu__link {
-		max-width: 120px;
-		padding: 5px 7px;
 		display: flex;
 		align-items: center;
 		gap: 10px;
-		border-radius: 4px;
 
 		transition: background-color 0.2s linear;
+		border-radius: 4px;
+		padding: 5px 7px;
+		max-width: 120px;
 	}
 
 	.menu__link span {
+		color: var(--color--black);
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 21px;
-
-		color: var(--color--black);
 	}
 
 	.menu__link:hover,

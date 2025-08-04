@@ -48,16 +48,16 @@
 		position: relative;
 	}
 	.breadcrumbs__item:not(:last-of-type)::after {
-		content: '/';
 		padding: 0 6px 0 3px;
-		font-weight: 500;
+		content: '/';
 		color: var(--color--primary);
+		font-weight: 500;
 	}
 
 	.breadcrumbs__link {
-		font-weight: 400;
-		color: var(--color--primary);
 		transition: color 0.2s;
+		color: var(--color--primary);
+		font-weight: 400;
 	}
 
 	.breadcrumbs__link:hover,
