@@ -2,68 +2,25 @@
 	import { ADMIN_MENU } from '$lib/constants/adminMenu';
 </script>
 
-<h1 class="v-h">Dashboard</h1>
+<h1 class="sr-only">Dashboard</h1>
 
-<div class="dashboard">
-	<!-- <h2 class="dashboard__title">Sections</h2> -->
-	<ul class="dashboard__list">
-		<!-- {#each ADMIN_MENU as item (item.id)}
-			<li class="dahsboard__item">
-				<a class="dashboard__link" href={item.href}>
-					<svelte:component this={item.icon} width={30} height={30} />
+<div class="mx-auto mb-[50%] mt-[135px] w-[80%] max-w-[685%]">
+	<h2 class="mb-3 font-semibold uppercase">Sections</h2>
+
+	<ul class="grid grid-cols-[repeat(auto-fit,_minmax(120px,_1fr))] gap-5">
+		{#each ADMIN_MENU as item (item.id)}
+			<li>
+				<a
+					class="hover:bg-[var(--color--primary)]/2 border-1 grid grid-rows-[50,_min-content] items-center justify-items-center gap-2 rounded-xl p-5 hover:border-[var(--color--primary)] hover:text-[var(--color--primary)]"
+					href={item.href}
+				>
+					<item.icon width={30} height={30} />
 					<span>{item.title}</span>
 				</a>
 			</li>
-		{/each} -->
+		{/each}
 	</ul>
 </div>
 
 <style>
-	.dashboard {
-		margin: 135px auto 50px;
-		width: 80%;
-		max-width: 685px;
-	}
-
-	.dashboard__title {
-		margin-bottom: 36px;
-
-		color: var(--color--primary);
-		font-weight: 600;
-		font-size: 16px;
-		line-height: 24px;
-		text-transform: uppercase;
-	}
-
-	.dashboard__list {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, 125px);
-		gap: 15px;
-	}
-
-	.dashboard__link {
-		display: grid;
-		grid-template-rows: 50px min-content;
-		align-items: center;
-		justify-items: center;
-		border: 1px solid var(--color--gray-85);
-		border-radius: 4px;
-		background: var(--color--white);
-		padding: 10px;
-		color: var(--color--black);
-		font-weight: 400;
-	}
-
-	.dashboard__link:hover,
-	.dashboard__link:focus-visible {
-		border-color: var(--color--primary);
-		color: var(--color--primary);
-		--color--icon: var(--color--primary);
-	}
-
-	.dashboard__link:active {
-		border-color: var(--color--gray-85);
-		color: var(--color--gray-85);
-		--color--icon: var(--color--gray-85);
-	}
 </style>
