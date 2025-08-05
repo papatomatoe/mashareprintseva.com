@@ -4,7 +4,7 @@ import { auth } from '$/lib/auth';
 
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { loginSchema, type LoginSchemaType } from '$/lib/validators';
+import { loginSchema, type LoginSchemaType } from '$/lib/validators/auth';
 import { APIError } from 'better-auth/api';
 import type { FormMessageType } from '$/lib/types';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SvelteComponent, onMount, type ComponentEvents } from 'svelte';
+	import { onMount } from 'svelte';
 	import { Editor } from '@tiptap/core';
 
 	import UndoLink from '$lib/icons/Undo.svelte';
@@ -30,12 +30,12 @@
 
 	let element: HTMLDivElement;
 	let editor: Editor;
-	let modalFileManager: SvelteComponent;
-	let modalHTMLEditor: SvelteComponent;
-	let filemanager: SvelteComponent;
-	let linkPopover: SvelteComponent;
-	let imagePopover: SvelteComponent;
-	let textPopover: SvelteComponent;
+	let modalFileManager: any;
+	let modalHTMLEditor: any;
+	let filemanager: any;
+	let linkPopover: any;
+	let imagePopover: any;
+	let textPopover: any;
 
 	type URLType = 'link' | 'image';
 
@@ -118,7 +118,7 @@
 		modalFileManager.close();
 	};
 
-	const handleCheckFiles = (e: ComponentEvents<Filemanager>['check']) => {
+	const handleCheckFiles = (e) => {
 		isDisabledSelectButton = e.detail.ids.length !== 1;
 	};
 
@@ -144,7 +144,7 @@
 	};
 
 	const handleConfirmEditHTML = () => {
-		editor.commands.setContent(sourceHTML, true);
+		editor.commands.setContent(sourceHTML);
 		modalHTMLEditor.close();
 	};
 
@@ -180,7 +180,7 @@
 	</div>
 </Modal>
 
-<div>
+<div class="col-span-2">
 	<p>{label}</p>
 	<div class="editor" class:editor--fullscreen={isFullscreenMode}>
 		{#if editor}
@@ -480,8 +480,8 @@
 	.editor__buttons {
 		display: flex;
 		gap: 2px;
-		padding: 2px 4px;
 		border-right: 1px solid var(--color--gray-85);
+		padding: 2px 4px;
 	}
 
 	div.editor__buttons:last-of-type {
@@ -489,12 +489,12 @@
 	}
 
 	.editor__button {
-		width: 34px;
-		height: 34px;
-		padding: 2px;
 		display: grid;
 		place-items: center;
 		background-color: transparent;
+		padding: 2px;
+		width: 34px;
+		height: 34px;
 		color: var(--color--gray-15);
 		font-weight: 400;
 		--color--icon: var(--color--black);
@@ -518,9 +518,9 @@
 	}
 
 	.editor__button--italic {
-		font-family: 'Times New Roman', Times, serif;
-		font-size: 18px;
 		font-style: italic;
+		font-size: 18px;
+		font-family: 'Times New Roman', Times, serif;
 	}
 
 	.active,
@@ -532,10 +532,10 @@
 	}
 
 	.editor__element {
+		padding: 20px;
 		min-height: 200px;
 		max-height: 600px;
 		overflow-y: auto;
-		padding: 20px;
 	}
 
 	.editor__wrapper {
@@ -586,9 +586,9 @@
 	}
 
 	:global(.editor__element > div) {
+		outline: 0;
 		height: 100%;
 		min-height: inherit;
-		outline: 0;
 	}
 
 	:global(.editor__element h1),
@@ -602,9 +602,9 @@
 	}
 
 	:global(.editor__element blockquote) {
+		margin: 20px 20px 20px 40px;
 		border-left: 2px solid var(--color--gray-85);
 		padding: 20px 0 20px 20px;
-		margin: 20px 20px 20px 40px;
 	}
 
 	:global(.editor__element blockquote > p) {
@@ -618,19 +618,19 @@
 		margin: 20px 0;
 	}
 	:global(.editor__element ul li) {
-		list-style-type: disc;
 		margin: 10px 0;
+		list-style-type: disc;
 	}
 
 	:global(.editor__element ol li) {
-		list-style-type: decimal;
 		margin: 10px 0;
+		list-style-type: decimal;
 	}
 
 	:global(.editor__element img) {
 		display: block;
-		width: 500px;
 		padding: 20px 0;
+		width: 500px;
 	}
 
 	:global(.editor__element a) {
@@ -641,10 +641,10 @@
 		position: fixed;
 		top: 0;
 		left: 0;
+		z-index: 1;
+		background-color: var(--color--white);
 		width: 100vw;
 		height: 100vh;
-		background-color: var(--color--white);
-		z-index: 1;
 	}
 
 	.editor--fullscreen .editor__element {
