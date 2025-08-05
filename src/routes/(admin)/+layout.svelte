@@ -10,7 +10,7 @@
 	let { children }: Props = $props();
 </script>
 
-<Toaster position="top-center" richColors theme="light" />
+<Toaster position="top-right" richColors theme="light" />
 
 <div class="h-full">
 	{@render children()}

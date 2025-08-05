@@ -5,7 +5,7 @@
 	import Textarea from '$lib/components/Textarea.svelte';
 	import File from '$lib/components/File.svelte';
 	import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
-	import Page from '$routes/(public)/bio/+page.svelte';
+	// import Page from '$routes/(public)/bio/+page.svelte';
 
 	export let data;
 	export let form;
@@ -38,7 +38,7 @@
 <Notification show={showNotification} message={notificationMessage} type={notificationType} />
 <Form title="Bio Page" {published} {hasErrors} on:submit={handleSubmit}>
 	<div slot="preview">
-		<Page
+		<!-- <Page
 			data={{
 				menu: [],
 				social: [],
@@ -54,7 +54,7 @@
 					thumbnail
 				}
 			}}
-		/>
+		/> -->
 	</div>
 	<Input
 		label="title"

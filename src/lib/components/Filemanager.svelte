@@ -34,7 +34,7 @@
 	import Grid from '$lib/icons/Grid.svelte';
 	import { FILE_TYPES, IMAGE_TYPES } from '$lib/constants/files';
 	import { filesStore } from '$lib/stores/files/store';
-	import { debounce } from '$lib/utils/debounce';
+	import { debounce } from '$lib/helpers/debounce';
 	import type { ViewType } from '$lib/stores/files/types';
 	import Image from '$lib/components/Image.svelte';
 	import DateTime from '$lib/components/DateTime.svelte';
@@ -358,10 +358,10 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		padding: 0 0 21px;
-		margin-bottom: 43px;
 		gap: 10px;
+		margin-bottom: 43px;
 		border-bottom: 1px solid var(--color--gray-85);
+		padding: 0 0 21px;
 	}
 	.files__title {
 		font-weight: 700;
@@ -370,23 +370,23 @@
 	}
 
 	.files__search {
-		width: 250px;
-		margin-left: 20px;
 		margin-right: auto;
+		margin-left: 20px;
+		width: 250px;
 	}
 	.files__button {
 		display: flex;
-		padding: 7px 10px 7px 15px;
-		align-items: center;
 		justify-content: space-between;
+		align-items: center;
 		gap: 11px;
+		padding: 7px 10px 7px 15px;
 	}
 	.files__button--disabled,
 	.files__button:disabled,
 	.files__button:hover:disabled {
+		cursor: auto;
 		background-color: var(--color--gray-95);
 		color: var(--color--gray-85);
-		cursor: auto;
 		--color--icon: var(--color--gray-85);
 	}
 
@@ -401,11 +401,11 @@
 	}
 
 	.files__view {
-		height: 36px;
-		width: 36px;
 		display: grid;
 		place-items: center;
 		background-color: var(--color--gray-95);
+		width: 36px;
+		height: 36px;
 		--color--icon: var(--color--gray-30);
 	}
 
@@ -427,18 +427,18 @@
 	}
 
 	.files__info {
-		width: 100%;
 		padding: 10px 0 0;
+		width: 100%;
 	}
 	.files__info-value {
 		font-weight: 700;
 	}
 	.files__message {
-		width: 100%;
 		padding: 40px;
-		font-weight: 700;
-		text-transform: uppercase;
-		text-align: center;
+		width: 100%;
 		color: var(--color--gray-50);
+		font-weight: 700;
+		text-align: center;
+		text-transform: uppercase;
 	}
 </style>

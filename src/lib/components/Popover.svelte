@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clickOutside } from '$lib/utils/clickOutside';
+	import { clickOutside } from '$lib/helpers/clickOutside';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -46,19 +46,19 @@
 
 <style>
 	.popover {
-		position: absolute;
-		padding: 10px;
 		display: none;
-		flex-direction: column;
-		gap: 10px;
-		background-color: var(--color--white);
-		border: 1px solid var(--color--gray-85);
-		border-radius: 4px;
-		width: 400px;
+		position: absolute;
 		top: 100%;
 		left: -40px;
+		flex-direction: column;
+		gap: 10px;
 		z-index: 1;
 		box-shadow: 0 3px 10px -7px var(--color--black);
+		border: 1px solid var(--color--gray-85);
+		border-radius: 4px;
+		background-color: var(--color--white);
+		padding: 10px;
+		width: 400px;
 	}
 
 	.popover-show {
@@ -67,8 +67,8 @@
 
 	.popover__buttons {
 		display: flex;
-		gap: 10px;
 		justify-content: end;
+		gap: 10px;
 		margin-top: 10px;
 	}
 </style>

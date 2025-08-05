@@ -1,6 +1,6 @@
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import type { Actions, PageServerLoad } from './$types';
-import { registerSchema } from '$/lib/validators';
+import { registerSchema } from '$/lib/validators/auth';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { auth } from '$/lib/auth';
 import { APIError } from 'better-auth/api';

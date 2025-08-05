@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import Repeat from '$lib/icons/Repeat.svelte';
 	import Clear from '$lib/icons/Clear.svelte';
-	import { debounce } from '$lib/utils/debounce';
+	import { debounce } from '$lib/helpers/debounce';
 	import Search from '$lib/icons/Search.svelte';
 
 	export let label = '';
@@ -104,14 +104,14 @@
 
 <style>
 	.field {
-		position: relative;
 		display: grid;
+		position: relative;
 	}
 
 	.field__text {
+		color: var(--color--gray-15);
 		font-size: 15px;
 		line-height: 23px;
-		color: var(--color--gray-15);
 	}
 
 	.field__required {
@@ -123,20 +123,19 @@
 	}
 
 	.field__input {
-		width: 100%;
-		padding: 5px 40px 5px 10px;
-		background: var(--color--white);
+		transition: border-color 0.3s linear;
+		outline: none;
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
+		background: var(--color--white);
+		padding: 5px 40px 5px 10px;
+		width: 100%;
+		color: var(--color--gray-30);
 
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
 		font: var(--font--primary);
-		color: var(--color--gray-30);
-		outline: none;
-
-		transition: border-color 0.3s linear;
 	}
 
 	.field__input:hover {
@@ -152,34 +151,34 @@
 	}
 
 	.field__input::placeholder {
+		color: var(--color--gray-85);
 		font-weight: 300;
 		font-size: 14px;
 		line-height: 23px;
-		color: var(--color--gray-85);
 	}
 
 	.field__error {
 		position: absolute;
 		top: 100%;
+
+		color: var(--color--red);
 		font-weight: 300;
 		font-size: 9px;
 		line-height: 14px;
-
-		color: var(--color--red);
 	}
 	.field__button {
-		position: absolute;
-		padding: 0;
-		right: 5px;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 30px;
-		height: 30px;
 		display: grid;
+		position: absolute;
+		top: 50%;
+		right: 5px;
 		place-items: center;
+		transform: translateY(-50%);
+		cursor: pointer;
 		border: none;
 		background-color: transparent;
-		cursor: pointer;
+		padding: 0;
+		width: 30px;
+		height: 30px;
 		--color--icon: var(--color--gray-85);
 	}
 
@@ -204,13 +203,13 @@
 	}
 
 	.field__icon {
-		height: fit-content;
 		position: absolute;
-		width: 17px;
-		height: 17px;
 		top: 50%;
 		left: 5px;
 		transform: translate(0, -50%);
+		width: 17px;
+		height: fit-content;
+		height: 17px;
 
 		--color--icon: var(--color--gray-85);
 	}

@@ -8,7 +8,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { browser } from '$app/environment';
-	import { clickOutside } from '$lib/utils/clickOutside';
+	import { clickOutside } from '$lib/helpers/clickOutside';
 
 	const dispatch = createEventDispatcher();
 
@@ -178,15 +178,15 @@
 	}
 
 	.select__button {
+		cursor: pointer;
 		border: none;
+		border-radius: 4px;
+		background-color: transparent;
+		padding: 5px 7px;
 		width: 100%;
 		height: 100%;
 		min-height: 34px;
-		background-color: transparent;
-		padding: 5px 7px;
-		cursor: pointer;
 		text-align: left;
-		border-radius: 4px;
 	}
 	.select__button:hover,
 	.select__button:focus-visible {
@@ -195,34 +195,34 @@
 
 	.select__button--selected {
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
-		background-color: var(--color--white);
+		align-items: center;
 		border: 1px solid var(--color--gray-85);
+		background-color: var(--color--white);
 	}
 
 	.select__button--selected:hover,
 	.select__button--selected:focus-visible {
-		background-color: var(--color--white);
 		border: 1px solid var(--color--gray-85);
+		background-color: var(--color--white);
 	}
 	.icons--open {
 		transform: rotateZ(180deg);
 	}
 
 	.select__options {
-		padding: 2px;
 		display: grid;
 		position: absolute;
-		width: 100%;
-		max-height: 250px;
-		overflow-y: auto;
 		top: calc(100% + 2px);
+		gap: 4px;
+		z-index: 1;
 		border: 1px solid var(--color--gray-85);
 		border-radius: 4px;
 		background-color: var(--color--white);
-		gap: 4px;
-		z-index: 1;
+		padding: 2px;
+		width: 100%;
+		max-height: 250px;
+		overflow-y: auto;
 	}
 
 	.select__placeholder {
@@ -230,20 +230,20 @@
 	}
 
 	.select__input {
-		border: 1px solid var(--color--gray-85);
-		border-radius: 4px;
-		padding: 5px 7px;
 		display: grid;
-		height: 100%;
 		grid-template-columns: 1fr min-content;
 		align-items: center;
 		gap: 10px;
+		border: 1px solid var(--color--gray-85);
+		border-radius: 4px;
+		padding: 5px 7px;
+		height: 100%;
 	}
 
 	.select__field {
-		height: 100%;
-		padding: 0;
-		border: none;
 		outline: 0;
+		border: none;
+		padding: 0;
+		height: 100%;
 	}
 </style>
