@@ -8,13 +8,13 @@
 	// import Form from '$/lib/components/Form.svelte';
 	// import { NotificationType } from '$/lib/components/Notification.svelte';
 	// import { Input } from '$/lib/components/ui/input';
-	// import { Editor } from '@tiptap/core';
 	import type { PageData } from './$types.js';
 	import { toast } from 'svelte-sonner';
 
 	// import Input from '$lib/components/Input.svelte';
 	// import Form from '$lib/components/Form.svelte';
-	import Editor from '$lib/components/Editor.svelte';
+	import Editor from '$lib/components/admin/Editor/Editor.svelte';
+
 	// import Notification, { type NotificationType } from '$lib/components/Notification.svelte';
 	// import { Page } from '$/lib/components/ui/breadcrumb';
 

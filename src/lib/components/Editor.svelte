@@ -2,19 +2,20 @@
 	import { onMount } from 'svelte';
 	import { Editor } from '@tiptap/core';
 
+	import Input from '$lib/components/Input.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Filemanager from '$lib/components/Filemanager.svelte';
+	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
+	import Popover from '$lib/components/Popover.svelte';
+	import Textarea from '$lib/components/Textarea.svelte';
+
 	import UndoLink from '$lib/icons/Undo.svelte';
 	import RedoLink from '$lib/icons/Redo.svelte';
 	import BulletList from '$lib/icons/BulletList.svelte';
 	import OrderedList from '$lib/icons/OrderedList.svelte';
 	import LinkIcon from '$lib/icons/Link.svelte';
-	import Input from '$lib/components/Input.svelte';
 	import ImageIcon from '$lib/icons/Image.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import Filemanager from '$lib/components/Filemanager.svelte';
-	import ConfirmPanel from '$lib/components/ConfirmPanel.svelte';
-	import Popover from '$lib/components/Popover.svelte';
 	import Upload from '$lib/icons/Upload.svelte';
-	import Textarea from '$lib/components/Textarea.svelte';
 	import Source from '$lib/icons/Source.svelte';
 	import Fullscreen from '$lib/icons/Fullscreen.svelte';
 	import AlignLeft from '$lib/icons/AlignLeft.svelte';
@@ -22,6 +23,7 @@
 	import AlignRight from '$lib/icons/AlignRight.svelte';
 	import MakeNestedList from '$lib/icons/MakeNestedList.svelte';
 	import UndoNestedList from '$lib/icons/UndoNestedList.svelte';
+
 	import { CUSTOM_EXTENSIONS } from '$lib/configs/tiptap';
 
 	export let label = '';
