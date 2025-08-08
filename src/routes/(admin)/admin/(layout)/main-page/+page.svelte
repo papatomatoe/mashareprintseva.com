@@ -93,7 +93,7 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-		<Editor label="content" name="content" bind:value={content} />
+		<Editor label="Content" name="content" bind:value={content} />
 	</div>
 	<Form.Button type="submit">Save</Form.Button>
 </form>

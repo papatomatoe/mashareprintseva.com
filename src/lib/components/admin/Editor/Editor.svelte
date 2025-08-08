@@ -4,23 +4,28 @@
 
 	import Input from '$lib/components/Input.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import Popover from '$lib/components/Popover.svelte';
+	import Popover from '$lib/components/admin/Popover.svelte';
 
-	import UndoIcon from '$lib/icons/Undo.svelte';
-	import RedoIcon from '$lib/icons/Redo.svelte';
-	import BulletListIcon from '$lib/icons/BulletList.svelte';
-	import OrderedListIcon from '$lib/icons/OrderedList.svelte';
-	import LinkIcon from '$lib/icons/Link.svelte';
-	import ImageIcon from '$lib/icons/Image.svelte';
-	import SourceIcon from '$lib/icons/Source.svelte';
-	import FullscreenIcon from '$lib/icons/Fullscreen.svelte';
-	import AlignLeftIcon from '$lib/icons/AlignLeft.svelte';
-	import AlignCenterIcon from '$lib/icons/AlignCenter.svelte';
-	import AlignRightIcon from '$lib/icons/AlignRight.svelte';
-	import MakeNestedListIcon from '$lib/icons/MakeNestedList.svelte';
-	import UndoNestedListIcon from '$lib/icons/UndoNestedList.svelte';
-	import UploadIcon from '$lib/icons/Upload.svelte';
+	import {
+		Undo,
+		Redo,
+		ListOrdered,
+		List,
+		Link,
+		Image,
+		CodeXml,
+		Expand,
+		AlignCenter,
+		AlignLeft,
+		AlignRight,
+		Upload,
+		IndentDecrease,
+		IndentIncrease
+	} from '@lucide/svelte';
+
 	import { CUSTOM_EXTENSIONS } from './config';
+	import Label from '$/lib/components/ui/label/label.svelte';
+	import { cn } from '$/lib/utils';
 	// import UploadWidget from '$/lib/components/ui/UploadWidget/UploadWidget.svelte';
 
 	type Props = {
@@ -40,7 +45,6 @@
 	let modalHTMLEditor = $state<SvelteComponent>();
 	let showLinkPopover = $state(false);
 	let showImagePopover = $state(false);
-	let showTextPopover = $state(false);
 	let popoverUrlType = $state<URLType | null>(null); //NOTE: ???
 	let linkUrl = $state('');
 	let imageUrl = $state('');
@@ -56,8 +60,9 @@
 			element: element,
 			extensions: CUSTOM_EXTENSIONS,
 			content: value,
-			onTransaction: () => {
-				editor = editor;
+			onTransaction: ({ editor: newEditor }) => {
+				editor = undefined;
+				editor = newEditor;
 			},
 			onUpdate: ({ editor }) => {
 				value = editor.getHTML();
@@ -122,9 +127,6 @@
 	const handleFullscreenMode = () => {
 		isFullscreenMode = !isFullscreenMode;
 	};
-	const handleOpenTextPopover = () => {
-		showTextPopover = !showTextPopover;
-	};
 </script>
 
 {#snippet sourceHTMLButtons()}
@@ -141,20 +143,25 @@
 	</div>
 </Modal>
 
-<div class="editor-wrapper">
-	<div class="editor" class:editor--hasErrors={errors}>
+<div class="col-span-2">
+	<div>
 		{#if label}
-			<p class="label editor__label">
+			<Label for="content-{name}" class="mb-2">
 				{label}
-
 				{#if required}
-					<sup class="required">*</sup>
+					<sup class="text-red-500">*</sup>
 				{/if}
-			</p>
+			</Label>
 		{/if}
-		<div class="editor__container" class:editor__container--fullscreen={isFullscreenMode}>
+		<div
+			class={cn(
+				'border-1 shadow-xs rounded-md',
+				errors ? 'border-red-500' : '',
+				isFullscreenMode ? 'z-99 fixed left-0 top-0 h-[100vh] w-[100vw] rounded-none bg-white' : ''
+			)}
+		>
 			{#if editor}
-				<div class="editor__controls">
+				<div class="border-b-1 flex flex-wrap">
 					<div class="editor__buttons">
 						<button
 							class="button editor__button"
@@ -163,7 +170,7 @@
 							disabled={!editor.can().chain().focus().undo().run()}
 							aria-label="undo"
 						>
-							<UndoIcon />
+							<Undo />
 						</button>
 						<button
 							class="button editor__button"
@@ -172,113 +179,109 @@
 							disabled={!editor.can().chain().focus().redo().run()}
 							aria-label="redo"
 						>
-							<RedoIcon />
+							<Redo />
 						</button>
 					</div>
 					<div class="editor__buttons text-buttons">
-						<div class="editor__wrapper">
-							{#snippet textPopoverButton()}
-								<button class="button editor__button" type="button" onclick={handleOpenTextPopover}
-									>text</button
-								>
+						<Popover class="w-fit p-2" align="start">
+							{#snippet trigger()}
+								<button class="button editor__button" type="button">text</button>
 							{/snippet}
 
-							<Popover>
-								<div class="editor__buttons editor__button--popover">
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
-										class:active={editor.isActive('heading', { level: 1 })}
-									>
-										h1
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-										class:active={editor.isActive('heading', { level: 2 })}
-									>
-										h2
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
-										class:active={editor.isActive('heading', { level: 3 })}
-									>
-										h3
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleHeading({ level: 4 }).run()}
-										class:active={editor.isActive('heading', { level: 4 })}
-									>
-										h4
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleHeading({ level: 5 }).run()}
-										class:active={editor.isActive('heading', { level: 5 })}
-									>
-										h5
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleHeading({ level: 6 }).run()}
-										class:active={editor.isActive('heading', { level: 6 })}
-									>
-										h6
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().setParagraph().run()}
-										class:active={editor.isActive('paragraph')}
-									>
-										p
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleBlockquote().run()}
-										class:active={editor.isActive('blockquote')}
-									>
-										"
-									</button>
-									<button
-										class="button editor__button"
-										type="button"
-										onclick={() => editor?.chain().focus().setHardBreak().run()}
-									>
-										br
-									</button>
-									<button
-										class="button editor__button editor__button--bold"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleBold().run()}
-										disabled={!editor.can().chain().focus().toggleBold().run()}
-										class:active={editor.isActive('bold')}
-										aria-label="set bold text"
-									>
-										B
-									</button>
-									<button
-										class="button editor__button editor__button--italic"
-										type="button"
-										onclick={() => editor?.chain().focus().toggleItalic().run()}
-										disabled={!editor.can().chain().focus().toggleItalic().run()}
-										class:active={editor.isActive('italic')}
-										aria-label="set italic text"
-									>
-										I
-									</button>
-								</div>
-							</Popover>
-						</div>
+							<div class="editor__buttons editor__button--popover">
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+									class:active={editor.isActive('heading', { level: 1 })}
+								>
+									h1
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+									class:active={editor.isActive('heading', { level: 2 })}
+								>
+									h2
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+									class:active={editor.isActive('heading', { level: 3 })}
+								>
+									h3
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleHeading({ level: 4 }).run()}
+									class:active={editor.isActive('heading', { level: 4 })}
+								>
+									h4
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleHeading({ level: 5 }).run()}
+									class:active={editor.isActive('heading', { level: 5 })}
+								>
+									h5
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleHeading({ level: 6 }).run()}
+									class:active={editor.isActive('heading', { level: 6 })}
+								>
+									h6
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().setParagraph().run()}
+									class:active={editor.isActive('paragraph')}
+								>
+									p
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleBlockquote().run()}
+									class:active={editor.isActive('blockquote')}
+								>
+									"
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().setHardBreak().run()}
+								>
+									br
+								</button>
+								<button
+									class="button editor__button editor__button--bold"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleBold().run()}
+									disabled={!editor.can().chain().focus().toggleBold().run()}
+									class:active={editor.isActive('bold')}
+									aria-label="set bold text"
+								>
+									B
+								</button>
+								<button
+									class="button editor__button editor__button--italic"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleItalic().run()}
+									disabled={!editor.can().chain().focus().toggleItalic().run()}
+									class:active={editor.isActive('italic')}
+									aria-label="set italic text"
+								>
+									I
+								</button>
+							</div>
+						</Popover>
 					</div>
 					<div class="editor__buttons">
 						<button
@@ -287,21 +290,21 @@
 							type="button"
 							aria-label="align left"
 							onclick={() => editor?.chain().focus().setTextAlign('left').run()}
-							><AlignLeftIcon /></button
+							><AlignLeft /></button
 						>
 						<button
 							class="button editor__button"
 							class:active={editor.isActive({ textAlign: 'center' })}
 							type="button"
 							onclick={() => editor?.chain().focus().setTextAlign('center').run()}
-							aria-label="align center"><AlignCenterIcon /></button
+							aria-label="align center"><AlignCenter /></button
 						>
 						<button
 							class="button editor__button"
 							class:active={editor.isActive({ textAlign: 'right' })}
 							type="button"
 							onclick={() => editor?.chain().focus().setTextAlign('right').run()}
-							aria-label="align right"><AlignRightIcon /></button
+							aria-label="align right"><AlignRight /></button
 						>
 					</div>
 					<div class="editor__buttons">
@@ -312,7 +315,7 @@
 							class:active={editor.isActive('bulletList')}
 							aria-label="unordered list"
 						>
-							<BulletListIcon />
+							<List />
 						</button>
 						<button
 							class="button editor__button"
@@ -321,7 +324,7 @@
 							class:active={editor.isActive('orderedList')}
 							aria-label="ordered list"
 						>
-							<OrderedListIcon />
+							<ListOrdered />
 						</button>
 					</div>
 					<div class="editor__buttons">
@@ -332,7 +335,7 @@
 							disabled={!editor.can().sinkListItem('listItem')}
 							aria-label="make nested list item"
 						>
-							<MakeNestedListIcon />
+							<IndentIncrease />
 						</button>
 						<button
 							class="button editor__button"
@@ -341,7 +344,7 @@
 							disabled={!editor.can().liftListItem('listItem')}
 							aria-label="undo nested list item"
 						>
-							<UndoNestedListIcon />
+							<IndentDecrease />
 						</button>
 					</div>
 					<div class="editor__buttons">
@@ -357,7 +360,7 @@
 									class:active={editor?.isActive('link')}
 									aria-label="add link"
 								>
-									<LinkIcon />
+									<Link />
 								</button>
 							{/snippet}
 
@@ -386,7 +389,7 @@
 									aria-label="add image"
 									onclick={() => {
 										showImagePopover = true;
-									}}><ImageIcon /></button
+									}}><Image /></button
 								>
 							{/snippet}
 
@@ -410,7 +413,7 @@
 										}}
 										getFullPath
 									>
-										<UploadIcon />
+										<Upload />
 									</UploadWidget>
 								</div>
 								<Input
@@ -429,13 +432,13 @@
 							aria-label="open HTML source editor"
 							onclick={handleOpenHTMLEditorModal}
 						>
-							<SourceIcon />
+							<CodeXml />
 						</button>
 						<button
 							class="button editor__button"
 							type="button"
 							aria-label="toggle fullscreen"
-							onclick={handleFullscreenMode}><FullscreenIcon /></button
+							onclick={handleFullscreenMode}><Expand /></button
 						>
 					</div>
 				</div>
@@ -443,56 +446,23 @@
 
 			<div class="editor__element" bind:this={element}></div>
 
-			<input type="hidden" {name} bind:value={derivedValue} />
+			<input id="content-{name}" type="hidden" {name} bind:value={derivedValue} />
 		</div>
 	</div>
 	{#if errors}
-		<p class="error-text input__error">{errors[0]}</p>
+		<p class="absolute top-[calc(100%_-_22px)]">{errors[0]}</p>
 	{/if}
 </div>
 
-<style>
-	.editor-wrapper {
-		position: relative;
-		padding-bottom: 25px;
-	}
-	.editor {
-		display: grid;
-		gap: 12px;
-	}
-
-	.input__error {
-		position: absolute;
-		top: calc(100% - 22px);
-	}
-
-	.editor--hasErrors .editor__container {
-		border-color: var(--color--red);
-
-		&:has(:global(.tiptap):focus-visible) {
-			outline: 1px solid var(--color--red);
-		}
-	}
-
-	.editor__container {
-		border: var(--border);
-		border-radius: var(--border-radius);
-	}
-
-	.editor__controls {
-		display: flex;
-		flex-wrap: wrap;
-		border-bottom: var(--border);
-	}
+<style lang="postcss">
+	@reference "tailwindcss";
 
 	.editor__buttons {
-		display: flex;
-		gap: 8px;
-		padding: 8px;
+		@apply border-r-1 flex gap-2 p-2;
 	}
 
-	div.editor__buttons:last-of-type {
-		border: none;
+	.editor__buttons:last-of-type {
+		@apply border-none;
 	}
 
 	.editor__button,
@@ -507,7 +477,7 @@
 		height: 34px;
 		color: var(--color--black);
 		font-weight: 400;
-		--icon--color: var(--color--black);
+		--color--icon: var(--color--black);
 	}
 
 	.editor :global(.cld-upload:hover),
@@ -516,11 +486,15 @@
 	.editor__button:focus-visible {
 		background-color: var(--color--black);
 		color: var(--color--white);
-		--icon--color: var(--color--white);
+		--color--icon: var(--color--white);
 	}
 
 	.editor__button:disabled {
-		--icon--color: var(--color--black-15);
+		@apply text-neutral-300;
+
+		& :global(svg) {
+			--color--icon: var(--color--black-15);
+		}
 	}
 	.editor__button:disabled:hover {
 		background-color: var(--color--white);
@@ -540,9 +514,7 @@
 	.active,
 	.active:hover,
 	.active:focus-visible {
-		background: var(--color--black);
-		color: var(--color--white);
-		--icon--color: var(--color--white);
+		@apply bg-black text-white;
 	}
 
 	.editor__element {
@@ -592,6 +564,30 @@
 		padding: 10px 0;
 	}
 
+	:global(.editor__element h1) {
+		@apply text-3xl font-semibold;
+	}
+
+	:global(.editor__element h2) {
+		@apply text-2xl font-semibold;
+	}
+
+	:global(.editor__element h3) {
+		@apply text-xl font-semibold;
+	}
+
+	:global(.editor__element h4) {
+		@apply text-lg font-semibold;
+	}
+
+	:global(.editor__element h5) {
+		@apply text-base font-semibold;
+	}
+
+	:global(.editor__element h6) {
+		@apply text-sm font-semibold;
+	}
+
 	:global(.editor__element blockquote) {
 		margin: 20px 20px 20px 40px;
 		border-left: 2px solid var(--color--gray-85);
@@ -626,17 +622,6 @@
 
 	:global(.editor__element a) {
 		color: var(--color--primary);
-	}
-
-	.editor__container--fullscreen {
-		position: fixed;
-		top: 0;
-		left: 0;
-		z-index: 99;
-		border-radius: 0;
-		background-color: var(--color--white);
-		width: 100vw;
-		height: 100vh;
 	}
 
 	.editor__container--fullscreen .editor__element {
