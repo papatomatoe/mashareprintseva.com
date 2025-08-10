@@ -1,4 +1,4 @@
-import { db } from '$/lib/database';
+import { prisma } from '$lib/db';
 import { getPrismaError } from '$lib/services/error';
 import type { Project } from '@prisma/client';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
@@ -6,7 +6,7 @@ import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/libra
 export const createSection = async (data: any) => {
 	// const { projects, ...sectionData } = data;
 	try {
-		// await db.section.create({
+		// await prisma.section.create({
 		// 	data: sectionData,
 		// 	...(projects?.length && {
 		// 		projects: { connect: projects.map((project: Project) => ({ id: project.id })) }
@@ -25,7 +25,7 @@ export const createSection = async (data: any) => {
 
 export const updateSection = async (id: string, data: any) => {
 	try {
-		const section = await db.section.findUnique({ where: { id }, include: { projects: true } });
+		const section = await prisma.section.findUnique({ where: { id }, include: { projects: true } });
 
 		const existProjects = section?.projects;
 
@@ -37,7 +37,7 @@ export const updateSection = async (id: string, data: any) => {
 				)
 			: existProjects;
 
-		await db.section.update({
+		await prisma.section.update({
 			where: { id },
 			data: {
 				...sectionData,
@@ -63,7 +63,7 @@ export const updateSection = async (id: string, data: any) => {
 };
 export const getSection = async (id: string) => {
 	try {
-		const section = await db.section.findUnique({ where: { id }, include: { projects: true } });
+		const section = await prisma.section.findUnique({ where: { id }, include: { projects: true } });
 		return section;
 	} catch (e) {
 		console.error(e);
@@ -71,7 +71,7 @@ export const getSection = async (id: string) => {
 };
 export const getAllSections = async () => {
 	try {
-		const sections = await db.section.findMany();
+		const sections = await prisma.section.findMany();
 		return sections;
 	} catch (e) {
 		console.error(e);
@@ -79,8 +79,8 @@ export const getAllSections = async () => {
 };
 export const getSections = async (page = 0, perPage = 10) => {
 	try {
-		const total = await db.section.count();
-		const sections = await db.section.findMany({
+		const total = await prisma.section.count();
+		const sections = await prisma.section.findMany({
 			take: perPage,
 			skip: page * perPage,
 			orderBy: { createdAt: 'asc' }
@@ -94,7 +94,7 @@ export const getSections = async (page = 0, perPage = 10) => {
 
 export const getSectionBySlug = async (slug: string) => {
 	try {
-		return await db.section.findFirst({
+		return await prisma.section.findFirst({
 			where: { slug, published: true },
 			select: {
 				title: true,

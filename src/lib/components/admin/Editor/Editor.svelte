@@ -2,9 +2,8 @@
 	import { onMount, type SvelteComponent } from 'svelte';
 	import { Editor } from '@tiptap/core';
 
-	import Input from '$lib/components/Input.svelte';
-	import Modal from '$lib/components/Modal.svelte';
 	import Popover from '$lib/components/admin/Popover.svelte';
+	import Dialog from '$/lib/components/admin/Dialog.svelte';
 
 	import {
 		Undo,
@@ -15,43 +14,59 @@
 		Image,
 		CodeXml,
 		Expand,
+		Shrink,
 		AlignCenter,
 		AlignLeft,
 		AlignRight,
 		Upload,
 		IndentDecrease,
-		IndentIncrease
+		IndentIncrease,
+		Heading1,
+		Heading2,
+		Heading3,
+		Heading4,
+		Heading5,
+		Heading6,
+		Pilcrow,
+		Type,
+		Bold,
+		Italic,
+		Quote,
+		WrapText
 	} from '@lucide/svelte';
 
 	import { CUSTOM_EXTENSIONS } from './config';
-	import Label from '$/lib/components/ui/label/label.svelte';
+	import { Label } from '$/lib/components/ui/label';
+	import { Input } from '$lib/components/ui/input';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Textarea } from '$lib/components/ui/textarea';
+
 	import { cn } from '$/lib/utils';
+
 	// import UploadWidget from '$/lib/components/ui/UploadWidget/UploadWidget.svelte';
 
 	type Props = {
 		label?: string;
 		name: string;
 		value?: string;
-		errors?: string[] | null;
 		required?: boolean;
 	};
 
-	type URLType = 'link' | 'image';
+	const size = 18;
 
-	let { name, label = '', value = $bindable(''), required = false, errors }: Props = $props();
+	let { name, label = '', value = $bindable(''), required = false, ...restProps }: Props = $props();
 
 	let element = $state<HTMLDivElement>();
 	let editor = $state<Editor>();
-	let modalHTMLEditor = $state<SvelteComponent>();
-	let showLinkPopover = $state(false);
-	let showImagePopover = $state(false);
-	let popoverUrlType = $state<URLType | null>(null); //NOTE: ???
 	let linkUrl = $state('');
 	let imageUrl = $state('');
 	let imageAlt = $state('');
 	let sourceHTML = $state('');
-	let isDisabledSelectButton = $state(false); //NOTE: ???
 	let isFullscreenMode = $state(false);
+
+	let addLinkOpen = $state(false);
+	let codeEditorOpen = $state(false);
+	let addImageOpen = $state(false);
 
 	let derivedValue = $derived(value === '<p></p>' ? '' : value);
 
@@ -83,65 +98,21 @@
 		editor?.chain().focus().extendMarkRange('link').setLink({ href: linkUrl }).run();
 	};
 
-	const handleCloseLinkPopover = () => {
-		showLinkPopover = false;
-		linkUrl = '';
-	};
-
-	const handleConfirmAddLink = () => {
-		handleSetLink();
-		handleCloseLinkPopover();
-	};
-
 	const handleAddImages = () => {
 		if (imageUrl) {
 			editor?.chain().focus().setImage({ src: imageUrl, alt: imageAlt }).run();
 		}
 	};
 
-	const handleCloseImagePopover = () => {
-		showImagePopover = false;
-		imageUrl = '';
-		imageAlt = '';
-	};
-
-	const handleConfirmAddImage = () => {
-		handleAddImages();
-		handleCloseImagePopover();
-	};
-
-	const handleOpenHTMLEditorModal = () => {
-		sourceHTML = editor?.getHTML() ?? '';
-		modalHTMLEditor?.open();
-	};
-
-	const handleCancelEditHTML = () => {
-		modalHTMLEditor?.close();
-	};
-
 	const handleConfirmEditHTML = () => {
 		editor?.commands.setContent(sourceHTML);
-		modalHTMLEditor?.close();
+		codeEditorOpen = false;
 	};
 
 	const handleFullscreenMode = () => {
 		isFullscreenMode = !isFullscreenMode;
 	};
 </script>
-
-{#snippet sourceHTMLButtons()}
-	<div class="html__controls">
-		<button type="button" class="button button--black" onclick={handleConfirmEditHTML}>Save</button>
-		<button type="button" class="button button--black" onclick={handleCancelEditHTML}>Cancel</button
-		>
-	</div>
-{/snippet}
-
-<Modal bind:this={modalHTMLEditor}>
-	<div class="html__field">
-		<Input type="textarea" name="sourceHTML" label="" placeholder="" bind:value={sourceHTML} />
-	</div>
-</Modal>
 
 <div class="col-span-2">
 	<div>
@@ -156,7 +127,7 @@
 		<div
 			class={cn(
 				'border-1 shadow-xs rounded-md',
-				errors ? 'border-red-500' : '',
+				restProps['aria-invalid'] ? 'border-red-500' : '',
 				isFullscreenMode ? 'z-99 fixed left-0 top-0 h-[100vh] w-[100vw] rounded-none bg-white' : ''
 			)}
 		>
@@ -170,7 +141,7 @@
 							disabled={!editor.can().chain().focus().undo().run()}
 							aria-label="undo"
 						>
-							<Undo />
+							<Undo {size} />
 						</button>
 						<button
 							class="button editor__button"
@@ -179,13 +150,20 @@
 							disabled={!editor.can().chain().focus().redo().run()}
 							aria-label="redo"
 						>
-							<Redo />
+							<Redo {size} />
 						</button>
 					</div>
 					<div class="editor__buttons text-buttons">
 						<Popover class="w-fit p-2" align="start">
-							{#snippet trigger()}
-								<button class="button editor__button" type="button">text</button>
+							{#snippet trigger({ props, setOpen })}
+								<button
+									{...props}
+									class="button editor__button"
+									type="button"
+									onclick={() => {
+										setOpen(true);
+									}}><Type {size} /></button
+								>
 							{/snippet}
 
 							<div class="editor__buttons editor__button--popover">
@@ -195,7 +173,7 @@
 									onclick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
 									class:active={editor.isActive('heading', { level: 1 })}
 								>
-									h1
+									<Heading1 {size} />
 								</button>
 								<button
 									class="button editor__button"
@@ -203,7 +181,7 @@
 									onclick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
 									class:active={editor.isActive('heading', { level: 2 })}
 								>
-									h2
+									<Heading2 {size} />
 								</button>
 								<button
 									class="button editor__button"
@@ -211,7 +189,7 @@
 									onclick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
 									class:active={editor.isActive('heading', { level: 3 })}
 								>
-									h3
+									<Heading3 {size} />
 								</button>
 								<button
 									class="button editor__button"
@@ -219,7 +197,7 @@
 									onclick={() => editor?.chain().focus().toggleHeading({ level: 4 }).run()}
 									class:active={editor.isActive('heading', { level: 4 })}
 								>
-									h4
+									<Heading4 {size} />
 								</button>
 								<button
 									class="button editor__button"
@@ -227,7 +205,7 @@
 									onclick={() => editor?.chain().focus().toggleHeading({ level: 5 }).run()}
 									class:active={editor.isActive('heading', { level: 5 })}
 								>
-									h5
+									<Heading5 {size} />
 								</button>
 								<button
 									class="button editor__button"
@@ -235,7 +213,7 @@
 									onclick={() => editor?.chain().focus().toggleHeading({ level: 6 }).run()}
 									class:active={editor.isActive('heading', { level: 6 })}
 								>
-									h6
+									<Heading6 {size} />
 								</button>
 								<button
 									class="button editor__button"
@@ -243,32 +221,18 @@
 									onclick={() => editor?.chain().focus().setParagraph().run()}
 									class:active={editor.isActive('paragraph')}
 								>
-									p
+									<Pilcrow {size} />
 								</button>
+
 								<button
 									class="button editor__button"
-									type="button"
-									onclick={() => editor?.chain().focus().toggleBlockquote().run()}
-									class:active={editor.isActive('blockquote')}
-								>
-									"
-								</button>
-								<button
-									class="button editor__button"
-									type="button"
-									onclick={() => editor?.chain().focus().setHardBreak().run()}
-								>
-									br
-								</button>
-								<button
-									class="button editor__button editor__button--bold"
 									type="button"
 									onclick={() => editor?.chain().focus().toggleBold().run()}
 									disabled={!editor.can().chain().focus().toggleBold().run()}
 									class:active={editor.isActive('bold')}
 									aria-label="set bold text"
 								>
-									B
+									<Bold {size} />
 								</button>
 								<button
 									class="button editor__button editor__button--italic"
@@ -278,7 +242,22 @@
 									class:active={editor.isActive('italic')}
 									aria-label="set italic text"
 								>
-									I
+									<Italic {size} />
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().toggleBlockquote().run()}
+									class:active={editor.isActive('blockquote')}
+								>
+									<Quote {size} />
+								</button>
+								<button
+									class="button editor__button"
+									type="button"
+									onclick={() => editor?.chain().focus().setHardBreak().run()}
+								>
+									<WrapText {size} />
 								</button>
 							</div>
 						</Popover>
@@ -290,21 +269,21 @@
 							type="button"
 							aria-label="align left"
 							onclick={() => editor?.chain().focus().setTextAlign('left').run()}
-							><AlignLeft /></button
+							><AlignLeft {size} /></button
 						>
 						<button
 							class="button editor__button"
 							class:active={editor.isActive({ textAlign: 'center' })}
 							type="button"
 							onclick={() => editor?.chain().focus().setTextAlign('center').run()}
-							aria-label="align center"><AlignCenter /></button
+							aria-label="align center"><AlignCenter {size} /></button
 						>
 						<button
 							class="button editor__button"
 							class:active={editor.isActive({ textAlign: 'right' })}
 							type="button"
 							onclick={() => editor?.chain().focus().setTextAlign('right').run()}
-							aria-label="align right"><AlignRight /></button
+							aria-label="align right"><AlignRight {size} /></button
 						>
 					</div>
 					<div class="editor__buttons">
@@ -315,7 +294,7 @@
 							class:active={editor.isActive('bulletList')}
 							aria-label="unordered list"
 						>
-							<List />
+							<List {size} />
 						</button>
 						<button
 							class="button editor__button"
@@ -324,7 +303,7 @@
 							class:active={editor.isActive('orderedList')}
 							aria-label="ordered list"
 						>
-							<ListOrdered />
+							<ListOrdered {size} />
 						</button>
 					</div>
 					<div class="editor__buttons">
@@ -335,7 +314,7 @@
 							disabled={!editor.can().sinkListItem('listItem')}
 							aria-label="make nested list item"
 						>
-							<IndentIncrease />
+							<IndentIncrease {size} />
 						</button>
 						<button
 							class="button editor__button"
@@ -344,102 +323,165 @@
 							disabled={!editor.can().liftListItem('listItem')}
 							aria-label="undo nested list item"
 						>
-							<IndentDecrease />
+							<IndentDecrease {size} />
 						</button>
 					</div>
 					<div class="editor__buttons">
 						<div class="editor__wrapper">
-							{#snippet linkPopoverButton()}
-								<button
-									class="button editor__button"
-									type="button"
-									onclick={() => {
-										showLinkPopover = true;
-										linkUrl = editor?.getAttributes('link').href ?? '';
-									}}
-									class:active={editor?.isActive('link')}
-									aria-label="add link"
-								>
-									<Link />
-								</button>
-							{/snippet}
-
-							<!-- <Popover
-								bind:show={showLinkPopover}
-								oncancel={handleCloseLinkPopover}
-								onconfirm={handleConfirmAddLink}
-								disableAutoHide
-								button={linkPopoverButton}
-							>
-								<div class="editor__popover-container">
-									<Input
-										name="link"
-										label="URL:"
-										placeholder="https://example.net"
-										bind:value={linkUrl}
-									/>
+							<Popover bind:open={addLinkOpen}>
+								{#snippet trigger({ props })}
+									<button
+										{...props}
+										class="button editor__button"
+										type="button"
+										onclick={() => {
+											linkUrl = editor?.getAttributes('link').href ?? '';
+											addLinkOpen = true;
+										}}
+										class:active={editor?.isActive('link')}
+										aria-label="add link"
+									>
+										<Link {size} />
+									</button>
+								{/snippet}
+								<div class="grid gap-5">
+									<div class="grid gap-2">
+										<Label for="inputLinkUrl">URL:</Label>
+										<Input
+											id="inputLinkUrl"
+											type="text"
+											name="link"
+											placeholder="https://example.net"
+											bind:value={linkUrl}
+										/>
+									</div>
+									<Button
+										class="w-fit justify-self-end"
+										type="button"
+										onclick={() => {
+											handleSetLink();
+											addLinkOpen = false;
+										}}
+									>
+										Add Link
+									</Button>
 								</div>
-							</Popover> -->
+							</Popover>
 						</div>
 						<div class="editor__wrapper">
-							{#snippet imagePopoverButton()}
-								<button
-									class="button editor__button"
-									type="button"
-									aria-label="add image"
-									onclick={() => {
-										showImagePopover = true;
-									}}><Image /></button
-								>
-							{/snippet}
+							<Popover bind:open={addImageOpen}>
+								{#snippet trigger({ props })}
+									<button
+										{...props}
+										class="button editor__button"
+										type="button"
+										aria-label="add image"
+										onclick={() => {
+											addImageOpen = true;
+										}}
+									>
+										<Image {size} />
+									</button>
+								{/snippet}
 
-							<!-- <Popover
-								bind:show={showImagePopover}
-								oncancel={handleCloseImagePopover}
-								onconfirm={handleConfirmAddImage}
-								disableAutoHide
-								button={imagePopoverButton}
-							>
-								<div class="editor__popover-container editor__popover-container--url">
-									<Input
-										name="image"
-										label="URL:"
-										placeholder="https://example.net"
-										bind:value={imageUrl}
-									/>
-									<UploadWidget
+								<div class="grid gap-5">
+									<div class="grid gap-2">
+										<Label for="imageUrl">URL:</Label>
+										<Input
+											id="imageUrl"
+											name="image"
+											placeholder="https://example.net"
+											bind:value={imageUrl}
+										/>
+									</div>
+									<!-- <UploadWidget
 										onSuccess={(result) => {
 											imageUrl = result;
 										}}
 										getFullPath
 									>
-										<Upload />
-									</UploadWidget>
+										<Upload {size} />
+									</UploadWidget> -->
+									<div class="grid gap-2">
+										<Label for="imageAlt">Alt attribute</Label>
+										<Input
+											id="ImageTrackList"
+											name="alt"
+											placeholder="Alt attribute text"
+											bind:value={imageAlt}
+										/>
+									</div>
+									<Button
+										class="w-fit justify-self-end"
+										type="button"
+										onclick={() => {
+											handleAddImages();
+											addImageOpen = false;
+											imageUrl = '';
+											imageAlt = '';
+										}}
+									>
+										Add Image
+									</Button>
 								</div>
-								<Input
-									name="alt"
-									label="Alt attribute:"
-									placeholder="Alt attribute text"
-									bind:value={imageAlt}
-								/>
-							</Popover> -->
+							</Popover>
 						</div>
 					</div>
 					<div class="editor__buttons">
-						<button
-							class="button editor__button"
-							type="button"
-							aria-label="open HTML source editor"
-							onclick={handleOpenHTMLEditorModal}
+						<Dialog
+							class="flex h-[80%] w-[80%] flex-col p-10 pb-5 sm:max-w-[80%]"
+							bind:open={codeEditorOpen}
 						>
-							<CodeXml />
-						</button>
+							{#snippet trigger({ props })}
+								<button
+									{...props}
+									class="button editor__button"
+									type="button"
+									aria-label="open HTML source editor"
+									onclick={() => {
+										sourceHTML = editor?.getHTML() ?? '';
+										codeEditorOpen = true;
+									}}
+								>
+									<CodeXml {size} />
+								</button>
+							{/snippet}
+
+							<div class="html__field">
+								<Textarea
+									class="h-full resize-none"
+									name="sourceHTML"
+									placeholder=""
+									bind:value={sourceHTML}
+								/>
+							</div>
+
+							{#snippet footer()}
+								<div class="flex gap-5">
+									<Button
+										type="button"
+										class={cn(buttonVariants({ variant: 'outline' }), 'text-black')}
+										onclick={() => {
+											codeEditorOpen = false;
+										}}>Cancel</Button
+									>
+									<Button type="button" onclick={handleConfirmEditHTML}>Save</Button>
+								</div>
+							{/snippet}
+						</Dialog>
+
 						<button
 							class="button editor__button"
 							type="button"
 							aria-label="toggle fullscreen"
-							onclick={handleFullscreenMode}><Expand /></button
+							onclick={handleFullscreenMode}
 						>
+							{#if isFullscreenMode}
+								<Shrink {size} />
+							{:else}
+								<Expand {size} />
+							{/if}
+						</button>
 					</div>
 				</div>
 			{/if}
@@ -449,9 +491,6 @@
 			<input id="content-{name}" type="hidden" {name} bind:value={derivedValue} />
 		</div>
 	</div>
-	{#if errors}
-		<p class="absolute top-[calc(100%_-_22px)]">{errors[0]}</p>
-	{/if}
 </div>
 
 <style lang="postcss">
@@ -467,48 +506,18 @@
 
 	.editor__button,
 	.editor :global(.cld-upload) {
-		display: grid;
-		place-items: center;
-		border: var(--border);
-		border-radius: 8px;
-		background-color: transparent;
-		padding: 2px;
-		width: 34px;
-		height: 34px;
-		color: var(--color--black);
-		font-weight: 400;
-		--color--icon: var(--color--black);
+		@apply border-1 grid size-10 place-items-center rounded-md border-transparent bg-transparent p-1 text-black;
 	}
 
 	.editor :global(.cld-upload:hover),
 	.editor :global(.cld-upload:focus-visible),
 	.editor__button:hover,
 	.editor__button:focus-visible {
-		background-color: var(--color--black);
-		color: var(--color--white);
-		--color--icon: var(--color--white);
+		@apply border-black bg-black text-white;
 	}
 
 	.editor__button:disabled {
-		@apply text-neutral-300;
-
-		& :global(svg) {
-			--color--icon: var(--color--black-15);
-		}
-	}
-	.editor__button:disabled:hover {
-		background-color: var(--color--white);
-	}
-
-	.editor__button--bold {
-		font-weight: 700;
-		font-size: 18px;
-	}
-
-	.editor__button--italic {
-		font-style: italic;
-		font-size: 18px;
-		font-family: 'Times New Roman', Times, serif;
+		@apply border-transparent bg-white text-neutral-300;
 	}
 
 	.active,
@@ -518,17 +527,7 @@
 	}
 
 	.editor__element {
-		padding: 20px;
-		min-height: 200px;
-		max-height: 600px;
-		overflow-y: auto;
-	}
-
-	.editor__popover-container--url {
-		display: grid;
-		grid-template-columns: 1fr 36px;
-		align-items: center;
-		gap: 10px;
+		@apply max-h-[600px] min-h-[200px] overflow-y-auto p-5;
 	}
 
 	.html__field,
@@ -542,16 +541,8 @@
 		resize: none;
 	}
 
-	.html__controls {
-		display: flex;
-		justify-content: flex-end;
-		gap: 10px;
-	}
-
 	:global(.editor__element > div) {
-		outline: 0;
-		height: 100%;
-		min-height: inherit;
+		@apply h-full min-h-full outline-0;
 	}
 
 	:global(.editor__element h1),
@@ -561,7 +552,7 @@
 	:global(.editor__element h5),
 	:global(.editor__element h6),
 	:global(.editor__element p) {
-		padding: 10px 0;
+		@apply px-0 py-4;
 	}
 
 	:global(.editor__element h1) {
@@ -589,76 +580,36 @@
 	}
 
 	:global(.editor__element blockquote) {
-		margin: 20px 20px 20px 40px;
-		border-left: 2px solid var(--color--gray-85);
-		padding: 20px 0 20px 20px;
+		@apply m-5 ml-10 border-2 border-neutral-500 p-5 pr-0;
 	}
 
 	:global(.editor__element blockquote > p) {
-		padding: 5px 0;
+		@apply px-0 py-2;
 	}
 	:global(.editor__element ul) {
-		margin: 20px 0 20px 40px;
+		@apply my-5 ml-10 mr-0;
 	}
 
 	:global(.editor__element ol) {
-		margin: 20px 0;
+		@apply mx-0 my-5;
 	}
 	:global(.editor__element ul li) {
-		margin: 10px 0;
-		list-style-type: disc;
+		@apply mx-0 my-2 list-none;
 	}
 
 	:global(.editor__element ol li) {
-		margin: 10px 0;
-		list-style-type: decimal;
+		@apply mx-0 my-2 list-decimal;
 	}
 
 	:global(.editor__element img) {
-		display: block;
-		padding: 20px 0;
-		width: 500px;
+		@apply block w-[500px] px-0 py-5;
 	}
 
 	:global(.editor__element a) {
-		color: var(--color--primary);
+		@apply text-[var(--color--primary)];
 	}
 
 	.editor__container--fullscreen .editor__element {
 		max-height: calc(100% - 39px);
-	}
-
-	.editor :global(.popover) {
-		top: 75px;
-		left: 50%;
-		translate: -50% 0;
-		width: 85vw;
-	}
-
-	.editor__popover-container {
-		display: grid;
-		gap: 10px;
-	}
-
-	.editor__button--popover {
-		flex-wrap: wrap;
-	}
-
-	@media (min-width: 1360px) {
-		.editor__wrapper {
-			position: relative;
-		}
-		.editor__buttons {
-			border-right: var(--border);
-		}
-		.editor__button--popover {
-			flex-wrap: nowrap;
-		}
-		.editor :global(.popover) {
-			top: 110%;
-			left: -14px;
-			translate: 0;
-			width: 500px;
-		}
 	}
 </style>

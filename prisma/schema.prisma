@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,7 +21,6 @@ model Bio {
   title     String  @unique
   slug      String  @unique
   image     String
-  thumbnail String
   epigraph  String
   content   String
 }
@@ -46,7 +44,6 @@ model Section {
   subtitle  String
   createdAt DateTime  @default(now())
   image     String
-  thumbnail String
   altTitle  String
   content   String
   projects  Project[]
@@ -63,7 +60,6 @@ model Project {
   preview          String
   previewThumbnail String
   image            String
-  thumbnail        String
   subtitle         String
   content          String
 }

@@ -1,9 +1,9 @@
-import { db } from '$/lib/database';
+import { prisma } from '$lib/db';
 import type { MenuType } from '$/lib/types';
 
 export const getMainMenuData = async (): Promise<MenuType[] | undefined> => {
 	try {
-		await db.section.findMany({
+		await prisma.section.findMany({
 			where: { published: true },
 			select: { id: true, title: true, order: true, slug: true }
 		});
@@ -15,7 +15,7 @@ export const getMainMenuData = async (): Promise<MenuType[] | undefined> => {
 
 export const getSocialMenuData = async () => {
 	try {
-		return await db.social.findMany();
+		return await prisma.social.findMany();
 	} catch (e) {
 		console.log(e);
 	}

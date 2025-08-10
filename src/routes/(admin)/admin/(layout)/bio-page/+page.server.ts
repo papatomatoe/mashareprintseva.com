@@ -1,43 +1,33 @@
-import { db } from '$/lib/database';
-import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { addBioPageData, getBioPageAdminData } from '$/lib/services/bio';
+import { fail, message, superValidate } from 'sveltekit-superforms';
+import { bioPageSchema, type BioPageSchemaType } from '$/lib/validators/bio';
+import { zod } from 'sveltekit-superforms/adapters';
+import type { BioPageType, FormMessageType } from '$/lib/types';
 
-export const load = (async ({ locals }) => {
-	if (!locals.user) redirect(302, '/admin/login');
+export const load: PageServerLoad = async () => {
+	const bio = await getBioPageAdminData();
 
-	const bio = await db.bio.findFirst();
+	const form = await superValidate(bio, zod(bioPageSchema));
 
-	return { bio, pageTitle: 'Admin | Bio Page' };
-}) satisfies PageServerLoad;
+	return { form, pageTitle: 'Admin | Bio Page' };
+};
 
 export const actions = {
 	default: async ({ request }) => {
-		const data = await request.formData();
+		const form = await superValidate<BioPageSchemaType, FormMessageType>(
+			request,
+			zod(bioPageSchema)
+		);
 
-		const published = Boolean(data.get('published'));
-		const content = data.get('content');
-		const image = data.get('image');
-		const thumbnail = data.get('thumbnail');
-		const epigraph = data.get('epigraph');
-
-		if (
-			typeof content !== 'string' ||
-			typeof image !== 'string' ||
-			typeof epigraph !== 'string' ||
-			typeof thumbnail !== 'string'
-		) {
-			return fail(400, { invalid: true });
+		if (!form.valid) {
+			return fail(400, { form });
 		}
 
-		try {
-			await db.bio.upsert({
-				where: { title: 'bio' },
-				update: { published, content, image, epigraph, thumbnail },
-				create: { title: 'bio', slug: 'bio', content, published, image, epigraph, thumbnail }
-			});
-			return { success: true };
-		} catch (e) {
-			return fail(400, { success: false });
-		}
+		const response = await addBioPageData(form.data as BioPageType);
+
+		if (!response) return message(form, { status: 'error', text: 'Saving data error' });
+
+		return message(form, { status: 'success', text: 'Bio Page data has been saved' });
 	}
 } satisfies Actions;

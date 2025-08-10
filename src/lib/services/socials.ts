@@ -1,10 +1,10 @@
-import { db } from '$/lib/database';
+import { prisma } from '$lib/db';
 import { getPrismaError } from '$lib/services/error';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const getSocials = async () => {
 	try {
-		const socials = await db.social.findMany();
+		const socials = await prisma.social.findMany();
 
 		return socials;
 	} catch (e) {
@@ -14,7 +14,7 @@ export const getSocials = async () => {
 
 export const createSocial = async (data: any) => {
 	try {
-		await db.social.create({ data });
+		await prisma.social.create({ data });
 
 		return { success: true };
 	} catch (e) {
@@ -27,7 +27,7 @@ export const createSocial = async (data: any) => {
 
 export const deleteSocial = async (id: string) => {
 	try {
-		await db.social.delete({ where: { id } });
+		await prisma.social.delete({ where: { id } });
 
 		return { success: true };
 	} catch (e) {
@@ -40,7 +40,7 @@ export const deleteSocial = async (id: string) => {
 
 export const updateSocial = async (id: string, data: any) => {
 	try {
-		await db.social.update({ where: { id }, data });
+		await prisma.social.update({ where: { id }, data });
 		return { success: true };
 	} catch (e) {
 		console.error(e);

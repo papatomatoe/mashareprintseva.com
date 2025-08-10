@@ -1,9 +1,9 @@
-import { db } from '$/lib/database';
+import { prisma } from '$lib/db';
 import type { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { getPrismaError } from '$lib/services/error';
 export const getAllProjects = async () => {
 	try {
-		const projects = await db.project.findMany();
+		const projects = await prisma.project.findMany();
 		return projects;
 	} catch (e) {
 		console.error(e);
@@ -11,8 +11,8 @@ export const getAllProjects = async () => {
 };
 export const getProjects = async (page = 0, perPage = 10) => {
 	try {
-		const total = await db.project.count();
-		const projects = await db.project.findMany({
+		const total = await prisma.project.count();
+		const projects = await prisma.project.findMany({
 			take: perPage,
 			skip: page * perPage,
 			orderBy: { createdAt: 'asc' },
@@ -26,7 +26,7 @@ export const getProjects = async (page = 0, perPage = 10) => {
 };
 export const getProject = async (id: string) => {
 	try {
-		const project = await db.project.findUnique({ where: { id }, include: { section: true } });
+		const project = await prisma.project.findUnique({ where: { id }, include: { section: true } });
 		return project;
 	} catch (e) {
 		console.error(e);
@@ -35,7 +35,7 @@ export const getProject = async (id: string) => {
 export const createProject = async (data: any) => {
 	const { section, ...projectData } = data;
 	try {
-		await db.project.create({
+		await prisma.project.create({
 			data: { ...projectData, ...(section?.id && { section: { connect: { id: section.id } } }) }
 		});
 
@@ -51,7 +51,7 @@ export const updateProject = async (id: string, data: any) => {
 	const { section, ...projectData } = data;
 
 	try {
-		await db.project.update({
+		await prisma.project.update({
 			where: { id },
 			data: {
 				...projectData,
@@ -71,7 +71,7 @@ export const updateProject = async (id: string, data: any) => {
 
 export const getProjectBySlug = async (slug: string) => {
 	try {
-		return await db.project.findUnique({
+		return await prisma.project.findUnique({
 			where: { slug, published: true },
 			select: {
 				title: true,

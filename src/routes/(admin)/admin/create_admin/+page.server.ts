@@ -30,10 +30,10 @@ export const actions: Actions = {
 		} catch (error) {
 			if (error instanceof APIError) {
 				console.log('====SvelteKit====', error);
-				return message(form, { status: 'error', message: error.message });
+				return message(form, { status: 'error', text: error.message });
 			}
 
-			return message(form, { status: 'error', message: 'Signup Error' });
+			return message(form, { status: 'error', text: 'Signup Error' });
 		}
 
 		return redirect(302, '/admin/dashboard');

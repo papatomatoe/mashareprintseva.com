@@ -37,9 +37,9 @@ export const actions: Actions = {
 			});
 		} catch (error) {
 			if (error instanceof APIError) {
-				return message(form, { status: 'error', message: error.message });
+				return message(form, { status: 'error', text: error.message });
 			}
-			return message(form, { status: 'error', message: 'Login Error' });
+			return message(form, { status: 'error', text: 'Login Error' });
 		}
 
 		return redirect(302, '/admin/dashboard');
