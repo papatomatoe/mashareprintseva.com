@@ -40,40 +40,40 @@
 <style>
 	.section {
 		display: block;
-		padding-top: 20px;
-		height: 100%;
 
 		border-top: 1px solid var(--color--gray-85);
+		padding-top: 20px;
+		height: 100%;
 	}
 	.section__title {
 		margin-bottom: 50px;
+		color: var(--color--black);
+		font-style: normal;
 
 		font-weight: bold;
 		font-size: 28px;
 		line-height: 1.5;
 		font-family: var(--font--secondary);
-		color: var(--color--black);
-		font-style: normal;
 	}
 	.section__subtitle {
 		margin-bottom: 60px;
+		color: var(--color--gray-50);
+		font-style: normal;
 		font-weight: bold;
 		font-size: 14px;
 		line-height: 1.5;
 		font-family: var(--font--secondary);
-		color: var(--color--gray-50);
-		font-style: normal;
 	}
 	.section__description {
-		padding-bottom: 30px;
 		margin-bottom: 50px;
 		border-bottom: 1px solid var(--color--gray-85);
+		padding-bottom: 30px;
 	}
 	.section__image {
-		width: 100%;
-		overflow: hidden;
 		position: relative;
 		margin-bottom: 70px;
+		width: 100%;
+		overflow: hidden;
 	}
 
 	.section__no-projects {
@@ -95,20 +95,20 @@
 		}
 		.section__description {
 			display: grid;
-			align-items: start;
 
 			grid-template-columns: min-content 1fr;
-			margin-top: 45px;
-			padding-bottom: 60px;
+			align-items: start;
 
 			gap: 50px;
+			margin-top: 45px;
+			padding-bottom: 60px;
 		}
 		.section__image {
+			position: relative;
+			grid-row: 1 / -1;
 			width: 237px;
 			height: 316px;
 			overflow: hidden;
-			position: relative;
-			grid-row: 1 / -1;
 		}
 
 		.section__no-projects {
@@ -121,8 +121,8 @@
 	}
 	@media (min-width: 1200px) {
 		.section {
-			width: 100%;
 			border: none;
+			width: 100%;
 		}
 		.section__description {
 			gap: 70px;

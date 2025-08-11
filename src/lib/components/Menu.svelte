@@ -37,12 +37,12 @@
 	}
 
 	.link {
+		color: var(--color--gray-95);
+		font-style: normal;
 		font-weight: normal;
 		font-size: 17px;
 		line-height: 1.5;
 		font-family: var(--font--secondary);
-		color: var(--color--gray-95);
-		font-style: normal;
 		text-transform: lowercase;
 	}
 
@@ -53,10 +53,10 @@
 	@media (min-width: 768px) {
 		.menu {
 			display: flex;
-			width: 100%;
-			align-items: center;
 			justify-content: space-between;
+			align-items: center;
 			gap: 20px;
+			width: 100%;
 		}
 
 		.menu__item {
@@ -68,8 +68,8 @@
 		}
 
 		.link {
-			font-size: 14px;
 			color: var(--color--gray-30);
+			font-size: 14px;
 		}
 
 		.link--current {
@@ -91,15 +91,14 @@
 		}
 
 		.link {
-			font-size: 17px;
 			transition: color 0.3s linear;
+			font-size: 17px;
 		}
 
 		.link:not(.link--current):hover,
 		.link:not(.link--current):focus-visible {
-			color: var(--color--primary);
-
 			transition: color 0.3s linear;
+			color: var(--color--primary);
 		}
 
 		.link:not(.link--current):active {

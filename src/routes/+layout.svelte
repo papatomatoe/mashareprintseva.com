@@ -38,25 +38,24 @@
 
 <style>
 	.container {
+		display: flex;
 		position: relative;
 		top: 0;
-		z-index: 0;
-
-		display: flex;
 		flex-grow: 1;
 		flex-direction: column;
 		justify-content: space-between;
+		z-index: 0;
 
 		transition: top 0.2s linear;
 	}
 
 	.content {
-		width: 87%;
-		margin: 0 auto;
-		padding-top: 0px;
-		align-items: center;
 		flex-grow: 1;
+		align-items: center;
+		margin: 0 auto;
 		border-top: 1px solid var(--color--gray-85);
+		padding-top: 0px;
+		width: 87%;
 	}
 	@media (min-width: 768px) {
 		.container {
@@ -68,14 +67,14 @@
 	}
 	@media (min-width: 1200px) {
 		.container {
-			width: 960px;
 			margin: 0 auto;
 
 			border-top: 1px solid var(--color--gray-85);
+			width: 960px;
 		}
 		.content {
-			width: 100%;
 			border: none;
+			width: 100%;
 		}
 	}
 </style>

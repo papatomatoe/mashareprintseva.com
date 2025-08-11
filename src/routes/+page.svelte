@@ -19,9 +19,9 @@
 
 <style>
 	.main-page {
+		margin: 0 auto;
 		padding-top: 20px;
 		height: 100%;
-		margin: 0 auto;
 	}
 
 	.main-page__content {
@@ -31,9 +31,9 @@
 	}
 
 	:global(.main-page__content img) {
-		object-position: 40% 0;
-		object-fit: cover;
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
+		object-position: 40% 0;
 	}
 </style>

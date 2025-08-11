@@ -31,25 +31,25 @@
 		height: 100%;
 	}
 	.projects__title {
+		color: var(--color--gray-30);
+		font-style: normal;
 		font-weight: bold;
 		font-size: 17px;
 		line-height: 24px;
 		font-family: var(--font--secondary);
-		color: var(--color--gray-30);
-		font-style: normal;
 	}
 	.projects__image {
+		position: relative;
 		width: 100%;
 		overflow: hidden;
-		position: relative;
 	}
 
 	@media (min-width: 768px) {
 		.projects {
 			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
 
 			gap: 25px;
-			grid-template-columns: 1fr 1fr 1fr;
 		}
 		.projects__item {
 			margin-bottom: 0;

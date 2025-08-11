@@ -32,25 +32,25 @@
 
 <style>
 	.header {
+		display: grid;
 		position: sticky;
 		top: 0;
-		z-index: 10;
-		padding: 20px 0 15px;
-		background-color: var(--color--white);
-		margin: 0 auto;
-		display: grid;
-		width: 87%;
-		border-top: none;
 		grid-template-columns: 2fr auto;
+		z-index: 10;
+		margin: 0 auto;
+		border-top: none;
+		background-color: var(--color--white);
+		padding: 20px 0 15px;
+		width: 87%;
 	}
 	.header__logo {
 		display: block;
 		height: auto;
 	}
 	.header__button {
-		padding: 0 10px;
-		background-color: transparent;
 		border: none;
+		background-color: transparent;
+		padding: 0 10px;
 	}
 	.header__button svg {
 		stroke-width: 3;
@@ -64,12 +64,12 @@
 
 	@media (min-width: 768px) {
 		.header {
-			padding-top: 30px;
-			padding-bottom: 20px;
+			grid-template-rows: 1fr 1fr;
+			grid-template-columns: none;
 
 			gap: 10px;
-			grid-template-columns: none;
-			grid-template-rows: 1fr 1fr;
+			padding-top: 30px;
+			padding-bottom: 20px;
 		}
 
 		.header__button {
@@ -79,18 +79,18 @@
 
 	@media (min-width: 1200px) {
 		.header {
-			padding-top: 50px;
-			padding-bottom: 30px;
-			padding-left: 10px;
-			padding-right: 10px;
-
-			border: none;
-
-			width: 1140px;
+			grid-template-rows: none;
+			grid-template-columns: 210px auto;
 
 			gap: 0;
-			grid-template-columns: 210px auto;
-			grid-template-rows: none;
+
+			border: none;
+			padding-top: 50px;
+			padding-right: 10px;
+			padding-bottom: 30px;
+			padding-left: 10px;
+
+			width: 1140px;
 		}
 		.header__logo {
 			transition: opacity 0.3s linear;

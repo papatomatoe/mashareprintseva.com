@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { Action } from 'svelte/action';
-
 	type Props = {
 		class?: string;
 		src: string;
@@ -51,8 +49,8 @@
 	}
 
 	img {
+		transition: all 0.3s;
 		width: 100%;
 		height: auto;
-		transition: all 0.3s;
 	}
 </style>

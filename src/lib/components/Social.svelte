@@ -34,9 +34,9 @@
 
 <style>
 	.social__wrapper {
+		position: relative;
 		width: 25px;
 		height: 25px;
-		position: relative;
 		overflow: hidden;
 	}
 

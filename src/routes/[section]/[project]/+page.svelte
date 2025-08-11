@@ -43,55 +43,55 @@
 	}
 
 	.project__title {
-		width: 100%;
 		margin: 0 auto;
 		margin-bottom: 50px;
 		padding-top: 15px;
+		width: 100%;
+		color: var(--color--black);
+		font-style: normal;
 
 		font-weight: 700;
 		font-size: 28px;
 		line-height: 1.5;
 		font-family: var(--font--secondary);
-		color: var(--color--black);
-		font-style: normal;
 	}
 
 	.project__image {
 		position: relative;
+		margin-bottom: 100px;
 		width: 100%;
 		overflow: hidden;
-		margin-bottom: 100px;
 	}
 
 	.projects {
-		padding-top: 50px;
 		margin-top: 100px;
-		padding-bottom: 20px;
 		border-top: 1px solid var(--color--gray-85);
+		padding-top: 50px;
+		padding-bottom: 20px;
 	}
 	@media (min-width: 768px) {
 		.project {
-			width: 90%;
 			margin: 0 auto;
 			padding-top: 50px;
+			width: 90%;
 		}
 		.project__wrapper {
 			margin-bottom: 100px;
 		}
 		.project__title {
-			font-size: 46px;
+			align-self: center;
 			margin-bottom: 85px;
 			padding-top: 0;
-			align-self: center;
 
 			font-weight: 400;
+			font-size: 46px;
 		}
 
 		.project__image {
-			grid-column: 2 / -1;
 			grid-row: 1 / 3;
-			height: fit-content;
+			grid-column: 2 / -1;
 			margin-bottom: 0;
+			height: fit-content;
 		}
 
 		.project__image :global(picture) {
@@ -105,9 +105,9 @@
 	}
 	@media (min-width: 1200px) {
 		.project {
-			width: 100%;
-			padding-top: 150px;
 			border-top: none;
+			padding-top: 150px;
+			width: 100%;
 		}
 		.project__wrapper {
 			display: grid;
@@ -123,9 +123,9 @@
 
 		.project__image {
 			position: relative;
+			margin-bottom: 100px;
 			width: 100%;
 			overflow: hidden;
-			margin-bottom: 100px;
 		}
 	}
 </style>
