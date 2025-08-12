@@ -10,28 +10,28 @@ subtitle: <a href="https://handembroidery.com/the-prize/prize-2020-categories/op
 
 Nature, as represented by a variety of species, types and structures, unveils its world in a dreamy dance where colours and textures play their solo parts. It inspires humans to make marvellous designs, to capture the look of nature's wild blossoming on a textile surface.
 
-![handwork stitching on a frame](/images/the-song-of-a-thistle_1.avif)
+![handwork stitching on a frame](/images/the-song-of-a-thistle_1)
 
-![sloper fitting](/images/the-song-of-a-thistle_2.avif)
+![sloper fitting](/images/the-song-of-a-thistle_2)
 
-![flare skirt](/images/the-song-of-a-thistle_3.avif)
+![flare skirt](/images/the-song-of-a-thistle_3)
 
 The mind transforms this picture into the sensual sensation of Nature. Organic resources serve to realise the work, becoming threads, fabrics and dyes – referencing the natural "roots".
 
-![the back side of a dress](/images/the-song-of-a-thistle_4.avif)
+![the back side of a dress](/images/the-song-of-a-thistle_4)
 
-![the inside elements of the dress](/images/the-song-of-a-thistle_5.avif)
+![the inside elements of the dress](/images/the-song-of-a-thistle_5)
 
 Watching the blooming meadow, I associate flowers herbs with some traits of human character, keeping the story told in the background by floral poetics and symbols, colour meaning – the allegories found in works of Pre-Raphaelite.
 
-![embroidered flare skirt](/images/the-song-of-a-thistle_6.avif)
+![embroidered flare skirt](/images/the-song-of-a-thistle_6)
 
-![the bodice embroidered with herbal design](/images/the-song-of-a-thistle_7.avif)
+![the bodice embroidered with herbal design](/images/the-song-of-a-thistle_7)
 
 The iconic and recognisable New Look silhouette by Dior is influential in the construction, emphasising femininity and the natural beauty of the body. The delicacy of fabrics blending with the complexity of texture, materials and techniques, create an effect whereby the floral corset wraps the waist, presenting the female as the gem of the bouquet.
 
-![the inside elements of the dress](/images/the-song-of-a-thistle_8.avif)
+![the inside elements of the dress](/images/the-song-of-a-thistle_8)
 
 It reflects an imaginative colour subsistence as seen through my eyes, this feeling of the connection between Nature and human, and the freedom, consciousness, beauty and deep care for the natural resources granted to us.
 
-![full size embroidered dress](/images/the-song-of-a-thistle_9.avif)
+![full size embroidered dress](/images/the-song-of-a-thistle_9)
