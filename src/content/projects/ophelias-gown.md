@@ -1,7 +1,7 @@
 ---
 title: Ophelia's Gown
 slug: ophelias-gown
-published: false
+published: true
 section: tailoring
 image: /images/ophelias-gown
 preview: /images/ophelias-gown_prw
@@ -24,8 +24,10 @@ The image of Ophelia is outstandingly lyric and full of symbolism and metaphors.
 
 This gown is inspired by the story of Ophelia‘s love and tragedy.
 
-![full size embroidered dress](/images/ophelias-gown_6)
+![a fragment of an embroidery](/images/ophelias-gown_6)
 
 ![full size embroidered dress](/images/ophelias-gown_7)
+
+![full size embroidered dress](/images/ophelias-gown_8)
 
 The image of violet is a metaphor that keeps her sadness, dreams, and hopes, deep shades of purple reveal her sorrow and pain.

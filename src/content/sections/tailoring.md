@@ -11,6 +11,7 @@ projects:
   - the-song-of-a-thistle
   - floras-gown
   - the-nymphaea
+  - the-molecule-of-a-cubic-heart
 ---
 
 Tailoring has always been very special to me.
