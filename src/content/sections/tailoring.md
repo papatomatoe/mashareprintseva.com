@@ -14,6 +14,7 @@ projects:
   - the-molecule-of-a-cubic-heart
   - in-embrace-of-gillyflowers
   - citronnier
+  - glasgow-rose
 ---
 
 Tailoring has always been very special to me.
