@@ -20,7 +20,7 @@
 		{/if}
 
 		<div class="project__image">
-			<Picture src={project.image} alt={project.title} width="326" height="489" />
+			<Picture src={project.image} alt={project.title} width="326" height="489" loading="eager" />
 		</div>
 	</div>
 	<div class="project__content">

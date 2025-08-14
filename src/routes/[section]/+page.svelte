@@ -19,7 +19,7 @@
 			<h2 class="v-h">Section description</h2>
 
 			<div class="section__image">
-				<Picture src={section.image} alt={section.title} width="326" height="436" />
+				<Picture src={section.image} alt={section.title} width="326" height="436" loading="eager" />
 			</div>
 			<div class="section__content">
 				<Content />
