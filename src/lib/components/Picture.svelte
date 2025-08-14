@@ -5,31 +5,32 @@
 		alt: string;
 		width: string;
 		height: string;
+		loading?: 'lazy' | 'eager' | null;
 	};
 
-	let { class: className, src, alt, height, width }: Props = $props();
+	let { class: className, src, alt, height, width, loading = 'lazy' }: Props = $props();
 
-	let loading = $state(true);
+	let isLoading = $state(true);
 
 	const handleOnLoad = () => {
-		loading = false;
+		isLoading = false;
 	};
 </script>
 
 <picture
 	class={className}
-	class:placeholder={loading}
+	class:placeholder={isLoading}
 	style="--width: {width}px; --height: {height}px"
 >
 	<source media="(min-width: 1200px)" srcset="{src}-desk.avif, {src}-desk@2x.avif 2x" />
 	<source media="(min-width: 768px)" srcset="{src}-tab.avif, {src}-tab@2x.avif 2x" />
 	<img
-		class:blurry={loading}
+		class:blurry={isLoading}
 		src="{src}-mob.avif"
 		srcset="{src}-mob@2x.avif 2x"
 		{width}
 		{height}
-		loading="lazy"
+		{loading}
 		{alt}
 		onload={handleOnLoad}
 	/>

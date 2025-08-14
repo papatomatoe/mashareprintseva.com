@@ -18,6 +18,7 @@
 					alt="Masha Reprintseva"
 					width="326"
 					height="218"
+					loading="eager"
 				/>
 			</div>
 		</div>
