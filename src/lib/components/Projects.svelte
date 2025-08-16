@@ -86,5 +86,9 @@
 		.projects__link:active {
 			opacity: 0.8;
 		}
+
+		.projects__image {
+			height: 400px;
+		}
 	}
 </style>

@@ -9,6 +9,9 @@ image: /images/interior
 projects:
   - the-enchanted-wood
   - the-golden-dragons
+  - the-black-orchid
+  - the-scent-of-seasons
+  - the-fifth-season
 ---
 
 Various traditions of embroidery endured the test of time, making their way to the modern world. They strengthened their positions in fashion and interior design today.
