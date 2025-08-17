@@ -3,22 +3,22 @@ title: Citronnier
 slug: citronnier
 published: true
 section: tailoring
-image: /images/citronnier
 preview: /images/citronnier_prw
+image: /images/citronnier_1
 subtitle: <blockquote><p>Cutting the lemon the knife leaves a little cathedral&colon; alcoves unguessed by the eye that open acidulous glass to the light; topazes riding the droplets, altars, aromatic facades.</p><cite>Pablo Neruda “Ode To a Lemon”</cite></blockquote>
 ---
 
 If we dive into any book dealing with botany, it will go without saying that lemons inspired botanists incredibly much. At the same time, they discovered the beauty of lemon trees, lemon blossoming and lemon fruits, indulging with sparkling taste and exquisite flavour. Lemon, being surrounded by other savours brings out the best in their neighbours: lifting the most delicate tastes, naturally timing the bolder.
 
-![a sketch of the dress design](/images/citronnier_1)
+![a sketch of the dress design](/images/citronnier_2)
 
 As historians say, citrus trees were first introduced into Europe after the Indian conquests of Alexander the Great and continued to arrive via the Silk Road and Spice Route from China spreading across Southern Europe in the Middle Ages. The 'golden apples of Hesperides', lemons have been associated for centuries with weddings, marriage and love.
 
-![a sketch of the dress design](/images/citronnier_2)
+![a sketch of the dress design](/images/citronnier_3)
 
 The citrus tree has long fascinated botanists with the ability to bear fruit every day of the year, as well as bearing fruit simultaneously with blossoms. Furthermore, to grow your citrus tree, all you need is one plant – that’s because multiple citrus types can be grown just on one tree.
 
-![a sketch of the dress design](/images/citronnier_3)
+![a sketch of the dress design](/images/citronnier_4)
 
 In cuisine, lemon is the third seasoning after salt and pepper. It balances sweet and savoury dishes. Lemon oil, zest and flower essences are a perfect marriage, in perfumery with thousands of other scents. In Art History lemon also has significance.
 
