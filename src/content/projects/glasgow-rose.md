@@ -46,6 +46,6 @@ Around it there are silver stems and the leaves, they drive the energy of life, 
 
 The lining contains a tiny pocket with an invisible zipper closure. Metal clasps provide enough fixation and thousands of hand stitches make the joint between the face and the wrong sides of the purse strong and invisible.
 
-![fragment of an embroidery](/images/glasgow-rose_12)
+![fragment of an embroidery](/images/glasgow-rose_1)
 
 A gem for any lover of embroidery and Modern.

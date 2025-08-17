@@ -88,13 +88,11 @@ Like on Monet's canvas, here there are no specific lines separating flowers and 
 
 ![a close-up of the skirt with water lilies](/images/the-nymphaea_25)
 
-![a close-up of the embroidery fragment](/images/the-nymphaea_26)
-
 In the embroidery, there is a combination of tambour beading and chain stitching, satin stitching made with silk, cotton and woollen threads, silk ribbons and chenille, decorated with sequins of various textures and colours.
 
-![hands stitching with tambour hook](/images/the-nymphaea_27)
+![a close-up of the embroidery fragment](/images/the-nymphaea_26)
 
-![a close-up of the water lily](/images/the-nymphaea_28)
+![hands stitching with tambour hook](/images/the-nymphaea_27)
 
 The waist is wrapped by a velvet belt, made of Uzbek Dukhoba - a handwoven silk velvet. It has an extremely delicate touch, satin sheen and depth.
 
