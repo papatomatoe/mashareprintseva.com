@@ -12,6 +12,8 @@ projects:
   - the-black-orchid
   - the-scent-of-seasons
   - the-fifth-season
+  - cherry-blossom
+  - moonlight-rabbit
 ---
 
 Various traditions of embroidery endured the test of time, making their way to the modern world. They strengthened their positions in fashion and interior design today.
