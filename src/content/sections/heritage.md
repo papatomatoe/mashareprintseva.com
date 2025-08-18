@@ -11,6 +11,7 @@ projects:
   - russian-goldwork-and-beadweaving-tradition
   - northern-ornaments
   - tears-of-yaroslavna
+  - pearls-and-golden-twists
 ---
 
 Since ancient times, embroidery as a way of textile design has been a sign of good taste, wealth and respect for traditions. Using such simple materials as thread and fabric, women made monumental pieces, transforming a plain textile piece into a sculpture-like surface.
