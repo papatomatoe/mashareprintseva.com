@@ -1,7 +1,23 @@
 <script lang="ts">
 	import Picture from '$lib/components/Picture.svelte';
 	import type { Project } from '$lib/types/project';
-	let { projects, section }: { projects: Project[]; section: string } = $props();
+
+	const SIZES: Record<string, { w: string; h: string }> = {
+		default: {
+			w: '326',
+			h: '489'
+		},
+		myrtusworkshop: {
+			w: '326',
+			h: '220'
+		}
+	};
+
+	type Props = { type?: string; projects: Project[]; section: string };
+
+	let { projects, section }: Props = $props();
+
+	const sizes = $derived(SIZES[section] ?? SIZES.default);
 </script>
 
 <ul class="projects">
@@ -9,8 +25,8 @@
 		<li class="projects__item">
 			<a class="projects__link" href={`/${section}/${project.slug}`}>
 				<h3 class="projects__title">{project.title}</h3>
-				<div class="projects__image">
-					<Picture src={project.preview} alt="" width="326" height="489" />
+				<div class="projects__image --picture-height={sizes.h}">
+					<Picture src={project.preview} alt="" width={sizes.w} height={sizes.h} />
 				</div>
 			</a>
 		</li>
@@ -88,7 +104,7 @@
 		}
 
 		.projects__image {
-			height: 400px;
+			height: var(--picture-height);
 		}
 	}
 </style>
