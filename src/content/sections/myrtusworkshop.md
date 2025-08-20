@@ -9,6 +9,10 @@ image: /images/myrtusworkshop
 projects:
   - artworks-inspired-embroidery
   - flora-and-fauna
+  - landscape-stitching
+  - needle-turn-applique-and-embroidery
+  - stumpwork-embroidery
+  - traditional-embroidery-and-folk-design
 ---
 
 Myrtusworkshop is a project that unites my love for embroidery and keeping the family tradition of taking photos and making albums. It took a long time before I came to a certain understanding of how a perfect album should look like. I applied different methods of bookbinding and decoration, experimented with shapes, elements, conceptions, moods and, reached what I show to you today.
