@@ -7,6 +7,10 @@ published: true
 altTitle:
 image: /images/contemporary
 projects:
+  - the-unseen-hues
+  - serendipity-of-man
+  - intricate-proportion-no-21
+  - vortex-constellation
 ---
 
 No artist tolerates reality, finding the way to speak about vital, urgent, striking and painful topics in the most eloquent language. For quite a long time this part of my creative universe was hidden from the public. I considered this as my healing place, free from criticism, bans and restrictions. By expressing my strong emotions with fibre and textile I calm them down, cope with disorders, ask myself questions and try to answer honestly, explore and go on a journey without leaving a place where I am.
