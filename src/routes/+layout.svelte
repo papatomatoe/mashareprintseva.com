@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../styles/globals.css';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -12,7 +12,7 @@
 
 	let { children, data }: { children: Snippet; data: PageData } = $props();
 
-	const pageTitle = $derived($page.data.pageTitle);
+	const pageTitle = $derived(page.data.pageTitle);
 	const menu = $derived(data.menu);
 	const social = $derived(data.social);
 </script>

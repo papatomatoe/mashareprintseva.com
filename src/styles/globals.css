@@ -267,6 +267,16 @@ p {
 	object-fit: contain;
 }
 
+.project__content figure {
+	p {
+		margin: 0 auto;
+	}
+	figcaption {
+		margin: 40px auto 0;
+		text-align: center;
+	}
+}
+
 .project__content blockquote {
 	display: block;
 	box-sizing: border-box;
