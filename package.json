@@ -1,5 +1,5 @@
 {
-	"name": "mashareprintseva.com-sveltekit",
+	"name": "mashareprintseva.com",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -10,31 +10,29 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint . && prettier --check .",
 		"format": "prettier --write .",
-		"images:convert": "bun run ./utils/convert.js ",
-		"prepare": "husky"
+		"images:convert": "bun run ./utils/convert.js "
 	},
 	"devDependencies": {
 		"@fontsource/roboto": "5.2.6",
 		"@fontsource/volkhov": "5.2.6",
-		"@sveltejs/adapter-vercel": "5.8.2",
-		"@sveltejs/kit": "2.27.3",
-		"@sveltejs/vite-plugin-svelte": "6.1.1",
+		"@sveltejs/adapter-vercel": "5.10.2",
+		"@sveltejs/kit": "2.36.2",
+		"@sveltejs/vite-plugin-svelte": "6.1.3",
 		"@types/eslint": "9.6.1",
-		"eslint": "9.33.0",
+		"eslint": "9.34.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "3.11.0",
 		"globals": "16.3.0",
-		"husky": "9.1.7",
 		"mdsvex": "0.12.6",
 		"prettier": "3.6.2",
 		"prettier-plugin-css-order": "2.1.2",
 		"prettier-plugin-svelte": "3.4.0",
 		"sharp": "0.34.3",
-		"svelte": "5.38.1",
+		"svelte": "5.38.3",
 		"svelte-check": "4.3.1",
 		"typescript": "5.9.2",
-		"typescript-eslint": "8.39.1",
-		"vite": "7.1.1"
+		"typescript-eslint": "8.40.0",
+		"vite": "7.1.3"
 	},
 	"type": "module"
 }

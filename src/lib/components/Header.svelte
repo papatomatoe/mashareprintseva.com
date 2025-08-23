@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { Menu } from '$lib/types/menu';
 	import type { Social } from '$lib/types/socials';
-	import Logo from './Logo.svelte';
-	import Nav from './Nav.svelte';
+	import Logo from '$lib/components/Logo.svelte';
+	import Nav from '$lib/components/Nav.svelte';
 
-	let { menu, social }: { menu: Menu[]; social: Social[] } = $props();
+	type Props = { menu: Menu[]; social: Social[] };
+
+	let { menu, social }: Props = $props();
 
 	const HOME_PATH = '/';
 	let isMenuOpened = $state(false);

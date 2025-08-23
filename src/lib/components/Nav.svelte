@@ -4,12 +4,9 @@
 	import type { Social } from '$lib/types/socials';
 	import type { Menu } from '$lib/types/menu';
 
-	let {
-		menu,
-		social,
-		isMenuOpened,
-		onClose
-	}: { menu: Menu[]; social: Social[]; isMenuOpened: boolean; onClose: () => void } = $props();
+	type Props = { menu: Menu[]; social: Social[]; isMenuOpened: boolean; onClose: () => void };
+
+	let { menu, social, isMenuOpened, onClose }: Props = $props();
 </script>
 
 <nav class="nav" class:nav--show={isMenuOpened}>

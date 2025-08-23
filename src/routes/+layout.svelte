@@ -10,7 +10,9 @@
 	import type { PageData } from './$types';
 	import type { Snippet } from 'svelte';
 
-	let { children, data }: { children: Snippet; data: PageData } = $props();
+	type Props = { children: Snippet; data: PageData };
+
+	let { children, data }: Props = $props();
 
 	const pageTitle = $derived(page.data.pageTitle);
 	const menu = $derived(data.menu);
