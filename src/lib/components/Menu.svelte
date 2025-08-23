@@ -1,23 +1,33 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { Menu } from '$lib/types/menu';
 
-	let { items, onClose }: { items: Menu[]; onClose: () => void } = $props();
+	type Props = { items: Menu[]; onClose: () => void };
 
-	const currentPath = $derived($page.url.pathname);
-	const menu = $derived([{ title: 'main', slug: '' }, ...items, { title: 'bio', slug: 'bio' }]);
+	let { items, onClose }: Props = $props();
+
+	const currentPath = $derived(page.url.pathname);
+	const menu = $derived([
+		{ title: 'main', slug: '' },
+		...items,
+		{ title: 'podcast', slug: 'https://filum-podcast.github.io/' },
+		{ title: 'bio', slug: 'bio' }
+	]);
 </script>
 
 {#if items.length}
 	<ul class="menu">
 		{#each menu as item (item.title)}
-			{@const path = `/${item.slug}`}
+			{@const external = item.slug.startsWith('https://')}
+			{@const href = external ? item.slug : `/${item.slug}`}
+			{@const current = currentPath === href}
 			<li class="menu__item">
 				<a
 					class="link"
-					class:link--current={currentPath === path}
-					href="/{item.slug}"
+					class:link--current={current}
+					{href}
 					onclick={onClose}
+					target={external ? '_blank' : ''}
 				>
 					{item.title}
 				</a>
@@ -92,7 +102,7 @@
 
 		.link {
 			transition: color 0.3s linear;
-			font-size: 17px;
+			font-size: 15px;
 		}
 
 		.link:not(.link--current):hover,
