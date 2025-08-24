@@ -47,6 +47,7 @@
 	}
 	.header__logo {
 		display: block;
+		width: fit-content;
 		height: auto;
 	}
 	.header__button {
