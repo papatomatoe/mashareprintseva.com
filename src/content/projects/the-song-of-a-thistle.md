@@ -5,6 +5,7 @@ published: true
 section: tailoring
 preview: /images/the-song-of-a-thistle_prw
 image: /images/the-song-of-a-thistle_1
+imageAlt: front side full size embroidered dress
 subtitle: <a href="https://handembroidery.com/the-prize/prize-2020-categories/open-fashion-category/masha-reprintseva/" target="_blank" rel="noopener noreferrer">Aworded with Hand &amp; Lock Prize for Embroidery 2020</a><a href="https://coinstreet.org/whats-on/hand-lock-prize-embroidery-presents-embroidered-arts" target="_blank" rel="noopener noreferrer">Embroidered Arts Exhibition</a>
 ---
 
