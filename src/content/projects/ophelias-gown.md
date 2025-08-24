@@ -5,6 +5,7 @@ published: true
 section: tailoring
 preview: /images/ophelias-gown_prw
 image: /images/ophelias-gown_1
+imageAlt: waist line of an embroidered dress
 subtitle: <blockquote><p>“I'd give you some violets, flowers of faithfulness...“</p><cite>Ophelia. (Hamlet. Act4, scene 5, page 9)</cite></blockquote>
 ---
 

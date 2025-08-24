@@ -20,19 +20,25 @@
 		{/if}
 
 		<div class="project__image">
-			<Picture src={project.image} alt={project.title} width="326" height="489" loading="eager" />
+			<Picture
+				src={project.image}
+				alt={project.imageAlt}
+				width="326"
+				height="489"
+				loading="eager"
+			/>
 		</div>
 	</div>
 	<div class="project__content">
 		<Content />
 	</div>
-	{#if project.restProjects && project.restProjects.length}
-		<section class="projects">
-			<h2 class="projects__title">Projects</h2>
-			<Projects projects={project.restProjects} section={project.section ?? ''} />
-		</section>
-	{/if}
 </section>
+{#if project.restProjects && project.restProjects.length}
+	<section class="projects">
+		<h2 class="projects__title">Projects</h2>
+		<Projects projects={project.restProjects} section={project.section ?? ''} />
+	</section>
+{/if}
 
 <style>
 	.project {

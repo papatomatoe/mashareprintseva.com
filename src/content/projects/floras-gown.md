@@ -5,6 +5,7 @@ published: true
 section: tailoring
 preview: /images/floras-gown_prw
 image: /images/floras-gown_1
+imageAlt: scale mannequin size 1/8
 subtitle:
 ---
 

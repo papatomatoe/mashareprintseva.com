@@ -3,7 +3,9 @@
 	import Projects from '$lib/components/Projects.svelte';
 	import Picture from '$lib/components/Picture.svelte';
 
-	let { data }: { data: PageData } = $props();
+	type Props = { data: PageData };
+
+	let { data }: Props = $props();
 
 	const section = $derived(data.section);
 	const Content = $derived(data.section.content);
