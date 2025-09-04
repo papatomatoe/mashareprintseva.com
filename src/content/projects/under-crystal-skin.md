@@ -10,48 +10,48 @@ subtitle: <p>Inspired by the body and the emotions hidden from the public for th
 
 Like a bit of glass spreads light into many shades - the mind and sense spread our impressions about an individual, considering possible psychological particularities, which many try to hide due to the fear of public stigmatisation.
 
-![fragment of an embroidery](/images/under-crystal-skin_2)
+![Fragment juxtaposing transparency and opacity, metaphor for public image vs essence](/images/under-crystal-skin_2)
 
 Some perceive life as a dual phenomenon: black and white, true or false - as if binary code directs them. But living is full of shades collated to errors and achievements, experience and trauma. The latter may subconsciously influence many aspects of life until we accept them, “recycle” and outlive them, to leave their dust in the “backyard” of our public image.
 
-![fragment of an embroidery](/images/under-crystal-skin_3)
+![Close-up of fiber manipulation and cyanotype texture integrated with stitch](/images/under-crystal-skin_3)
 
 My BPD has been painfully devastating till I formed a way of altering "affective hurricanes" - investing them into the creation.
 
-![fragment of an embroidery](/images/under-crystal-skin_4)
+![Raw emotion translated into thread, dark-light duality across the surface](/images/under-crystal-skin_4)
 
 During the recent episodes (as self-therapy), I mailed to nowhere, telling about my disturbia, took self-portraits, focused on fibre manipulation and fabric cyanotypes. All these activities eased my emotional pain and anxiety.
 
-![fragment of an embroidery](/images/under-crystal-skin_5)
+![Self-therapeutic practice: mailed words to nowhere layered beneath textile](/images/under-crystal-skin_5)
 
-![fragment of an embroidery](/images/under-crystal-skin_6)
+![Distressed textures suggesting trauma processing and acceptance](/images/under-crystal-skin_6)
 
-![fragment of an embroidery](/images/under-crystal-skin_7)
+![Cyan-blue imprint with stitched overlays, body outline abstracted](/images/under-crystal-skin_7)
 
 I put my sensitiveness into the envelope, “sealing” it between the transparent “walls”.
 
-![fragment of an embroidery](/images/under-crystal-skin_8)
+![Translucent envelope wall, muted side presented to the public](/images/under-crystal-skin_8)
 
 One wall is “mute” as an image displayed to the public on a digital screen; another - is sore like burned skin, stitched to the true “essence”. Together, both sides make a translucent “casket” through which the insiders read my alter ego.
 
-![fragment of an embroidery](/images/under-crystal-skin_9)
+![Sore, raw stitched side bonded to true essence—pain made visible](/images/under-crystal-skin_9)
 
-![fragment of an embroidery](/images/under-crystal-skin_10)
+![Inside view through transparent layers, insiders reading the alter ego](/images/under-crystal-skin_10)
 
-![fragment of an embroidery](/images/under-crystal-skin_11)
+![Dialogue between analogue print and embroidery, reflections on identity](/images/under-crystal-skin_11)
 
 “Envelope” is a physical and thinking exercise in many aspects. It is diffusion and expansion, acceptance, observation and the analysis of various contexts of present and past of my "Self".
 
-![fragment of an embroidery](/images/under-crystal-skin_12)
+![Diffusion and expansion visualized—threads radiating from a central core](/images/under-crystal-skin_12)
 
 Embroidery, textile, analogue processes of printing and digital photography, psychotherapy (self-therapy) are united in one by an artistic expression which is an act of Art by itself. It is the art of self-acceptance (of the main principles of post-traumatic disorder therapy is acceptance and commitment therapy) and the act of supporting others through the creation of the symbolic matter.
 
-![fragment of an embroidery](/images/under-crystal-skin_13)
+![Acceptance and commitment symbolized by bound edges and steady lines](/images/under-crystal-skin_13)
 
-![fragment of an embroidery](/images/under-crystal-skin_14)
+![Philosophical matter breathing life into object—luminous textile surface](/images/under-crystal-skin_14)
 
 That brings the point where visual aesthetics materialised in a piece meet the unseen - the psychological and philosophical matter, which breathes a certain sense and life to the object and sustains the humanity in each of us.
 
-![fragment of an embroidery](/images/under-crystal-skin_15)
+![Final fragment, crystal-like clarity emerging from layered vulnerability](/images/under-crystal-skin_15)
 
 <a href="/files/under-crystal-skin.pdf" target="_blank">You may look through the whole portfolio here</a>

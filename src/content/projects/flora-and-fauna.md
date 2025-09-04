@@ -10,36 +10,36 @@ subtitle:
 
 Being a child, I had a book that excited me most of all. It was an illustrated Atlas of Biology. Flipping its glossy pages, I looked at the beautifully painted plants and admired their structure and parts. I examined their seeds, petals and leaves. I watched a lush plumage of rare birds, dreaming to see them in flesh. I adored the sumptuous complexity of an amazing animal world and, a breathtaking variety of herbs, flowers, insects and other tiny creatures. Their rich colours and textures are the source of my inspiration today. The equilibrium they represent I try to perform in my animalistic and floral embroideries.
 
-![fragment of an embroidery](/images/flora-and-fauna_2)
+![Botanical embroidery fragment with fine satin stitches forming leaf veins on neutral ground](/images/flora-and-fauna_2)
 
-![fragment of an embroidery](/images/flora-and-fauna_3)
+![Close-up of floral embroidery, layered petals with soft colour gradients and crisp outlines](/images/flora-and-fauna_3)
 
 I liked to "hide" in some virgin rainy forests displayed in the book by amazingly painted watercolour illustrations and "walk" in the mountains among the unique examples of blossoming, ferns and moss.
 
-![fragment of an embroidery](/images/flora-and-fauna_4)
+![Bird plumage embroidered in silk threads, overlapping stitches creating realistic feather texture](/images/flora-and-fauna_4)
 
-![fragment of an embroidery](/images/flora-and-fauna_5)
+![Embroidered botanical specimen, slender stem and serrated leaves in tonal greens](/images/flora-and-fauna_5)
 
 I have brought this love to my adulthood, trying to express it through embroidery. I adore the works of the British School of Botanical Illustration, the artworks by Pierre-Joseph Redouté, Pierre-Antoin Poiteau, Jeanne Holgate. I find them the most inspiring.
 
-![fragment of an embroidery](/images/flora-and-fauna_6)
+![Macro of flower center embroidery, dense knots and short stitches suggesting pollen](/images/flora-and-fauna_6)
 
-![fragment of an embroidery](/images/flora-and-fauna_7)
+![Botanical illustration rendered in thread, fine linework and naturalistic shading](/images/flora-and-fauna_7)
 
-![fragment of an embroidery](/images/flora-and-fauna_8)
+![Close-up of embroidered bird head, glossy eye highlight and delicate beak detailing](/images/flora-and-fauna_8)
 
-![fragment of an embroidery](/images/flora-and-fauna_9)
+![Floral spray in silk embroidery, curved stems and clustered blossoms with subtle hues](/images/flora-and-fauna_9)
 
 Flowers and birds are quite inspiring for any artistic expression. They demonstrate a rich variety of colours that you strive to imitate, mastering your embroidering skills stitch by stitch, trying to recreate the amazing palette formulated by nature.
 
-![fragment of an embroidery](/images/flora-and-fauna_10)
+![Leaf study in embroidery, parallel long-and-short stitches forming smooth gradients](/images/flora-and-fauna_10)
 
-![fragment of an embroidery](/images/flora-and-fauna_11)
+![Insect wing embroidery, translucent effect achieved with gauze and sparse stitching](/images/flora-and-fauna_11)
 
-![fragment of an embroidery](/images/flora-and-fauna_12)
+![Botanical detail with tendrils, tiny seed pods and fine vein network in thread](/images/flora-and-fauna_12)
 
-![fragment of an embroidery](/images/flora-and-fauna_13)
+![Embroidered bird perched among leaves, varied stitch directions creating volume](/images/flora-and-fauna_13)
 
-![fragment of an embroidery](/images/flora-and-fauna_14)
+![Cluster of embroidered blossoms, petal edges neatly defined with contrasting outlines](/images/flora-and-fauna_14)
 
-![fragment of an embroidery](/images/flora-and-fauna_15)
+![Composite panel of flora and fauna embroidery elements, harmonious colour palette and textures](/images/flora-and-fauna_15)
