@@ -11,42 +11,42 @@ subtitle: <blockquote><p>Life is the leaves which shape and nourish a plant, but
 
 Glasgow Rose is a stylised flower which became famous thanks to the artists of the Glasgow School of Art, and especially Rennie Mackintosh. A marvellous blend of the West and the East, developed by Mackintosh highlights a contrast between strong right angles and floral-inspired decorative motifs with subtle curves, symbolism, and sensualism, infused with the restraint and minimalism of Japonism, as well as fine delicacy. Every line is poetry. Every curve is a symphony of love for floral motifs.
 
-![](/images/glasgow-rose_2)
+![Stylised Glasgow Rose embroidery on twilight blue velvet, metal-like curves and seed-pod motifs](/images/glasgow-rose_2)
 
 For quite a long time, I have been exercising to apply some of the iconic images of Art Nouveau and interlink them with embroidery, classical textures and materials. I imagined making the piece a bit abstract but in full flow, with simple metal forms like on the fence, where seeds and pods twist and blossom, but backed with a soft pad of velvet coloured in twilight blue.
 
-![](/images/glasgow-rose_3)
+![Close-up of Art Nouveau-inspired spiral rose, sharp angles paired with soft floral curves](/images/glasgow-rose_3)
 
 The Glasgow Four used the rose so often as an iconic symbol that it was characteristic of them. The rose is the grandest and noblest of nature's symbols. It is the symbol of Nature of the ever-prolific and virgin Earth, or Isis, the mother and nourisher of man.
 
-![](/images/glasgow-rose_4)
+![Embroidery detail showing silver stems and leaves, balanced geometry and organic lines](/images/glasgow-rose_4)
 
 I imagined how the embroidery may look if it combined black textures of metal wire, grey check-purl, black silk threads and velvet fabric assembling everything into a luxurious hand-sewn evening clutch.
 
-![](/images/glasgow-rose_5)
+![Evening clutch in velvet with Glasgow Rose motif, black wire-like textures and check purl accents](/images/glasgow-rose_5)
 
-![](/images/glasgow-rose_6)
+![Work-in-progress embroidery panel, contrasting black threads and metallic highlights](/images/glasgow-rose_6)
 
 “You ask how you are to judge architecture? Just as you judge painting or sculpture form, colour, proportion, all visible qualities - and the one great invisible quality in all art, soul“, wrote Mackintosh in one of his works, I feel it reasonable to apply this idea to embroidery also.
 
-![](/images/glasgow-rose_7)
+![Macro of stitch lines forming the rose spiral, precise edges and smooth turns](/images/glasgow-rose_7)
 
 All visible qualities of embroidery, its sharpness, accuracy, lines and texture make the soul of the piece and define the artist.
 
-![](/images/glasgow-rose_8)
+![Central bud-like form emerging from dark velvet, petals catching light with subtle sheen](/images/glasgow-rose_8)
 
 The central motif is a huge bud-like shape that appears from the darkness of the velvet background, growing up into the sun. It reflects the beams of light, shimmering with the petals.
 
-![](/images/glasgow-rose_9)
+![Silver stems and stylised leaves dancing around the rose, dynamic composition](/images/glasgow-rose_9)
 
 Around it there are silver stems and the leaves, they drive the energy of life, dancing around the flower. Nothing was done for purely decorative effect alone. All is imbued with feeling and meaning. The interlining of the purse is hand-stitched.
 
-![](/images/glasgow-rose_10)
+![Clutch interior details, hand-stitched interlining and neat finishing](/images/glasgow-rose_10)
 
-![](/images/glasgow-rose_11)
+![Pocket with invisible zipper in lining, metal clasps and dense hand stitching](/images/glasgow-rose_11)
 
 The lining contains a tiny pocket with an invisible zipper closure. Metal clasps provide enough fixation and thousands of hand stitches make the joint between the face and the wrong sides of the purse strong and invisible.
 
-![](/images/glasgow-rose_1)
+![Final view of Glasgow Rose evening clutch, luxurious velvet and Modernist ornament](/images/glasgow-rose_1)
 
 A gem for any lover of embroidery and Modern.
